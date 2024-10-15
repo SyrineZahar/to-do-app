@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SignupComponent } from './components/signup/signup.component';
 
 /**
  * Module principal de l'application Angular.
@@ -22,7 +23,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     KanbanDashboardComponent, // Composant pour le tableau Kanban
     FooterComponent,       // Composant pour le pied de page
     NavbarComponent,       // Composant pour la barre de navigation
-    TaskFormComponent      // Composant pour le formulaire de tâche
+    TaskFormComponent, 
+    SignupComponent      // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular

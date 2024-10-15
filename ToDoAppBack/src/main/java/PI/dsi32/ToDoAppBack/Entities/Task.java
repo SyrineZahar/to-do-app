@@ -10,6 +10,8 @@ import jakarta.persistence.Enumerated; // Importation pour la gestion des énum�
 import jakarta.persistence.GeneratedValue; // Importation pour la génération automatique des valeurs.
 import jakarta.persistence.GenerationType; // Importation pour définir le type de stratégie de génération.
 import jakarta.persistence.Id; // Importation pour identifier la clé primaire de l'entité.
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity // Annotation indiquant que cette classe est une entité JPA.
 public class Task implements Serializable { // La classe implémente Serializable pour la sérialisation.
@@ -33,8 +35,13 @@ public class Task implements Serializable { // La classe implémente Serializabl
     private LocalDateTime updatedAt; // Date de dernière mise à jour de la tâche.
 
     private boolean isDestactive; // Indique si la tâche est désactivée.
+    
+    //La relation qui indique que plusieurs tache peut etre assigné à un seul user
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    // Constructeur par défaut
+	// Constructeur par défaut
     public Task() {
         super();
     }
@@ -122,4 +129,12 @@ public class Task implements Serializable { // La classe implémente Serializabl
     public static long getSerialversionuid() {
         return serialVersionUID; // Retourne la version de sérialisation.
     }
+    
+    public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 }

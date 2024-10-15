@@ -1,0 +1,42 @@
+<p>signup works!</p>
+<div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="app-title">Sign Up</h1>
+      <p class="subtitle">Create your account</p>
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="login-form">
+ 
+        <div class="input-group">
+            <input type="username" id="username" formControlName="username" placeholder="Username" class="form-control">
+            <div *ngIf="signupForm.get('username')?.touched && signupForm.get('username')?.errors?.['required']" class="error">
+              Username is required.
+            </div>
+          </div>
+
+        <div class="input-group">
+          <input type="email" id="email" formControlName="email" placeholder="Email" class="form-control">
+          <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['required']" class="error">
+            Email is required.
+          </div>
+          <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.errors?.['email']" class="error">
+            Please enter a valid email address.
+          </div>
+        </div>
+  
+        <div class="input-group">
+          <input type="password" id="password" formControlName="password" placeholder="Password" class="form-control">
+          <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['required']" class="error">
+            Password is required.
+          </div>
+          <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['pattern']" class="error">
+            Password must contain at least one uppercase letter and one digit.
+          </div>
+        </div>
+  
+        <button type="submit" class="btn-submit">Sign Up</button>
+        <div class="signup">
+          <a routerLink="/login">Login</a>
+        </div>
+      </form>
+    </div>
+  </div>
+  
