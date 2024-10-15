@@ -1,70 +1,59 @@
-package PI.dsi32.ToDoAppBack.Controllers;
-import java.time.LocalDateTime;
-// importation de la classe LocalDateTime
-import java.util.List;
-// Importation de la classe List
-import org.springframework.beans.factory.annotation.Autowired;
-// Annotation pour l'injection de dépendance
-import org.springframework.http.HttpStatus;
-// importation de la classe HttpStatus
-import org.springframework.http.ResponseEntity;
-// Importation de la classe ResponseEntity
-import org.springframework.web.bind.annotation.CrossOrigin;
-// Importation pour la gestion des CORS
-import org.springframework.web.bind.annotation.GetMapping;
-// Importation de l'annotation GetMapping
-import org.springframework.web.bind.annotation.PostMapping;
-// Importation de l'annotation PostMapping
-import org.springframework.web.bind.annotation.RequestBody;
-// Importation pour le corps de la requête
-import org.springframework.web.bind.annotation.RequestMapping;
-// Importation de l'annotation RequestMapping
-import org.springframework.web.bind.annotation.RestController;
-// Importation de l'annotation RestController
-import PI.dsi32.ToDoAppBack.Entities.Task;
-// Importation de la classe Task
-import PI.dsi32.ToDoAppBack.ServicesImpl.TaskServiceImpl;
-// Importation de la classe TaskServiceImpl
-//Contrôleur REST pour gérer les opérations liées aux tâches.
-@CrossOrigin(origins = "*")
-// Permet les requêtes CORS depuis n'importe quelle origine
-@RestController
-// Marque le contrôleur comme un contrôleur REST
-@RequestMapping("/tasks")
-// Définit l'URI de base pour les requêtes
+package PI.dsi32.ToDoAppBack.Controllers; // Déclaration du package pour le contrôleur.
+
+import java.time.LocalDateTime; // Importation de la classe pour gérer les dates et heures.
+import java.util.List; // Importation de la classe List pour les collections.
+
+import org.springframework.beans.factory.annotation.Autowired; // Annotation pour l'injection de dépendances.
+import org.springframework.http.HttpStatus; // Importation des statuts HTTP.
+import org.springframework.http.ResponseEntity; // Importation de la classe ResponseEntity pour les réponses HTTP.
+import org.springframework.web.bind.annotation.CrossOrigin; // Annotation pour gérer les politiques CORS.
+import org.springframework.web.bind.annotation.GetMapping; // Annotation pour les requêtes GET.
+import org.springframework.web.bind.annotation.PostMapping; // Annotation pour les requêtes POST.
+import org.springframework.web.bind.annotation.PutMapping; // Annotation pour les requêtes PUT.
+import org.springframework.web.bind.annotation.RequestBody; // Annotation pour indiquer que le corps de la requête contient des données.
+import org.springframework.web.bind.annotation.RequestMapping; // Annotation pour définir le chemin de la requête.
+import org.springframework.web.bind.annotation.RestController; // Annotation pour indiquer que c'est un contrôleur REST.
+
+import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
+import PI.dsi32.ToDoAppBack.ServicesImpl.TaskServiceImpl; // Importation du service des tâches.
+
+@CrossOrigin(origins = "*") // Permet les requêtes cross-origin depuis n'importe quelle origine.
+@RestController // Indique que ce contrôleur gère des requêtes REST.
+@RequestMapping("/tasks") // Définit le chemin de base pour toutes les méthodes de ce contrôleur.
 public class TaskController {
 	
-	@Autowired
+	@Autowired // Injection du service des tâches.
     private TaskServiceImpl taskService;
-    // Injection de dépendance pour l'implémentation de la service de tâche
 	
-    @GetMapping()
+    @GetMapping() // Gère les requêtes GET sur le chemin /tasks.
     public ResponseEntity<List<Task>> getAllTasks() {
         try {
-            List<Task> tasks = taskService.getAllTasks();
-            // Récupère la liste des tâches
-            return new ResponseEntity<>(tasks, HttpStatus.OK);
-            // Retourne la liste des tâches avec un statut HTTP OK
+            List<Task> tasks = taskService.getAllTasks(); // Récupère toutes les tâches via le service.
+            return new ResponseEntity<>(tasks, HttpStatus.OK); // Retourne les tâches avec un statut HTTP 200.
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            // Retourne un statut HTTP Erreur interne du serveur si  une erreur 500
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
         }
     }
 	
-    @PostMapping()// Mapping pour les requêtes POST
+    @PostMapping() // Gère les requêtes POST sur le chemin /tasks.
     public ResponseEntity<Task> addTask(@RequestBody Task task) {
         try {
-        	task.setCreatedAt(LocalDateTime.now());
-            // Définit la date de création
-            Task newTask = taskService.addTask(task);
-            // Ajoute la tâche
-            return new ResponseEntity<>(newTask, HttpStatus.CREATED);
-            // Retourne la tâche ajoutée avec un statut HTTP Créé
+        	task.setCreatedAt(LocalDateTime.now()); // Définit la date de création.
+            Task newTask = taskService.addTask(task); // Ajoute la tâche via le service.
+            return new ResponseEntity<>(newTask, HttpStatus.CREATED); // Retourne la nouvelle tâche avec un statut HTTP 201.
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            // Retourne un statut HTTP Erreur interne du serveur si  une erreur 500
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
         }
     }
-
-	
+    
+    @PutMapping("/{id}") // Gère les requêtes PUT sur le chemin /tasks/{id}.
+    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+        try {
+        	task.setUpdatedAt(LocalDateTime.now()); // Définit la date de mise à jour.
+            Task updatedTask = taskService.editTask(task); // Met à jour la tâche via le service.
+            return new ResponseEntity<>(updatedTask, HttpStatus.OK); // Retourne la tâche mise à jour avec un statut HTTP 200.
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
+        }
+    }
 }

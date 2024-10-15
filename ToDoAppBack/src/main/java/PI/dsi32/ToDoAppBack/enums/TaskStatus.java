@@ -1,12 +1,8 @@
-package PI.dsi32.ToDoAppBack.enums;
+package PI.dsi32.ToDoAppBack.enums; // Déclaration du package pour les énumérations.
 
-public enum TaskStatus {
-    TODO,
-    //État représentant une tâche qui n'a pas encore été commencée.
-    INPROGRESS,
-    //Indique que la tâche est actuellement en cours d'exécution. 
-    DONE
-    //Indique que la tâche a été entièrement complétée. 
+public enum TaskStatus { // Définition de l'énumération TaskStatus.
+    
+    TODO,       // État représentant une tâche à faire.
+    INPROGRESS, // État représentant une tâche en cours.
+    DONE        // État représentant une tâche terminée.
 }
-/**  TaskStatus fournit un moyen simple et clair de représenter les différents états d'une tâche, 
-ce qui est essentiel pour une application de gestion de tâches efficace. */
