@@ -1,124 +1,151 @@
+/* 
+  Styles globaux
+  ---------------
+  Ce fichier CSS définit les styles pour différents éléments
+  de l'application, y compris des conteneurs, des titres, 
+  des tableaux et des composants Kanban.
+*/
+
+/* Conteneur principal */
 .container {
-    padding: 2rem;
-  }
-  
-  h1 {
-    color: var(--primary-color);
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 2rem;
-  }
-  
-  .form-label {
-    color: var(--text-color-light);
-  }
-  
+  padding: 2rem; /* Espacement interne du conteneur */
+}
+
+/* Style du titre principal */
+h1 {
+  color: var(--primary-color); /* Couleur définie par la variable CSS */
+  font-size: 2.5rem; /* Taille de la police */
+  font-weight: 700; /* Poids de la police */
+  margin-bottom: 2rem; /* Marge inférieure pour espacer des éléments suivants */
+}
+
+/* Étiquette des formulaires */
+.form-label {
+  color: var(--text-color-light); /* Couleur du texte des étiquettes */
+}
+
+/* Tableau Kanban */
+.kanban-board {
+  display: flex; /* Utilisation du modèle flex */
+  justify-content: space-between; /* Espacement entre les colonnes */
+  gap: 1rem; /* Espacement entre les colonnes */
+}
+
+/* Colonne du Kanban */
+.kanban-column {
+  background: linear-gradient(135deg, #3f3f3f, #1a1a1a); /* Dégradé de couleur pour l'arrière-plan */
+  border-radius: 8px; /* Coins arrondis */
+  width: 100%; /* Largeur maximale */
+  min-width: 250px; /* Largeur minimale */
+  max-width: 33%; /* Largeur maximale pour chaque colonne */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée */
+  overflow: hidden; /* Évite le débordement du contenu */
+}
+
+/* En-tête de la colonne Kanban */
+.kanban-header {
+  background-color: var(--primary-color); /* Couleur de fond définie par la variable CSS */
+  color: var(--text-color-light); /* Couleur du texte définie par la variable CSS */
+  padding: 1rem; /* Espacement interne */
+  font-size: 1.25rem; /* Taille de la police */
+  font-weight: 600; /* Poids de la police */
+  text-align: center; /* Centre le texte */
+}
+
+/* Corps de la colonne Kanban */
+.kanban-body {
+  padding: 1rem; /* Espacement interne */
+  max-height: 60vh; /* Hauteur maximale */
+  overflow-y: auto; /* Activation du défilement vertical */
+}
+
+/* Élément Kanban */
+.kanban-item {
+  background-color: #2d2d2d; /* Couleur de fond des éléments Kanban */
+  color: var(--text-color-light); /* Couleur du texte */
+  border-radius: 6px; /* Coins arrondis */
+  padding: 0.75rem; /* Espacement interne */
+  margin-bottom: 0.5rem; /* Marge inférieure */
+  cursor: pointer; /* Change le curseur en pointeur */
+  transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
+}
+
+/* Effet au survol d'un élément Kanban */
+.kanban-item:hover {
+  background-color: var(--primary-color); /* Change la couleur de fond au survol */
+}
+
+/* Styles responsives */
+@media (max-width: 768px) {
   .kanban-board {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+      flex-direction: column; /* Empile les colonnes sur les petits écrans */
   }
-  
+
   .kanban-column {
-    background: linear-gradient(135deg, #3f3f3f, #1a1a1a);
-    border-radius: 8px;
-    width: 100%;
-    min-width: 250px;
-    max-width: 33%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
+      max-width: 100%; /* Largeur maximale à 100% pour les petites écrans */
+      margin-bottom: 1rem; /* Marge inférieure pour espacer les colonnes */
   }
-  
-  .kanban-header {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-    padding: 1rem;
-    font-size: 1.25rem;
-    font-weight: 600;
-    text-align: center;
-  }
-  
-  .kanban-body {
-    padding: 1rem;
-    max-height: 60vh;
-    overflow-y: auto;
-  }
-  
-  .kanban-item {
-    background-color: #2d2d2d;
-    color: var(--text-color-light);
-    border-radius: 6px;
-    padding: 0.75rem;
-    margin-bottom: 0.5rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .kanban-item:hover {
-    background-color: var(--primary-color);
-  }
-  
-  @media (max-width: 768px) {
-    .kanban-board {
-      flex-direction: column;
-    }
-  
-    .kanban-column {
-      max-width: 100%;
-      margin-bottom: 1rem;
-    }
-  }
-  
-  .table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 2rem;
-  }
-  
-  .table th, .table td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .table th {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-  }
-  
-  .table td {
-    background-color: #2d2d2d;
-    color: var(--text-color-light);
-  }
-  
-  .table tr:hover {
-    background-color: #333;
-  }
-  
-  .mat-paginator {
-    background: #1a1a1a;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  }
-  
-  .mat-paginator .mat-flat-button {
-    background-color: var(--primary-color);
-    color: var(--text-color-light);
-    border-radius: 4px;
-  }
-  
-  .mat-paginator .mat-flat-button:hover {
-    background-color: var(--text-color-light);
-    color: var(--primary-color);
-  }
-  
-  .mat-paginator .mat-paginator-range-label {
-    color: var(--text-color-light); 
-  }
-  
-  .mat-paginator .mat-select-trigger {
-    background: #2d2d2d; 
-    color: var(--text-color-light);
-  }
-  
+}
+
+/* Styles du tableau */
+.table {
+  width: 100%; /* Largeur à 100% */
+  border-collapse: collapse; /* Fusionne les bordures */
+  margin-top: 2rem; /* Marge supérieure */
+}
+
+/* Styles des cellules du tableau */
+.table th, .table td {
+  padding: 0.75rem; /* Espacement interne */
+  text-align: left; /* Alignement du texte à gauche */
+  border-bottom: 1px solid #ddd; /* Bordure inférieure */
+}
+
+/* En-tête du tableau */
+.table th {
+  background-color: var(--primary-color); /* Couleur de fond définie par la variable CSS */
+  color: var(--text-color-light); /* Couleur du texte */
+}
+
+/* Cellules du tableau */
+.table td {
+  background-color: #2d2d2d; /* Couleur de fond des cellules */
+  color: var(--text-color-light); /* Couleur du texte */
+}
+
+/* Effet au survol d'une ligne du tableau */
+.table tr:hover {
+  background-color: #333; /* Change la couleur de fond au survol */
+}
+
+/* Styles pour le paginator */
+.mat-paginator {
+  background: #1a1a1a; /* Couleur de fond */
+  border-radius: 8px; /* Coins arrondis */
+  padding: 1rem; /* Espacement interne */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée */
+}
+
+/* Styles des boutons du paginator */
+.mat-paginator .mat-flat-button {
+  background-color: var(--primary-color); /* Couleur de fond définie par la variable CSS */
+  color: var(--text-color-light); /* Couleur du texte */
+  border-radius: 4px; /* Coins arrondis */
+}
+
+/* Effet au survol d'un bouton du paginator */
+.mat-paginator .mat-flat-button:hover {
+  background-color: var(--text-color-light); /* Change la couleur de fond au survol */
+  color: var(--primary-color); /* Change la couleur du texte au survol */
+}
+
+/* Styles de l'étiquette de plage du paginator */
+.mat-paginator .mat-paginator-range-label {
+  color: var(--text-color-light); /* Couleur du texte */
+}
+
+/* Styles du déclencheur du sélecteur dans le paginator */
+.mat-paginator .mat-select-trigger {
+  background: #2d2d2d; /* Couleur de fond */
+  color: var(--text-color-light); /* Couleur du texte */
+}

@@ -1,76 +1,90 @@
-import { HttpErrorResponse } from '@angular/common/http'; // Importation pour gérer les erreurs HTTP.
-import { Component, OnInit } from '@angular/core'; // Importation des décorateurs et interfaces nécessaires.
-import { Router } from '@angular/router'; // Importation du routeur pour naviguer entre les pages.
-import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum'; // Importation de l'énumération des statuts de tâche.
-import { Task } from 'src/app/classe/Task'; // Importation de la classe Task.
-import { taskService } from 'src/app/service/Task.service'; // Importation du service de gestion des tâches.
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
+import { Task } from 'src/app/classe/Task';
+import { taskService } from 'src/app/service/Task.service';
 
+/**
+ * Composant pour le tableau de bord Kanban.
+ * -------------------------------------------
+ * Ce composant gère l'affichage et l'interaction avec les tâches
+ * dans un tableau Kanban, permettant de glisser et déposer
+ * des tâches entre différents statuts.
+ */
 @Component({
-  selector: 'app-kanban-dashboard', // Sélecteur pour utiliser ce composant dans le template.
-  templateUrl: './kanban-dashboard.component.html', // Chemin vers le fichier HTML du composant.
-  styleUrls: ['./kanban-dashboard.component.css'] // Chemin vers le fichier CSS du composant.
+  selector: 'app-kanban-dashboard', // Sélecteur du composant
+  templateUrl: './kanban-dashboard.component.html', // Chemin vers le template HTML
+  styleUrls: ['./kanban-dashboard.component.css'] // Chemin vers le fichier CSS du composant
 })
-export class KanbanDashboardComponent implements OnInit { // Déclaration du composant avec l'interface OnInit.
+export class KanbanDashboardComponent implements OnInit {
 
-  constructor(private taskService: taskService, private router: Router) {} // Injection des services nécessaires.
+  constructor(private taskService: taskService, private router: Router) { }
 
-  TaskStatus = TaskStatus; // Exposition de l'énumération TaskStatus pour l'utiliser dans le template.
+  TaskStatus = TaskStatus; // Enumération pour les statuts de tâche
 
-  tasks!: Task[]; // Déclaration de la liste des tâches, initialisée à undefined.
+  tasks: Task[] = []; // Liste complète des tâches
+  todolist: Task[] = []; // Tâches à faire
+  inProgressList: Task[] = []; // Tâches en cours
+  doneList: Task[] = []; // Tâches terminées
+  currentTask!: Task; // Tâche actuellement en cours de glisser
 
-  todolist!: Task[]; // Liste des tâches à faire.
-  inProgressList!: Task[]; // Liste des tâches en cours.
-  doneList!: Task[]; // Liste des tâches terminées.
-
-  currentTask!: Task; // Tâche actuellement en cours de glisser-déposer.
-
-  ngOnInit(): void { // Méthode exécutée lors de l'initialisation du composant.
-    this.loadTasks(); // Charge les tâches lors de l'initialisation.
+  ngOnInit(): void {
+    this.loadTasks(); // Charge les tâches au démarrage du composant
   }
 
-  loadTasks() { // Méthode pour charger les tâches à partir du service.
-    this.taskService.getTasks().subscribe({ // Abonnement au service pour récupérer les tâches.
-      next: (tasks: Task[]) => { // Fonction appelée si la récupération est réussie.
-        this.todolist = tasks.filter(task => task.status === TaskStatus.todo); // Filtre les tâches à faire.
-        this.inProgressList = tasks.filter(task => task.status === TaskStatus.inprogress); // Filtre les tâches en cours.
-        this.doneList = tasks.filter(task => task.status === TaskStatus.done); // Filtre les tâches terminées.
+  loadTasks(): void {
+    // Charge les tâches à partir du service
+    this.taskService.getTasks().subscribe({
+      next: (tasks: Task[]) => {
+        this.tasks = tasks; // Stocke les tâches récupérées
+        this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
       },
-      error: (err) => { // Fonction appelée en cas d'erreur.
-        console.error('Error fetching tasks:', err); // Affiche une erreur dans la console.
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching tasks:', err); // Gestion des erreurs
       }
     });
   }
 
-  onDragStart(task: Task) { // Méthode appelée lorsque le glissement d'une tâche commence.
-    this.currentTask = task; // Stocke la tâche actuellement glissée.
-    console.log('Dragging task: ', task); // Affiche la tâche en cours de glissement dans la console.
+  updateTaskLists(): void {
+    // Met à jour les listes de tâches selon leur statut
+    this.todolist = this.tasks.filter(task => task.status === TaskStatus.todo);
+    this.inProgressList = this.tasks.filter(task => task.status === TaskStatus.inprogress);
+    this.doneList = this.tasks.filter(task => task.status === TaskStatus.done);
   }
 
-  onDrop(event: DragEvent, status: TaskStatus) { // Méthode appelée lorsque la tâche est lâchée.
-    event.preventDefault(); // Empêche le comportement par défaut.
+  onDragStart(task: Task): void {
+    // Gère l'événement de début de glisser d'une tâche
+    this.currentTask = task; // Stocke la tâche actuelle
+    console.log('Dragging task: ', task); // Log pour le débogage
+  }
 
-    let droppedTask = this.tasks.find(t => t.id === this.currentTask!.id); // Recherche la tâche glissée.
-    if (droppedTask) { // Si la tâche existe, met à jour son statut.
-      droppedTask.status = status; // Change le statut de la tâche.
-      console.log(`kbal edit task`); // Log d'information pour débogage.
+  onDrop(event: DragEvent, status: TaskStatus): void {
+    // Gère l'événement de dépôt d'une tâche
+    event.preventDefault(); // Empêche le comportement par défaut du navigateur
 
-      this.taskService.editTask(droppedTask).subscribe({ // Appelle le service pour mettre à jour la tâche.
-        next: () => { // Fonction appelée si la mise à jour est réussie.
-          this.loadTasks(); // Recharge les tâches.
-          console.log('Task dropped'); // Affiche un message de confirmation dans la console.
+    if (this.currentTask) {
+      this.currentTask.status = status; // Met à jour le statut de la tâche
+
+      this.taskService.editTask(this.currentTask).subscribe({
+        next: () => {
+          this.loadTasks(); // Recharge les tâches pour refléter les changements
+          console.log('Task dropped and updated'); // Log pour le débogage
         },
-        error: (err: HttpErrorResponse) => { // Fonction appelée en cas d'erreur.
-          console.error('Error updating task: ', err.message); // Affiche une erreur de mise à jour dans la console.
+        error: (err: HttpErrorResponse) => {
+          console.error('Error updating task: ', err.message); // Gestion des erreurs
         }
       });
     }
   }
 
-  onDragOver(event: DragEvent) { // Méthode appelée lorsque la tâche est survolée.
-    event.preventDefault(); // Empêche le comportement par défaut.
+  onDragOver(event: DragEvent): void {
+    // Gère l'événement de glisser sur une zone de dépôt
+    event.preventDefault(); // Permet le dépôt
   }
 
-  navigateToFormTask(): void { // Méthode pour naviguer vers le formulaire de tâche.
-    this.router.navigate(['/taskForm']); // Utilise le routeur pour naviguer vers le chemin spécifié.
+  navigateToFormTask(): void {
+    // Navigue vers le formulaire d'ajout de tâche
+    this.router.navigate(['/taskForm']);
   }
 }

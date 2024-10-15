@@ -1,20 +1,32 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'; // Importation des utilitaires pour les tests unitaires.
-import { TaskFormComponent } from './task-form.component'; // Importation du composant TaskForm à tester.
+// Importation des modules nécessaires pour les tests
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+// Importation du composant TaskForm à tester
+import { TaskFormComponent } from './task-form.component';
 
-describe('TaskFormComponent', () => { // Début du bloc de tests pour le TaskFormComponent.
-  let component: TaskFormComponent; // Déclaration de la variable pour l'instance du composant.
-  let fixture: ComponentFixture<TaskFormComponent>; // Déclaration de la variable pour le fixture du composant.
+// Déclaration d'un groupe de tests pour le TaskFormComponent
+describe('TaskFormComponent', () => {
+  // Déclaration de variables pour le composant et son fixture
+  let component: TaskFormComponent; // Instance du composant TaskForm
+  let fixture: ComponentFixture<TaskFormComponent>; // Fixture associée au composant TaskForm
 
-  beforeEach(() => { // Fonction exécutée avant chaque test.
-    TestBed.configureTestingModule({ // Configuration du module de test.
-      declarations: [TaskFormComponent] // Déclaration du TaskFormComponent dans le module de test.
+  // Configuration qui s'exécute avant chaque test
+  beforeEach(() => {
+    // Configuration du module de test
+    TestBed.configureTestingModule({
+      declarations: [TaskFormComponent] // Déclaration du TaskFormComponent dans le module de test
     });
-    fixture = TestBed.createComponent(TaskFormComponent); // Création d'une instance du composant dans le fixture.
-    component = fixture.componentInstance; // Récupération de l'instance du composant.
-    fixture.detectChanges(); // Détection des changements pour initialiser le composant.
+    
+    // Création d'une instance du TaskFormComponent
+    fixture = TestBed.createComponent(TaskFormComponent);
+    // Récupération de l'instance du composant
+    component = fixture.componentInstance;
+    // Déclenche la détection des changements pour initialiser le composant
+    fixture.detectChanges();
   });
 
-  it('should create', () => { // Test pour vérifier si le composant est créé avec succès.
-    expect(component).toBeTruthy(); // Assertion pour s'assurer que le composant existe.
+  // Déclaration d'un test unitaire
+  it('should create', () => {
+    // Vérification que le composant a été créé avec succès
+    expect(component).toBeTruthy(); // L'instance du composant ne doit pas être null ou undefined
   });
 });
