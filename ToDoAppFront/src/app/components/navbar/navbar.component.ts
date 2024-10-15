@@ -1,34 +1,41 @@
-import { Component } from '@angular/core'; // Importation du décorateur Component d'Angular.
+import { Component } from '@angular/core';
 
+/**
+ * Composant de la barre de navigation.
+ * -------------------------------------
+ * Ce composant gère l'affichage de la barre de navigation
+ * et intègre le module de traduction de Google.
+ */
 @Component({
-  selector: 'app-navbar', // Sélecteur utilisé pour insérer ce composant dans le HTML.
-  templateUrl: './navbar.component.html', // Chemin vers le fichier HTML du template du composant.
-  styleUrls: ['./navbar.component.css'] // Chemin vers le fichier CSS pour les styles du composant.
+  selector: 'app-navbar', // Sélecteur du composant
+  templateUrl: './navbar.component.html', // Chemin vers le template HTML
+  styleUrls: ['./navbar.component.css'] // Chemin vers le fichier CSS du composant
 })
-export class NavbarComponent { // Déclaration de la classe NavbarComponent.
+export class NavbarComponent {
+  constructor() { }
 
-  constructor() { } // Constructeur, peut être utilisé pour injecter des services si nécessaire.
-
-  ngOnInit(): void { // Méthode exécutée lors de l'initialisation du composant.
-    this.loadGoogleTranslate(); // Charge le script de Google Translate.
+  ngOnInit(): void {
+    // Méthode appelée lors de l'initialisation du composant
+    this.loadGoogleTranslate(); // Charge le module de traduction de Google
   }
 
-  loadGoogleTranslate(): void { // Méthode pour charger le script de Google Translate.
-    let script = document.createElement('script'); // Création d'un élément script.
-    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'; // Source du script.
-    script.type = 'text/javascript'; // Définition du type du script.
-    document.body.appendChild(script); // Ajout du script au corps du document.
-
-    let googleTranslateInit = document.createElement('script'); // Création d'un second élément script.
-    googleTranslateInit.type = 'text/javascript'; // Définition du type du script.
+  loadGoogleTranslate(): void {
+    // Méthode pour charger le module de traduction de Google
+    let script = document.createElement('script'); // Crée un élément <script>
+    script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit'; // URL du script de traduction
+    script.type = 'text/javascript'; // Type du script
+    document.body.appendChild(script); // Ajoute le script au corps du document
+    
+    let googleTranslateInit = document.createElement('script'); // Crée un autre élément <script>
+    googleTranslateInit.type = 'text/javascript'; // Type du script
     googleTranslateInit.innerHTML = `
-      function googleTranslateElementInit() { // Fonction d'initialisation pour Google Translate.
-          new google.translate.TranslateElement( // Création d'une nouvelle instance de TranslateElement.
-              {pageLanguage: 'fr'}, // Langue de la page source.
-              'google_translate_element' // ID de l'élément où le widget sera inséré.
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement(
+              {pageLanguage: 'fr'},
+              'google_translate_element'
           );
       }
-    `;
-    document.body.appendChild(googleTranslateInit); // Ajout de la fonction d'initialisation au corps du document.
+    `; // Fonction d'initialisation pour le module de traduction
+    document.body.appendChild(googleTranslateInit); // Ajoute le script d'initialisation au corps du document
   }
 }

@@ -1,18 +1,17 @@
+// Importation de l'énumération TaskStatus qui définit les différents états d'une tâche
 import { TaskStatus } from "./Enum/TaskStatus.enum";
-/**
- * Représente une tâche dans l'application.
- */
+
+// Déclaration de la classe Task
 export class Task {
-  //Crée une instance de la classe Task.
+    // Constructeur de la classe, définissant les propriétés d'une tâche
     constructor(
-        public id: number,// Identifiant unique
-        public title: String,// Titre de la tâche
-        public description: String, // Description de la tâche
-        public status:TaskStatus,// Statut de la tâche (enum)
-        public deadline: Date,// Date limite
-        public isDestactive?: boolean,// Indicateur de désactivation (facultatif)
-        public createdAt?: Date, // Date de création (facultatif)
-        public updatedAt?: Date,// Date de mise à jour (facultatif)
-     ) {}
-    
-    }
+        public title: String, // Titre de la tâche
+        public description: String, // Description détaillée de la tâche
+        public status: TaskStatus, // Statut de la tâche, défini par l'énumération TaskStatus
+        public deadline: Date, // Date limite pour compléter la tâche
+        public isDestactive?: boolean, // Indique si la tâche est désactivée (optionnel)
+        public id?: number, // Identifiant unique de la tâche (optionnel)
+        public createdAt?: Date,  // Date de création de la tâche (optionnel)
+        public updatedAt?: Date,  // Date de la dernière mise à jour de la tâche (optionnel)
+    ) {}
+}

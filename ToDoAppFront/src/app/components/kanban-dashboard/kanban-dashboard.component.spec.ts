@@ -1,20 +1,32 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'; // Importation des modules nécessaires pour effectuer des tests unitaires.
-import { KanbanDashboardComponent } from './kanban-dashboard.component'; // Importation du composant KanbanDashboard à tester.
+// Importation des modules nécessaires pour les tests
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+// Importation du composant à tester
+import { KanbanDashboardComponent } from './kanban-dashboard.component';
 
-describe('KanbanDashboardComponent', () => { // Début du bloc de tests pour le KanbanDashboardComponent.
-  let component: KanbanDashboardComponent; // Variable pour stocker l'instance du composant.
-  let fixture: ComponentFixture<KanbanDashboardComponent>; // Variable pour stocker le fixture du composant.
+// Déclaration d'un groupe de tests pour le KanbanDashboardComponent
+describe('KanbanDashboardComponent', () => {
+  // Déclaration de variables pour le composant et son fixture
+  let component: KanbanDashboardComponent; // Instance du composant
+  let fixture: ComponentFixture<KanbanDashboardComponent>; // Fixture associée au composant
 
-  beforeEach(() => { // Fonction exécutée avant chaque test.
-    TestBed.configureTestingModule({ // Configuration du module de test.
-      declarations: [KanbanDashboardComponent] // Déclaration du KanbanDashboardComponent dans le module de test.
+  // Configuration qui s'exécute avant chaque test
+  beforeEach(() => {
+    // Configuration du module de test
+    TestBed.configureTestingModule({
+      declarations: [KanbanDashboardComponent] // Déclaration du KanbanDashboardComponent dans le module de test
     });
-    fixture = TestBed.createComponent(KanbanDashboardComponent); // Création d'une instance du composant dans le fixture.
-    component = fixture.componentInstance; // Récupération de l'instance du composant.
-    fixture.detectChanges(); // Détection des changements pour initialiser le composant.
+    
+    // Création d'une instance du KanbanDashboardComponent
+    fixture = TestBed.createComponent(KanbanDashboardComponent);
+    // Récupération de l'instance du composant
+    component = fixture.componentInstance;
+    // Déclenche la détection des changements pour initialiser le composant
+    fixture.detectChanges();
   });
 
-  it('should create', () => { // Test pour vérifier si le composant est créé avec succès.
-    expect(component).toBeTruthy(); // Assertion pour s'assurer que le composant existe.
+  // Déclaration d'un test unitaire
+  it('should create', () => {
+    // Vérification que le composant a été créé avec succès
+    expect(component).toBeTruthy(); // L'instance du composant ne doit pas être null ou undefined
   });
 });

@@ -1,20 +1,32 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing'; // Importation des modules nécessaires pour les tests unitaires.
-import { FooterComponent } from './footer.component'; // Importation du composant Footer à tester.
+// Importation des modules nécessaires pour les tests
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+// Importation du composant à tester
+import { FooterComponent } from './footer.component';
 
-describe('FooterComponent', () => { // Début du bloc de tests pour le FooterComponent.
-  let component: FooterComponent; // Déclaration de la variable pour le composant.
-  let fixture: ComponentFixture<FooterComponent>; // Déclaration de la variable pour le fixture.
+// Déclaration d'un groupe de tests pour le FooterComponent
+describe('FooterComponent', () => {
+  // Déclaration de variables pour le composant et son fixture
+  let component: FooterComponent; // Instance du composant
+  let fixture: ComponentFixture<FooterComponent>; // Fixture associée au composant
 
-  beforeEach(() => { // Fonction exécutée avant chaque test.
-    TestBed.configureTestingModule({ // Configuration du module de test.
-      declarations: [FooterComponent] // Déclaration du FooterComponent dans le module de test.
+  // Configuration qui s'exécute avant chaque test
+  beforeEach(() => {
+    // Configuration du module de test
+    TestBed.configureTestingModule({
+      declarations: [FooterComponent] // Déclaration du FooterComponent dans le module de test
     });
-    fixture = TestBed.createComponent(FooterComponent); // Création d'une instance du composant dans le fixture.
-    component = fixture.componentInstance; // Récupération de l'instance du composant.
-    fixture.detectChanges(); // Détection des changements pour initialiser le composant.
+    
+    // Création d'une instance du FooterComponent
+    fixture = TestBed.createComponent(FooterComponent);
+    // Récupération de l'instance du composant
+    component = fixture.componentInstance;
+    // Déclenche la détection des changements pour initialiser le composant
+    fixture.detectChanges();
   });
 
-  it('should create', () => { // Test pour vérifier si le composant est créé avec succès.
-    expect(component).toBeTruthy(); // Assertion pour s'assurer que le composant existe.
+  // Déclaration d'un test unitaire
+  it('should create', () => {
+    // Vérification que le composant a été créé avec succès
+    expect(component).toBeTruthy(); // L'instance du composant ne doit pas être null ou undefined
   });
 });
