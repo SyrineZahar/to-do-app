@@ -1,0 +1,51 @@
+<form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="group-form">
+    <!-- Champ pour le nom du groupe -->
+    <div class="form-group">
+        <label for="nom">Nom</label>
+        <input
+            id="nom"  
+            type="text"  
+            class="form-control"  
+            formControlName="nom"  
+            placeholder="Entrer le nom du groupe"
+        />
+    </div>
+
+    <!-- Champ pour la description du groupe -->
+    <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+            id="description"  
+            class="form-control"  
+            formControlName="description"  
+            placeholder="Entrer la description du groupe"
+        ></textarea>
+    </div>
+
+    <div>
+        <label>Image de fond</label>
+        <input type="file" (change)="onBackgroundImageChange($event)" />
+        <div *ngIf="backgroundImageUrl">
+          <img [src]="backgroundImageUrl" alt="Aperçu de l'image de fond" style="max-width: 100px; max-height: 100px;" /> <!-- Affiche l'aperçu -->
+        </div>
+        <div *ngIf="!backgroundImageFile && groupForm.get('backgroundImage')?.touched">
+          <small class="text-danger">Veuillez sélectionner une image de fond.</small>
+        </div>
+    </div>
+    
+    <div>
+        <label>Photo de profil</label>
+        <input type="file" (change)="onProfilePictureChange($event)" />
+        <div *ngIf="profilePictureUrl">
+          <img [src]="profilePictureUrl" alt="Aperçu de la photo de profil" style="max-width: 100px; max-height: 100px;" /> <!-- Affiche l'aperçu -->
+        </div>
+        <div *ngIf="!profilePictureFile && groupForm.get('profilePicture')?.touched">
+          <small class="text-danger">Veuillez sélectionner une photo de profil.</small>
+        </div>
+    </div>
+
+    <!-- Bouton pour soumettre le formulaire -->
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <!-- Bouton pour annuler et retourner à la liste des groupes -->
+    <button type="button" class="btn btn-secondary" (click)="navigateToGroups()">Annuler</button>
+</form>

@@ -11,6 +11,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { TaskFormComponent } from './components/task-form/task-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SignupComponent } from './components/signup/signup.component';
+import { GroupFormComponent } from './components/group-form/group-form.component';
+import { GroupsComponent } from './components/groups/groups.component';
 
 /**
  * Module principal de l'application Angular.
@@ -24,7 +26,8 @@ import { SignupComponent } from './components/signup/signup.component';
     FooterComponent,       // Composant pour le pied de page
     NavbarComponent,       // Composant pour la barre de navigation
     TaskFormComponent, 
-    SignupComponent      // Composant pour le formulaire de tâche
+    SignupComponent, 
+    GroupFormComponent, GroupsComponent      // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular

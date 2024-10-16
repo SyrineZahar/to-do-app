@@ -1,0 +1,25 @@
+<div class="container">
+    <!-- Sidebar Section -->
+    <div class="sidebar">
+      <div class="home-icon">
+        <i class="fas fa-home"></i> <!-- FontAwesome icon for home -->
+      </div>
+      <div class="group-list">
+        <div class="group-item" *ngFor="let group of groups">
+          <img [src]="group.profilePicture" alt="Profile Picture" class="profile-pic" />
+          <p>{{ group.nom }}</p>
+        </div>
+      </div>
+      <button class="group-form-button" (click)="navigateToGroupForm()">Go to Group Form</button>
+    </div>
+  
+    <!-- Group Section -->
+    <div class="group-details" *ngIf="selectedGroup">
+      <img [src]="selectedGroup.backgroundImage" alt="Cover Photo" class="cover-photo" />
+      <div class="group-header">
+        <img [src]="selectedGroup.profilePicture" alt="Profile Picture" class="profile-pic" />
+        <h2>{{ selectedGroup.nom }}</h2>
+      </div>
+    </div>
+</div>
+  

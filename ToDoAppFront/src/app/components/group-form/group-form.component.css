@@ -1,0 +1,76 @@
+.group-form {
+    margin-top: 40%; /* Marge supérieure pour centrer le formulaire verticalement */
+    background-color: var(--card-bg-color); /* Couleur de fond du formulaire */
+    border-radius: 16px; /* Arrondi des coins */
+    padding: 2rem; /* Espacement intérieur */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée pour donner un effet de profondeur */
+    margin: auto; /* Centre le formulaire horizontalement */
+    max-width: 600px; /* Largeur maximale du formulaire */
+    margin-top: 7rem; /* Marge supérieure spécifique */
+    width: 100%; /* Prend toute la largeur disponible */
+}
+
+button {
+    margin: 5px; /* Marge autour des boutons */
+}
+
+.form-group {
+    margin-bottom: 1.5rem; /* Marge inférieure entre les groupes de formulaires */
+}
+
+.form-group label {
+    display: block; /* Affiche le label comme un bloc pour une meilleure structure */
+    margin-bottom: 0.5rem; /* Marge inférieure pour espacer le label du champ */
+    font-weight: 500; /* Épaisseur de la police pour le label */
+    color: var(--text-color-light); /* Couleur du texte pour le label */
+}
+
+.form-control {
+    width: 100%; /* Prend toute la largeur disponible */
+    max-width: 100%; /* Largeur maximale du champ */
+    padding: 0.75rem; /* Espacement intérieur du champ */
+    border: 1px solid var(--input-border-color); /* Bordure du champ */
+    border-radius: 8px; /* Arrondi des coins du champ */
+    background-color: var(--background-color); /* Couleur de fond du champ */
+    color: var(--text-color-light); /* Couleur du texte dans le champ */
+    transition: border-color 0.3s ease; /* Transition douce pour le changement de couleur de bordure */
+}
+
+.form-control:focus {
+    border-color: var(--primary-color); /* Couleur de la bordure au focus */
+    outline: none; /* Supprime l'outline par défaut du champ */
+}
+
+textarea.form-control {
+    resize: vertical; /* Permet de redimensionner le textarea uniquement verticalement */
+}
+
+.form-check-input {
+    margin-right: 0.5rem; /* Marge à droite de la case à cocher */
+}
+
+.form-check-label {
+    color: var(--text-color-light); /* Couleur du texte pour le label de la case à cocher */
+}
+
+.btn-primary {
+    background-color: var(--primary-color); /* Couleur de fond du bouton */
+    color: var(--text-color-light); /* Couleur du texte du bouton */
+    border: none; /* Pas de bordure */
+    border-radius: 8px; /* Arrondi des coins du bouton */
+    padding: 0.75rem 1.5rem; /* Espacement intérieur du bouton */
+    cursor: pointer; /* Changement du curseur au survol */
+    font-weight: 500; /* Épaisseur de la police pour le bouton */
+    transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur de fond */
+}
+
+.btn-primary:hover {
+    background-color: #5e50db; /* Couleur de fond au survol du bouton */
+}
+
+@media (max-width: 768px) {
+    .group-form {
+        padding: 1rem; /* Réduction de l'espacement intérieur sur les écrans plus petits */
+        max-width: 100%; /* Largeur maximale à 100% pour les petits écrans */
+    }
+}

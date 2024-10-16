@@ -10,8 +10,8 @@ import jakarta.persistence.Enumerated; // Importation pour la gestion des énum�
 import jakarta.persistence.GeneratedValue; // Importation pour la génération automatique des valeurs.
 import jakarta.persistence.GenerationType; // Importation pour définir le type de stratégie de génération.
 import jakarta.persistence.Id; // Importation pour identifier la clé primaire de l'entité.
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn; // Importation pour définir une colonne de jointure.
+import jakarta.persistence.ManyToOne; // Importation pour définir une relation plusieurs-à-un.
 
 @Entity // Annotation indiquant que cette classe est une entité JPA.
 public class Task implements Serializable { // La classe implémente Serializable pour la sérialisation.
@@ -35,21 +35,25 @@ public class Task implements Serializable { // La classe implémente Serializabl
     private LocalDateTime updatedAt; // Date de dernière mise à jour de la tâche.
 
     private boolean isDestactive; // Indique si la tâche est désactivée.
-    
-    //La relation qui indique que plusieurs tache peut etre assigné à un seul user
+
+    // Relation avec l'utilisateur (plusieurs tâches peuvent être assignées à un seul utilisateur)
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-	// Constructeur par défaut
+    // Relation avec le groupe (plusieurs tâches peuvent appartenir à un seul groupe)
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    private GroupEntity group; // Référence au groupe auquel appartient la tâche.
+
+    // Constructeur par défaut
     public Task() {
         super();
     }
 
     // Constructeur avec paramètres
     public Task(int id, String title, String description, TaskStatus status, LocalDateTime deadline,
-                LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDestactive) {
-        super();
+                LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDestactive, User user, GroupEntity group) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -58,6 +62,8 @@ public class Task implements Serializable { // La classe implémente Serializabl
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
         this.isDestactive = isDestactive;
+        this.user = user; // Associe l'utilisateur à la tâche.
+        this.group = group; // Associe le groupe à la tâche.
     }
 
     // Getters et Setters pour chaque attribut
@@ -126,15 +132,19 @@ public class Task implements Serializable { // La classe implémente Serializabl
         this.isDestactive = isDestactive; // Définit l'état désactivé de la tâche.
     }
 
-    public static long getSerialversionuid() {
-        return serialVersionUID; // Retourne la version de sérialisation.
-    }
-    
     public User getUser() {
-		return user;
-	}
+        return user; // Retourne l'utilisateur associé à la tâche.
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setUser(User user) {
+        this.user = user; // Définit l'utilisateur associé à la tâche.
+    }
+
+    public GroupEntity getGroup() {
+        return group; // Retourne le groupe associé à la tâche.
+    }
+
+    public void setGroup(GroupEntity group) {
+        this.group = group; // Définit le groupe associé à la tâche.
+    }
 }
