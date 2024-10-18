@@ -12,4 +12,6 @@ public interface IGroupService { // Interface définissant les opérations de se
     GroupEntity addGroup(GroupEntity group); // Méthode pour ajouter un nouveau groupe.
     
     void addUserToGroup(int groupId, User user); // Méthode pour ajouter un utilisateur à un groupe donné.
+    
+    void sendEmail(User user); //Méthode qui envoie un email 
 }

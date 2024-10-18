@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*; // Importation des annotations
 import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
 import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
 import PI.dsi32.ToDoAppBack.Services.IGroupService; // Importation de l'interface de service des groupes.
+import PI.dsi32.ToDoAppBack.ServicesImpl.EmailSender;
 
 @CrossOrigin(origins = "*") // Permet les requêtes cross-origin depuis n'importe quelle origine.
 @RestController // Indique que ce contrôleur gère des requêtes REST.
@@ -18,6 +19,8 @@ public class GroupController {
 	
 	@Autowired // Injection du service des groupes.
     private IGroupService groupService;
+    @Autowired
+    private EmailSender emailSender;
 
     @GetMapping() // Gère les requêtes GET sur le chemin /groups.
     public ResponseEntity<List<GroupEntity>> getAllGroups() {
@@ -40,12 +43,13 @@ public class GroupController {
     }
     
     @PostMapping("/{groupId}/users") // Gère les requêtes POST pour ajouter un utilisateur à un groupe.
-    public ResponseEntity<Void> addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
+    public String addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
         try {
             groupService.addUserToGroup(groupId, user); // Ajoute l'utilisateur au groupe via le service.
-            return new ResponseEntity<>(HttpStatus.CREATED); // Retourne un statut 201 pour l'ajout réussi.
+            //emailSender.sendSimpleEmail();
+            return "done";
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
+            return e.toString(); // Retourne un statut 500 en cas d'erreur.
         }
     }
 }

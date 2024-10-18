@@ -1,9 +1,13 @@
 package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
 
 import java.util.List; // Importation de la classe List.
+import PI.dsi32.ToDoAppBack.ServicesImpl.EmailSender;
 
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
 import org.springframework.stereotype.Service; // Importation de l'annotation Service.
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+//import javax.mail.internet.MimeMessage; // Import MimeMessage
 
 import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
 import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
@@ -20,6 +24,9 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
 
     @Autowired // Injection de dépendance pour le dépôt UserRepository.
     private UserRepository userRepo;
+    @Autowired 
+    private JavaMailSender mailSender;
+
 
     @Override
     public List<GroupEntity> getAllGroups() {
@@ -52,6 +59,16 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
 
         // Save the user or the group
         userRepo.save(managedUser);  // Saving only the user is fine because it's bidirectional
+
+
     }
+
+	@Override
+	public void sendEmail(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }
