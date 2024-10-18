@@ -26,7 +26,7 @@ public class TaskTest {
     @BeforeEach
     public void setUp() {
         now = LocalDateTime.now();
-        task = new Task(1, "Test Title", "Test Description", TaskStatus.INPROGRESS, now, now, now, false);
+        task = new Task(1, "Test Title", "Test Description", TaskStatus.INPROGRESS, now, now, now, false, null, null);
     }
 
     /**
