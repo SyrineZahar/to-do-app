@@ -14,10 +14,27 @@ public class AuthServiceImpl implements IAuthService{
 	private UserRepository userRepository;
 
 	@Override
-	public User registerUser(User user) {
-		// TODO Auto-generated method stub
-		return userRepository.save(user);
-	}
+    public User registerUser(User user) {
+        User existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null) {
+            throw new RuntimeException("Email already exists.");
+        }
+        return userRepository.save(user);
+    }
 	
+	
+	 @Override
+	    public User loginUser(String email, String password) {
+	    	password = password.trim();
+
+	        User user = userRepository.findByEmail(email);
+	        if (user != null) {
+	            String storedPassword = user.getPassword().trim();
+	            if (storedPassword.equals(password)) {
+	                return user;
+	            }
+	        }
+	        return null;
+	    }
 	
 }
