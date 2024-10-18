@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+    <div class="login-card">
+      <h1 class="app-title">Welcome</h1>
+      <p class="subtitle">Login to your To-Do App</p>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+        <div class="input-group">
+          <input type="email" id="email" formControlName="email" placeholder="Email" class="form-control">
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']" class="error">
+            Email is required.
+          </div>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']" class="error">
+            Please enter a valid email address.
+          </div>
+        </div>
+  
+        <div class="input-group">
+          <input type="password" id="password" formControlName="password" placeholder="Password" class="form-control">
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']" class="error">
+            Password is required.
+          </div>
+        </div>
+        <div *ngIf="errorMessage" class="error-message" style='color:red'>
+          {{ errorMessage }} 
+        </div>
+        <button type="submit" class="btn-submit">Login</button>
+  
+        <div class="signup">
+          <a routerLink="/signup">SignUp</a>
+        </div>
+      </form>
+    </div>
+  </div>
