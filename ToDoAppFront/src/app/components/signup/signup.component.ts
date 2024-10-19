@@ -31,7 +31,7 @@ export class SignupComponent {
       this.authService.registerUser(user).subscribe({
         next: (response) => {
           console.log('Signup successful:', response);
-          this.router.navigate(['/kanban']); 
+          this.router.navigate(['/login']); 
 
         },
         error: (error) => {

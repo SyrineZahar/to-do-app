@@ -2,6 +2,11 @@ package PI.dsi32.ToDoAppBack.Entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -16,6 +21,10 @@ import jakarta.persistence.OneToMany;
 import PI.dsi32.ToDoAppBack.enums.UserRole;
 
 @Entity
+@JsonIdentityInfo(
+	    generator = ObjectIdGenerators.PropertyGenerator.class,
+	    property = "id"
+	)
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;

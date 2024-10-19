@@ -2,6 +2,11 @@ package PI.dsi32.ToDoAppBack.Entities;
 
 import java.io.Serializable;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +16,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
+@JsonIdentityInfo(
+	    generator = ObjectIdGenerators.PropertyGenerator.class,
+	    property = "id"
+	)
 public class GroupEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,88 +27,93 @@ public class GroupEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     private String backgroundImage;
-    
-    private String profilePicture; 
-    
-    private String nom; 
-    
-    private String description; 
+    private String profilePicture;
+    private String nom;
+    private String description;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> users; 
+    private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    private List<Task> tasks; 
+    private List<Task> tasks;
 
     public GroupEntity() {
         super();
     }
 
-    public GroupEntity(int id, String backgroundImage, String profilePicture, String nom, String description, List<User> users, List<Task> tasks) {
-        this.id = id;
-        this.backgroundImage = backgroundImage;
-        this.profilePicture = profilePicture;
-        this.nom = nom;
-        this.description = description;
-        this.users = users;
-        this.tasks = tasks;
-    }
+	public GroupEntity(int id, String backgroundImage, String profilePicture, String nom, String description,
+			List<User> users, List<Task> tasks) {
+		super();
+		this.id = id;
+		this.backgroundImage = backgroundImage;
+		this.profilePicture = profilePicture;
+		this.nom = nom;
+		this.description = description;
+		this.users = users;
+		this.tasks = tasks;
+	}
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public String getBackgroundImage() {
-        return backgroundImage;
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void setBackgroundImage(String backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
+	public String getBackgroundImage() {
+		return backgroundImage;
+	}
 
-    public String getProfilePicture() {
-        return profilePicture;
-    }
+	public void setBackgroundImage(String backgroundImage) {
+		this.backgroundImage = backgroundImage;
+	}
 
-    public void setProfilePicture(String profilePicture) {
-        this.profilePicture = profilePicture;
-    }
+	public String getProfilePicture() {
+		return profilePicture;
+	}
 
-    public String getNom() {
-        return nom;
-    }
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
 
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
+	public String getNom() {
+		return nom;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public List<User> getUsers() {
-        return users; 
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void setUsers(List<User> users) {
-        this.users = users; 
-    }
+	public List<User> getUsers() {
+		return users;
+	}
 
-    public List<Task> getTasks() {
-        return tasks;
-    }
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
-    }
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+ 
 }

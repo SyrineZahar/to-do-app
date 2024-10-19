@@ -63,11 +63,7 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
 
     }
 
-	@Override
-	public void sendEmail(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 
 

@@ -17,134 +17,133 @@ import jakarta.persistence.ManyToOne; // Importation pour définir une relation 
 public class Task implements Serializable { // La classe implémente Serializable pour la sérialisation.
     private static final long serialVersionUID = 1L; // Version de la classe pour la sérialisation.
 
-    @Id // Annotation indiquant que ce champ est la clé primaire.
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Stratégie de génération de la clé primaire.
-    private int id; // Identifiant unique de la tâche.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    private String title; // Titre de la tâche.
-    
-    private String description; // Description de la tâche.
-    
-    @Enumerated(EnumType.STRING) // Indique que la valeur de l'énumération sera stockée sous forme de chaîne.
-    private TaskStatus status; // Statut de la tâche (TODO, INPROGRESS, DONE).
+    private String title;
+    private String description;
 
-    private LocalDateTime deadline; // Date limite de la tâche.
-    
-    private LocalDateTime createdAt; // Date de création de la tâche.
-    
-    private LocalDateTime updatedAt; // Date de dernière mise à jour de la tâche.
+    @Enumerated(EnumType.STRING)
+    private TaskStatus status;
 
-    private boolean isDestactive; // Indique si la tâche est désactivée.
+    private LocalDateTime deadline;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private boolean isDestactive;
 
-    // Relation avec l'utilisateur (plusieurs tâches peuvent être assignées à un seul utilisateur)
+    // Chaque tâche a un seul utilisateur
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Relation avec le groupe (plusieurs tâches peuvent appartenir à un seul groupe)
+    // Chaque tâche appartient à un seul groupe
     @ManyToOne
     @JoinColumn(name = "group_id")
-    private GroupEntity group; // Référence au groupe auquel appartient la tâche.
-
-    // Constructeur par défaut
+    private GroupEntity group;
+    
     public Task() {
-        super();
+    	
     }
+    
+	public Task(int id, String title, String description, TaskStatus status, LocalDateTime deadline,
+			LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDestactive, User user, GroupEntity group) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.description = description;
+		this.status = status;
+		this.deadline = deadline;
+		this.createdAt = createdAt;
+		this.updatedAt = updatedAt;
+		this.isDestactive = isDestactive;
+		this.user = user;
+		this.group = group;
+	}
 
-    // Constructeur avec paramètres
-    public Task(int id, String title, String description, TaskStatus status, LocalDateTime deadline,
-                LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDestactive, User user, GroupEntity group) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.status = status;
-        this.deadline = deadline;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.isDestactive = isDestactive;
-        this.user = user; // Associe l'utilisateur à la tâche.
-        this.group = group; // Associe le groupe à la tâche.
-    }
+	public int getId() {
+		return id;
+	}
 
-    // Getters et Setters pour chaque attribut
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public int getId() {
-        return id; // Retourne l'identifiant de la tâche.
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setId(int id) {
-        this.id = id; // Définit l'identifiant de la tâche.
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getTitle() {
-        return title; // Retourne le titre de la tâche.
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setTitle(String title) {
-        this.title = title; // Définit le titre de la tâche.
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getDescription() {
-        return description; // Retourne la description de la tâche.
-    }
+	public TaskStatus getStatus() {
+		return status;
+	}
 
-    public void setDescription(String description) {
-        this.description = description; // Définit la description de la tâche.
-    }
+	public void setStatus(TaskStatus status) {
+		this.status = status;
+	}
 
-    public TaskStatus getStatus() {
-        return status; // Retourne le statut de la tâche.
-    }
+	public LocalDateTime getDeadline() {
+		return deadline;
+	}
 
-    public void setStatus(TaskStatus status) {
-        this.status = status; // Définit le statut de la tâche.
-    }
+	public void setDeadline(LocalDateTime deadline) {
+		this.deadline = deadline;
+	}
 
-    public LocalDateTime getDeadline() {
-        return deadline; // Retourne la date limite de la tâche.
-    }
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
 
-    public void setDeadline(LocalDateTime deadline) {
-        this.deadline = deadline; // Définit la date limite de la tâche.
-    }
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt; // Retourne la date de création de la tâche.
-    }
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt; // Définit la date de création de la tâche.
-    }
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt; // Retourne la date de mise à jour de la tâche.
-    }
+	public boolean isDestactive() {
+		return isDestactive;
+	}
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt; // Définit la date de mise à jour de la tâche.
-    }
+	public void setDestactive(boolean isDestactive) {
+		this.isDestactive = isDestactive;
+	}
 
-    public boolean isDestactive() {
-        return isDestactive; // Retourne si la tâche est désactivée.
-    }
+	public User getUser() {
+		return user;
+	}
 
-    public void setDestactive(boolean isDestactive) {
-        this.isDestactive = isDestactive; // Définit l'état désactivé de la tâche.
-    }
+	public void setUser(User user) {
+		this.user = user;
+	}
 
-    public User getUser() {
-        return user; // Retourne l'utilisateur associé à la tâche.
-    }
+	public GroupEntity getGroup() {
+		return group;
+	}
 
-    public void setUser(User user) {
-        this.user = user; // Définit l'utilisateur associé à la tâche.
-    }
+	public void setGroup(GroupEntity group) {
+		this.group = group;
+	}
 
-    public GroupEntity getGroup() {
-        return group; // Retourne le groupe associé à la tâche.
-    }
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-    public void setGroup(GroupEntity group) {
-        this.group = group; // Définit le groupe associé à la tâche.
-    }
+ 
 }

@@ -46,7 +46,7 @@ public class GroupController {
     public String addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
         try {
             groupService.addUserToGroup(groupId, user); // Ajoute l'utilisateur au groupe via le service.
-            //emailSender.sendSimpleEmail();
+            emailSender.sendSimpleEmail(user);
             return "done";
         } catch (RuntimeException e) {
             return e.toString(); // Retourne un statut 500 en cas d'erreur.

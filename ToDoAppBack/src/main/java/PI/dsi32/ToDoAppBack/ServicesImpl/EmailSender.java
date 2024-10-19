@@ -1,10 +1,8 @@
 package PI.dsi32.ToDoAppBack.ServicesImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import PI.dsi32.ToDoAppBack.Entities.User;
@@ -20,11 +18,17 @@ public class EmailSender {
 	}
 
     @Async
-	public void sendSimpleEmail() { // Remove the static keyword
+	public void sendSimpleEmail(User user) { // Remove the static keyword
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("cyrine.zahaar@gmail.com");
-        message.setSubject("Test Email");
-        message.setText("Hello, this is a test email!");
+        
+        String emailContent = "Dear " + user.getName() + ",\n\n"
+                + "You've been added to a new group in the Work Together application. "
+                + "We hope you enjoy collaborating with your team!\n\n"
+                + "Best regards,\nThe Work Together Team";
+        
+        message.setTo(user.getEmail());
+        message.setSubject("Work Together Application");
+        message.setText(emailContent);
         message.setFrom("hello@demomailtrap.com");
 
         try {
