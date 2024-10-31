@@ -38,7 +38,7 @@ export class GroupFormComponent {
   constructor(
     private fb: FormBuilder,
     private groupService: GroupService, 
-    private router: Router
+    private router: Router,
   ) {}
 
   /**
@@ -47,6 +47,7 @@ export class GroupFormComponent {
    */
   ngOnInit(): void {
     this.createEmptyForm();
+
   }
 
   /**
@@ -58,7 +59,7 @@ export class GroupFormComponent {
         nom: ['', Validators.required], // Champ nom obligatoire
         description: ['', Validators.required], // Champ description obligatoire
         backgroundImage: [null], // Champ d'image de fond (optionnel)
-        profilePicture: [null], // Champ d'image de profil (optionnel)
+        profilePicture: [null],
     });
   }
 
@@ -158,6 +159,6 @@ export class GroupFormComponent {
    * Cette méthode est appelée lors de l'annulation.
    */
   navigateToGroups(): void {
-    this.router.navigate([""]); // Redirection vers la liste des groupes
+    this.router.navigate(['/groups']); // Redirection vers la liste des groupes
   }
 }

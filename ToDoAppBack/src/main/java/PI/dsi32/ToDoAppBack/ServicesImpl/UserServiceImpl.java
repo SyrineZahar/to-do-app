@@ -20,5 +20,10 @@ public class UserServiceImpl implements IUserService{
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
 	}
+	
+	@Override
+	public List<User> getUsersByGroupId(Integer groupId) {
+        return userRepository.findUsersByGroupId(groupId); // Appelle le repository pour récupérer les utilisateurs du groupe.
+    }
 
 }

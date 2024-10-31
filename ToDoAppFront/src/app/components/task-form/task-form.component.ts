@@ -24,15 +24,15 @@ export class TaskFormComponent {
   constructor(
     private fb: FormBuilder,
     private taskService: taskService, 
+    private userService: userService,
     private router: Router,
-    private userService: userService ,
     private groupService: GroupService ,
   ) {}
 
   ngOnInit(): void {
     this.createEmptyForm();
 
-    //fetch users
+    //fetch groups
     this.groupService.getGroups().subscribe((data: GroupEntity[]) => {
       this.groups = data;
       console.log(this.groups);
@@ -40,7 +40,7 @@ export class TaskFormComponent {
       console.error('Error fetching users:', error);
     });
 
-    //fetch groups
+    //fetch users
     this.userService.getUsers().subscribe((data: User[]) => {
       this.users = data;
       console.log(this.users);
@@ -68,8 +68,8 @@ export class TaskFormComponent {
           this.taskForm.value.description,
           this.taskForm.value.status,
           new Date(this.taskForm.value.deadline),
-          this.taskForm.value.group_id,
-          this.taskForm.value.user_id,
+          Number(this.taskForm.value.group_id),
+          Number(this.taskForm.value.user_id),
           this.taskForm.value.isDesactivated,
         );
 
@@ -77,13 +77,48 @@ export class TaskFormComponent {
     
         // Appel du service pour ajouter la tâche
         this.taskService.addTask(taskData).subscribe(() => {
-          //this.router.navigate([""]); // Redirection vers la liste des tâches
+          this.router.navigate([""]); // Redirection vers la liste des tâches
         });
      } 
    else {
       console.log('Form is invalid'); // You can show this message in your UI as well
   }
   }
+
+  onGroupChange() {
+    const groupId = this.taskForm.get('group_id')?.value; 
+    if (groupId) {
+      this.userService.getUsersbygroup(groupId).subscribe(
+        (users) => {
+          this.users = users; // Met à jour la liste des utilisateurs
+          // Ne réinitialisez pas le champ utilisateur pour garder la sélection actuelle
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des utilisateurs:', error);
+        }
+      );
+    } 
+    // Si aucun groupe n'est sélectionné, vous pouvez garder la liste actuelle des utilisateurs
+  }
+  
+  onUserChange() {
+    const userId = this.taskForm.get('user_id')?.value; // Récupère l'ID de l'utilisateur sélectionné
+    if (userId) {
+      this.groupService.getGroupsByUser(userId).subscribe(
+        (groups) => {
+          this.groups = groups; // Met à jour la liste des groupes
+          // Ne réinitialisez pas le champ groupe pour garder la sélection actuelle
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération des groupes:', error);
+        }
+      );
+    } 
+    // Si aucun utilisateur n'est sélectionné, vous pouvez garder la liste actuelle des groupes
+  }
+  
+  
+
 
   navigateToTasks(): void {
     this.router.navigate([""]); // Redirect to task list

@@ -14,4 +14,8 @@ export class userService {
     getUsers():Observable<User[]>{
         return this.httpClient.get<User[]>(this.URL)
     }
+
+    getUsersbygroup(groupId: number):Observable<User[]>{
+      return this.httpClient.get<User[]>(`${this.URL}/${groupId}`)
+    }
 }

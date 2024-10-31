@@ -6,7 +6,7 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée pour donner un effet de profondeur */
     margin: auto; /* Centre le formulaire horizontalement */
     max-width: 600px; /* Largeur maximale du formulaire */
-    margin-top: 7rem; /* Marge supérieure spécifique */
+    margin-top: 25px; /* Marge supérieure spécifique */
     width: 100%; /* Prend toute la largeur disponible */
 }
 

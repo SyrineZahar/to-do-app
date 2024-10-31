@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserRole } from 'src/app/classe/Enum/UserRole.enum';
 import { User } from 'src/app/classe/User';
 import { AuthService } from 'src/app/service/Auth.service';
 
@@ -25,15 +26,17 @@ export class LoginComponent {
     this.authService.login(email, password).subscribe({
       next: (user: User) => {
         console.log('Login successful:', user);
-        this.router.navigate(['/kanban']);
+        this.authService.setUser(user); // Sauvegarde de l'utilisateur dans le localStorage
+        this.router.navigate(['/kanban']); // Redirection vers la page de tableau de bord
       },
       error: (error: any) => {
-        console.log('Login successful:', email,password);
         console.error('Login failed:', error);
         this.errorMessage = 'Login ou mot de passe incorrect'; 
       }
     });
   }
+
+  
   
 
   onSubmit() {

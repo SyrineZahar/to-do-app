@@ -141,9 +141,16 @@ label {
     z-index: 1000; /* Ensures it appears above other elements */
   }
 
+/* Styles globaux */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Roboto', "Helvetica Neue", sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color-light);
+    display: flex;
+    flex-direction: column; /* Permet d'aligner les éléments de la colonne */
+}
 
 
 
-    
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

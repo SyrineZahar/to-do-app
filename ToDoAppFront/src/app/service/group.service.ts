@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http'; // Pour effectuer des requêt
 import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
 import { Observable } from 'rxjs'; // Pour gérer les flux de données asynchrones
 import { GroupEntity } from '../classe/GroupEntity'; // Importation de la classe GroupEntity
+import { User } from '../classe/User';
 
 // Déclaration du service avec l'injection dans le root module
 @Injectable({
@@ -30,4 +31,13 @@ export class GroupService {
   editGroup(group: GroupEntity): Observable<GroupEntity> {
     return this.httpClient.put<GroupEntity>(`${this.URL}/${group.id}`, group); // Met à jour le groupe en fonction de son ID
   }
+
+  getGroupsByUser(userId: Number): Observable<GroupEntity[]>{
+    return this.httpClient.get<GroupEntity[]>(`${this.URL}/${userId}`);
+  }
+
+  addUserToGroup(groupId: number, user: User) {
+    return this.httpClient.post<GroupEntity>(`${this.URL}/${groupId}/users`, user);
+  }
+  
 }

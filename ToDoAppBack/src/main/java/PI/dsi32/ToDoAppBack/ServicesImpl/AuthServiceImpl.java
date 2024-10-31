@@ -23,18 +23,19 @@ public class AuthServiceImpl implements IAuthService{
     }
 	
 	
-	 @Override
-	    public User loginUser(String email, String password) {
-	    	password = password.trim();
+	@Override
+	public User loginUser(String email, String password) {
+	    password = password.trim();
+	    User user = userRepository.findByEmail(email); // Assurez-vous que cette méthode renvoie un seul utilisateur.
 
-	        User user = userRepository.findByEmail(email);
-	        if (user != null) {
-	            String storedPassword = user.getPassword().trim();
-	            if (storedPassword.equals(password)) {
-	                return user;
-	            }
+	    if (user != null) {
+	        String storedPassword = user.getPassword().trim();
+	        if (storedPassword.equals(password)) {
+	            return user;
 	        }
-	        return null;
 	    }
+	    return null; // Retourne null si l'utilisateur n'existe pas ou si le mot de passe est incorrect.
+	}
+
 	
 }

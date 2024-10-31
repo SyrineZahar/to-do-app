@@ -1,25 +1,56 @@
 <div class="container">
-    <!-- Sidebar Section -->
-    <div class="sidebar">
-      <div class="home-icon">
-        <i class="fas fa-home"></i> <!-- FontAwesome icon for home -->
-      </div>
-      <div class="group-list">
-        <div class="group-item" *ngFor="let group of groups">
-          <img [src]="group.profilePicture" alt="Profile Picture" class="profile-pic" />
-          <p>{{ group.nom }}</p>
-        </div>
-      </div>
-      <button class="group-form-button" (click)="navigateToGroupForm()">Go to Group Form</button>
+  <!-- Sidebar Section -->
+  <div class="sidebar">
+    <div class="home-icon">
+      <i class="fas fa-home"></i>
     </div>
-  
-    <!-- Group Section -->
-    <div class="group-details" *ngIf="selectedGroup">
-      <img [src]="selectedGroup.backgroundImage" alt="Cover Photo" class="cover-photo" />
-      <div class="group-header">
-        <img [src]="selectedGroup.profilePicture" alt="Profile Picture" class="profile-pic" />
-        <h2>{{ selectedGroup.nom }}</h2>
+    <div class="group-list">
+      <div class="group-item" (click)="selectGroup(group)" *ngFor="let group of groups">
+        <img [src]="'assets/image/' + group.profilePicture" class="profile-pic" />
+        <p>{{ group.nom }}</p>
       </div>
     </div>
+    <button class="group-form-button" (click)="navigateToGroupForm()">+ New Group</button>
+  </div>
+
+  <!-- Display Section -->
+  <div class="sidebarRight" *ngIf="selectedGroup">
+    <h2>{{ selectedGroup.nom }} - Détails</h2>
+    <img [src]="'assets/image/' + selectedGroup.profilePicture" alt="Profile Picture" class="profile-pic" />
+
+    <div class="task-list">
+      <h3>Tâches du groupe:</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Created At</th>
+            <th>Deadline</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of selectedGroup.tasks">
+            <td>{{ task.title }}</td>
+            <td>{{ task.createdAt }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-group" [formGroup]="userForm">
+      Utilisateur assigné
+      <select id="user_id" class="form-control" formControlName="user_id">
+        <option value="" disabled selected>Choisir un utilisateur</option> <!-- Placeholder option -->
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+    <button class="add-button" (click)="addUser()">Add User</button>
+    
+  <button class="add-button" (click)="addTask()">Add Task</button>
+  </div>
 </div>
-  

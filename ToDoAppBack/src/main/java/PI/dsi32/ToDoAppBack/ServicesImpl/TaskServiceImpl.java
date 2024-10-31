@@ -1,16 +1,13 @@
 package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
 
+import java.time.LocalDateTime;
 import java.util.List; // Importation de la classe List.
 
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
 import org.springframework.stereotype.Service; // Importation de l'annotation Service.
 
-import PI.dsi32.ToDoAppBack.Entities.GroupEntity;
 import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
-import PI.dsi32.ToDoAppBack.Entities.User;
-import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
 import PI.dsi32.ToDoAppBack.Repository.TaskRepository; // Importation du dépôt TaskRepository.
-import PI.dsi32.ToDoAppBack.Repository.UserRepository;
 import PI.dsi32.ToDoAppBack.Services.ITaskService; // Importation de l'interface ITaskService.
 
 @Service // Annotation indiquant que cette classe est un service Spring.
@@ -18,12 +15,6 @@ public class TaskServiceImpl implements ITaskService { // Classe implémentant l
 
     @Autowired // Injection de dépendance pour le dépôt TaskRepository.
     private TaskRepository taskRepo;
-    
-    @Autowired
-    private UserRepository userRepository;
-    
-    @Autowired
-    private GroupRepository groupRepository;
 
     @Override
     public List<Task> getAllTasks() {
@@ -31,21 +22,21 @@ public class TaskServiceImpl implements ITaskService { // Classe implémentant l
         return taskRepo.findAll();
     }
 
-    @Override
-    public Task addTask(Task task) {
-        User user = userRepository.findById(task.getUser().getId())
-                .orElseThrow(() -> new RuntimeException("User not found with id: " + task.getUser()));
-
-        GroupEntity group = groupRepository.findById(task.getGroup().getId())
-                .orElseThrow(() -> new RuntimeException("Group not found with id: " + task.getGroup().getId()));
-
-
-        task.setUser(user);
-        task.setGroup(group);
-
-        // Save the task and return the saved entity
-        return taskRepo.save(task);
+    
+    public void addTaskWithSQL(Task task, int userId, int groupId) {
+        taskRepo.addTaskWithSQL(
+            task.getTitle(),
+            task.getDescription(),
+            task.getStatus().name(),
+            task.getDeadline(),
+            LocalDateTime.now(),  // createdAt
+            LocalDateTime.now(),  // updatedAt
+            task.isDestactive(),
+            userId,  // user_id passé directement
+            groupId  // group_id passé directement
+        );
     }
+
 
 
     @Override
@@ -53,4 +44,11 @@ public class TaskServiceImpl implements ITaskService { // Classe implémentant l
         // Met à jour une tâche existante dans le dépôt et retourne la tâche mise à jour.
         return taskRepo.save(task);
     }
+
+
+	/*@Override
+	public Task addTask(Task task) {
+		// TODO Auto-generated method stub
+		return null;
+	}*/
 }

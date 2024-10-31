@@ -1,12 +1,33 @@
-package PI.dsi32.ToDoAppBack.Repository; // Déclaration du package pour les dépôts.
+package PI.dsi32.ToDoAppBack.Repository;
 
-import org.springframework.data.jpa.repository.JpaRepository; // Importation de l'interface JpaRepository.
-import org.springframework.stereotype.Repository; // Importation de l'annotation Repository.
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+import PI.dsi32.ToDoAppBack.Entities.Task;
+import PI.dsi32.ToDoAppBack.enums.TaskStatus;
 
-import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
+import java.time.LocalDateTime;
 
-@Repository // Annotation indiquant que cette interface est un dépôt Spring.
-public interface TaskRepository extends JpaRepository<Task, Integer> { // Interface étendant JpaRepository.
+import org.springframework.data.jpa.repository.JpaRepository;
 
-    // L'interface hérite des méthodes CRUD de JpaRepository pour l'entité Task avec Integer comme type d'ID.
+@Repository
+public interface TaskRepository extends JpaRepository<Task, Integer> {
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO task (title, description, status, deadline, created_at, updated_at, is_destactive, user_id, group_id) " +
+                   "VALUES (:title, :description, :status, :deadline, :createdAt, :updatedAt, :isDestactive, :userId, :groupId)", nativeQuery = true)
+    void addTaskWithSQL(
+            @Param("title") String title,
+            @Param("description") String description,
+            @Param("status") String string,
+            @Param("deadline") LocalDateTime deadline,
+            @Param("createdAt") LocalDateTime createdAt,
+            @Param("updatedAt") LocalDateTime updatedAt,
+            @Param("isDestactive") boolean isDestactive,
+            @Param("userId") int userId,
+            @Param("groupId") int groupId
+    );
 }

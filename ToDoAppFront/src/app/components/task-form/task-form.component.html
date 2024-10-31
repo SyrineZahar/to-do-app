@@ -46,7 +46,7 @@
     <!-- Menu déroulant pour sélectionner l'utilisateur assigné -->
     <div class="form-group">
         <label for="user_id">Utilisateur assigné</label>
-        <select id="user_id" class="form-control" formControlName="user_id">
+        <select id="user_id" class="form-control" formControlName="user_id" (change)="onUserChange()">
           <option value="" disabled selected>Choisir un utilisateur</option> <!-- Placeholder option -->
           <option *ngFor="let user of users" [value]="user.id">
             {{ user.name }}
@@ -57,7 +57,7 @@
 
     <div class="form-group">
         <label for="group_id">Groupe assigné</label>
-        <select id="group_id" class="form-control" formControlName="group_id">
+        <select id="group_id" class="form-control" formControlName="group_id" (change)="onGroupChange()">
         <option value="" disabled selected>Choisir un groupe</option> <!-- Placeholder option -->
         <option *ngFor="let group of groups" [value]="group.id">
             {{ group.nom }}

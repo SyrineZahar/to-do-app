@@ -1,15 +1,12 @@
-// Importation des modules nécessaires
-import { HttpClient, HttpHeaders } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
-import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
-import { Observable } from 'rxjs'; // Pour gérer les flux de données asynchrones
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { User } from '../classe/User';
 
-// Déclaration du service avec l'injection dans le root module
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-    // URL de l'API pour accéder aux tâches
     URL = 'http://localhost:8088/auth';
 
     constructor(private http: HttpClient) {}
@@ -19,11 +16,26 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<any> {
-      const loginData = { email: email, password: password };  
-      const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
-      
+        const loginData = { email, password };  
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
+        
+        return this.http.post<any>(`${this.URL}/login`, loginData, { headers });
+    }
 
-      
-      return this.http.post<any>(`${this.URL}/login`, loginData, { headers: headers });
+    setUser(user: User) {
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+
+    getUser(): User | null {
+        const user = localStorage.getItem('user');
+        return user ? JSON.parse(user) : null;
+    }
+
+    isLoggedIn(): boolean {
+        return this.getUser() !== null;
+    }
+
+    logout() {
+        localStorage.removeItem('user');
     }
 }

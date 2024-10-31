@@ -12,7 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -32,8 +31,8 @@ public class GroupEntity implements Serializable {
     private String nom;
     private String description;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
+    @OneToMany(mappedBy = "groups")
+    @JsonBackReference    private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Task> tasks;

@@ -52,4 +52,17 @@ public class GroupController {
             return e.toString(); // Retourne un statut 500 en cas d'erreur.
         }
     }
+    
+    @GetMapping("/{userId}") // Mapping pour récupérer les groupes par ID utilisateur.
+    public ResponseEntity<List<GroupEntity>> getGroupsByUserId(@PathVariable Integer userId) {
+        List<GroupEntity> groups = groupService.getGroupsForUser(userId); // Appel de la méthode dans le repository.
+        
+        // Vérification si des groupes ont été trouvés.
+        if (groups.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Retourne un 404 si aucun groupe n'est trouvé.
+        }
+        
+        return ResponseEntity.ok(groups); // Retourne un 200 avec la liste des groupes.
+    }
+    
 }

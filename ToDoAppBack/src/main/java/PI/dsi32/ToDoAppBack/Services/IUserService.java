@@ -7,4 +7,6 @@ import PI.dsi32.ToDoAppBack.Entities.User;
 public interface IUserService {
 	List<User> getAllUsers();
 
+	List<User> getUsersByGroupId(Integer groupId);
+
 }
