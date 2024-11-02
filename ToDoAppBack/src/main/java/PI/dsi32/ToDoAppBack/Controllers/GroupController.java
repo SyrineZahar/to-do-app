@@ -19,8 +19,6 @@ public class GroupController {
 	
 	@Autowired // Injection du service des groupes.
     private IGroupService groupService;
-    @Autowired
-    private EmailSender emailSender;
 
     @GetMapping() // Gère les requêtes GET sur le chemin /groups.
     public ResponseEntity<List<GroupEntity>> getAllGroups() {
@@ -45,8 +43,8 @@ public class GroupController {
     @PostMapping("/{groupId}/users") // Gère les requêtes POST pour ajouter un utilisateur à un groupe.
     public String addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
         try {
-            groupService.addUserToGroup(groupId, user); // Ajoute l'utilisateur au groupe via le service.
-            emailSender.sendSimpleEmail(user);
+            groupService.addUserToGroup(groupId, user);
+
             return "done";
         } catch (RuntimeException e) {
             return e.toString(); // Retourne un statut 500 en cas d'erreur.

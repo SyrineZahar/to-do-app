@@ -9,6 +9,7 @@ import PI.dsi32.ToDoAppBack.Entities.Task;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -30,4 +31,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             @Param("userId") int userId,
             @Param("groupId") int groupId
     );
+
+
 }

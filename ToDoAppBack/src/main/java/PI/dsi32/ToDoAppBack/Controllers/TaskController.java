@@ -90,4 +90,16 @@ public class TaskController {
             return new ResponseEntity("Error updating task: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @PostMapping("/notifyUsers")
+    public String notifyUsersBeforeTwoDays() {
+        // Retrieve the list of all tasks from the service.
+        List<Task> allTasks = taskService.getAllTasks();
+
+        // Call the method to notify user groups for tasks that have a deadline in two days.
+        taskService.notifyUsers(allTasks);
+
+        return "Notification process completed. Users notified for tasks due in 2 days.";
+    }
 }

@@ -18,17 +18,14 @@ public class EmailSender {
 	}
 
     @Async
-	public void sendSimpleEmail(User user) { // Remove the static keyword
+	public void sendSimpleEmail(User user, String subject) { // Remove the static keyword
         SimpleMailMessage message = new SimpleMailMessage();
         
-        String emailContent = "Dear " + user.getName() + ",\n\n"
-                + "You've been added to a new group in the Work Together application. "
-                + "We hope you enjoy collaborating with your team!\n\n"
-                + "Best regards,\nThe Work Together Team";
+
         
         message.setTo(user.getEmail());
         message.setSubject("Work Together Application");
-        message.setText(emailContent);
+        message.setText(subject);
         message.setFrom("hello@demomailtrap.com");
 
         try {
