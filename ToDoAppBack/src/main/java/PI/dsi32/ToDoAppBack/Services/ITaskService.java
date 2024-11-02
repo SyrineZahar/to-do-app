@@ -1,5 +1,6 @@
 package PI.dsi32.ToDoAppBack.Services; // Déclaration du package pour les services.
 
+import java.time.LocalDateTime;
 import java.util.List; // Importation de la classe List.
 
 import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
@@ -12,6 +13,9 @@ public interface ITaskService { // Interface définissant les opérations de ser
     
     Task editTask(Task task); // Méthode pour modifier une tâche existante.
     
-    public void addTaskWithSQL(Task task, int userId, int groupId);
-    
+
+    void addTaskWithSQL(Task task, int userId, int groupId);
+
+    void notifyUsers(List<Task> tasks);
+
 }

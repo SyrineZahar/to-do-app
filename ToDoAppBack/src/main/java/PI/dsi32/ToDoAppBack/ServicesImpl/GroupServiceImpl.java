@@ -26,8 +26,9 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
 
     @Autowired // Injection de dépendance pour le dépôt UserRepository.
     private UserRepository userRepo;
-    @Autowired 
-    private JavaMailSender mailSender;
+
+    @Autowired
+    private EmailSender emailSender;
 
 
     @Override
@@ -75,6 +76,11 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
         // Save the user or the group
         userRepo.save(managedUser);  // Saving only the user is fine because it's bidirectional
 
+        String emailContent = "Dear " + user.getName() + ",\n\n"
+                + "You've been added to a new group in the Work Together application. "
+                + "We hope you enjoy collaborating with your team!\n\n"
+                + "Best regards,\nThe Work Together Team";
+        emailSender.sendSimpleEmail(user,emailContent);
 
     }
 
