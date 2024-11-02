@@ -1,6 +1,7 @@
 package PI.dsi32.ToDoAppBack.Controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,6 +48,27 @@ public class UserController {
         }
         
         return ResponseEntity.ok(users); // Retourne un 200 avec la liste des utilisateurs.
+    }
+    
+    
+    
+    @PostMapping("/getData")
+    public ResponseEntity<User> getDataUser(@RequestBody Map<String, String> loginData) {
+
+    	String email = loginData.get("email");
+        String password = loginData.get("password");
+
+        try {
+            User user = userService.getDataUser(email);
+            if (user != null) {
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            }
+        } catch (RuntimeException e) {
+            System.out.println("Error: " + e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
     }
 
 }

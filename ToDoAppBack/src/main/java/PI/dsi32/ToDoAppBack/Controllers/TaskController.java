@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import org.hibernate.boot.archive.scan.spi.ScanParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import PI.dsi32.ToDoAppBack.Entities.Task;
+import PI.dsi32.ToDoAppBack.Entities.User;
+import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
+import PI.dsi32.ToDoAppBack.Repository.UserRepository;
+import PI.dsi32.ToDoAppBack.Services.IUserService;
 import PI.dsi32.ToDoAppBack.ServicesImpl.TaskServiceImpl;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
 
@@ -54,6 +60,8 @@ public class TaskController {
             TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase()); // Assurez-vous que l'énumération correspond à la chaîne
 
             // Créer une nouvelle tâche
+
+            IUserService userService;
             Task task = new Task();
             task.setTitle(title);
             task.setDescription(description);
@@ -83,7 +91,8 @@ public class TaskController {
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
         try {
-            task.setUpdatedAt(LocalDateTime.now()); 
+        	System.out.println(task);
+        	task.setUpdatedAt(LocalDateTime.now()); 
             Task updatedTask = taskService.editTask(task);
             return new ResponseEntity<>(updatedTask, HttpStatus.OK);
         } catch (Exception e) {

@@ -54,6 +54,7 @@ public class TaskServiceImpl implements ITaskService {
     }
 
 
+
     @Override
     public void notifyUsers(List<Task> tasks) {
         LocalDateTime now = LocalDateTime.now();
@@ -87,4 +88,5 @@ public class TaskServiceImpl implements ITaskService {
             }
         }
     }
+
 }

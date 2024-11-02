@@ -5,6 +5,7 @@ import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { GroupEntity } from 'src/app/classe/GroupEntity';
 import { Task } from 'src/app/classe/Task';
 import { User } from 'src/app/classe/User';
+import { AuthService } from 'src/app/service/Auth.service';
 import { GroupService } from 'src/app/service/group.service';
 import { taskService } from 'src/app/service/Task.service';
 import { userService } from 'src/app/service/User.service';
@@ -27,6 +28,7 @@ export class TaskFormComponent {
     private userService: userService,
     private router: Router,
     private groupService: GroupService ,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -72,12 +74,19 @@ export class TaskFormComponent {
           Number(this.taskForm.value.user_id),
           this.taskForm.value.isDesactivated,
         );
-
-        console.log(taskData);
     
         // Appel du service pour ajouter la tâche
         this.taskService.addTask(taskData).subscribe(() => {
-          this.router.navigate([""]); // Redirection vers la liste des tâches
+          const user=JSON.parse(sessionStorage['user']);
+          this.userService.getUserData(user.email).subscribe({
+            next: (user: User) => {
+              this.authService.setUser(user); // Sauvegarde de l'utilisateur dans le localStorage
+              this.router.navigate(['/kanban']); // Redirection vers la page de tableau de bord
+            },
+            error: (error: any) => {
+              console.error('Login failed:', error);
+            }
+          });
         });
      } 
    else {
@@ -121,7 +130,7 @@ export class TaskFormComponent {
 
 
   navigateToTasks(): void {
-    this.router.navigate([""]); // Redirect to task list
+    this.router.navigate(["kanban"]); // Redirect to task list
   }
 
   

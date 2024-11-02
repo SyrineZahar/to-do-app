@@ -13,7 +13,9 @@ public interface ITaskService { // Interface définissant les opérations de ser
     
     Task editTask(Task task); // Méthode pour modifier une tâche existante.
     
+
     void addTaskWithSQL(Task task, int userId, int groupId);
 
     void notifyUsers(List<Task> tasks);
+
 }

@@ -1,6 +1,8 @@
 <div class="container mt-4">
   <!-- Conteneur principal avec une marge supérieure -->
-  
+  <div *ngIf="userName">
+    Hello, {{ userName }}!
+  </div>
   <h1 class="text-center">Your To Do List</h1>
   <!-- Titre principal de la liste de tâches, centré -->
 

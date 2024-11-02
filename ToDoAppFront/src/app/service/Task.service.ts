@@ -11,6 +11,7 @@ import { Task } from '../classe/Task'; // Importation de la classe Task
 export class taskService {
     // URL de l'API pour accéder aux tâches
     URL = 'http://localhost:8088/tasks';
+  tasks$: any;
 
     // Injection du HttpClient dans le constructeur
     constructor(private httpClient: HttpClient) { }
@@ -22,7 +23,6 @@ export class taskService {
 
     // Méthode pour ajouter une nouvelle tâche
     addTask(task: Task): Observable<string> {
-        console.log(task); // Log l'objet de la tâche pour le débogage
 
         // Créer un payload conforme au format attendu par le backend
         const payload = {
@@ -34,9 +34,10 @@ export class taskService {
             user_id: Number(task.user_id), // Assurez-vous que `userId` est correctement défini dans votre objet `task`
             group_id: Number(task.group_id)  // Assurez-vous que `groupId` est correctement défini dans votre objet `task`
         };
-                
+        
         return this.httpClient.post<{ message: string }>(this.URL, payload).pipe(
             map(response => response.message), // Extraire le message de la réponse
+            
             catchError(error => {
                 console.error('Error:', error);
                 return throwError('Error creating task, please try again later.');
@@ -48,6 +49,7 @@ export class taskService {
 
     // Méthode pour éditer une tâche existante
     editTask(task: Task): Observable<Task> {
+        console.log(task)
         return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task); // Met à jour la tâche en fonction de son ID
     }
 }

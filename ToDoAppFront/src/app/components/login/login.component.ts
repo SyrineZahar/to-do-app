@@ -25,7 +25,6 @@ export class LoginComponent {
   login(email: string, password: string) {
     this.authService.login(email, password).subscribe({
       next: (user: User) => {
-        console.log('Login successful:', user);
         this.authService.setUser(user); // Sauvegarde de l'utilisateur dans le localStorage
         this.router.navigate(['/kanban']); // Redirection vers la page de tableau de bord
       },

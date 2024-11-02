@@ -33,7 +33,7 @@ export const adminGuard: CanActivateFn = (route, state) => {
     console.log('Access denied. No user.');
   }
 
-  router.navigate(['/login']); 
+  //router.navigate(['/login']); 
   return false; 
 };
 

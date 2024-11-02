@@ -7,4 +7,6 @@ public interface IAuthService {
 
 	User loginUser(String email, String password);
 
+	
+
 }
