@@ -16,18 +16,20 @@ export class AuthService {
     }
 
     login(email: string, password: string): Observable<any> {
-        const loginData = { email, password };  
+        const loginData = { email, password };
         const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
         
         return this.http.post<any>(`${this.URL}/login`, loginData, { headers });
     }
 
+    
+
     setUser(user: User) {
-        localStorage.setItem('user', JSON.stringify(user));
+        sessionStorage.setItem('user', JSON.stringify(user));
     }
 
     getUser(): User | null {
-        const user = localStorage.getItem('user');
+        const user = sessionStorage.getItem('user');
         return user ? JSON.parse(user) : null;
     }
 
@@ -36,6 +38,6 @@ export class AuthService {
     }
 
     logout() {
-        localStorage.removeItem('user');
+        sessionStorage.removeItem('user');
     }
 }

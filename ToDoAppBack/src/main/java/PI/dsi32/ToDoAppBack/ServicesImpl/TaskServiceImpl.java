@@ -46,9 +46,4 @@ public class TaskServiceImpl implements ITaskService { // Classe implémentant l
     }
 
 
-	/*@Override
-	public Task addTask(Task task) {
-		// TODO Auto-generated method stub
-		return null;
-	}*/
 }

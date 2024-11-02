@@ -1,6 +1,7 @@
 package PI.dsi32.ToDoAppBack.Controllers; // Déclaration du package pour le contrôleur.
 
 import java.util.List; // Importation de la classe List pour les collections.
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired; // Annotation pour l'injection de dépendances.
 import org.springframework.http.HttpStatus; // Importation des statuts HTTP.
@@ -65,4 +66,16 @@ public class GroupController {
         return ResponseEntity.ok(groups); // Retourne un 200 avec la liste des groupes.
     }
     
+    @GetMapping("/{groupId}") // Mapping to retrieve a group by its group ID.
+    public ResponseEntity<GroupEntity> getGroupById(@PathVariable Integer groupId) {
+        Optional<GroupEntity> group = groupService.getGroupById(4); // Call method in the service to get group by ID.
+
+        // Check if a group is found.
+        if (group.isEmpty()) {
+            return ResponseEntity.notFound().build(); // Return a 404 if no group is found.
+        }
+
+        return ResponseEntity.ok(group.get()); // Return a 200 with the group details.
+    }
+
 }

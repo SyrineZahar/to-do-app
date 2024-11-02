@@ -1,6 +1,8 @@
 package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
 
 import java.util.List; // Importation de la classe List.
+import java.util.Optional;
+
 import PI.dsi32.ToDoAppBack.ServicesImpl.EmailSender;
 
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
@@ -39,11 +41,19 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
         // Ajoute un nouveau groupe au dépôt et retourne le groupe ajouté.
         return groupRepo.save(group);
     }
+    
+    public Optional<GroupEntity> getGroupById(int groupId) {
+        return groupRepo.findById(groupId);
+    }
 
     @Override
     public List<GroupEntity> getGroupsForUser(Integer userId) {
         return groupRepo.findGroupsByUserId(userId);
     }
+    
+    public Optional<GroupEntity> getGroupById(Integer groupId) {
+	    return groupRepo.findById(groupId);
+	}
     
     @Override
     @Transactional // Ensure the method is transactional

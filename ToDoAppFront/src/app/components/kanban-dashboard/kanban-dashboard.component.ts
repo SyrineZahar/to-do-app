@@ -1,8 +1,10 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { Task } from 'src/app/classe/Task';
+import { User } from 'src/app/classe/User';
+import { AuthService } from 'src/app/service/Auth.service';
 import { taskService } from 'src/app/service/Task.service';
 
 /**
@@ -18,8 +20,8 @@ import { taskService } from 'src/app/service/Task.service';
   styleUrls: ['./kanban-dashboard.component.css'] // Chemin vers le fichier CSS du composant
 })
 export class KanbanDashboardComponent implements OnInit {
-
-  constructor(private taskService: taskService, private router: Router) { }
+  userName: String | undefined;
+  constructor(private taskService: taskService, private router: Router,private authService: AuthService) { }
 
   TaskStatus = TaskStatus; // Enumération pour les statuts de tâche
 
@@ -30,20 +32,22 @@ export class KanbanDashboardComponent implements OnInit {
   currentTask!: Task; // Tâche actuellement en cours de glisser
 
   ngOnInit(): void {
+    const user = this.authService.getUser();
+    if (user) {
+      this.userName = user.name;
+      this.tasks = user.tasks || [];
+    }
+    
     this.loadTasks(); // Charge les tâches au démarrage du composant
   }
 
+
   loadTasks(): void {
     // Charge les tâches à partir du service
-    this.taskService.getTasks().subscribe({
-      next: (tasks: Task[]) => {
-        this.tasks = tasks; // Stocke les tâches récupérées
-        this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
-      },
-      error: (err: HttpErrorResponse) => {
-        console.error('Error fetching tasks:', err); // Gestion des erreurs
-      }
-    });
+    
+     // Stocke les tâches récupérées
+    this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
+    
   }
 
   updateTaskLists(): void {
@@ -56,16 +60,16 @@ export class KanbanDashboardComponent implements OnInit {
   onDragStart(task: Task): void {
     // Gère l'événement de début de glisser d'une tâche
     this.currentTask = task; // Stocke la tâche actuelle
-    console.log('Dragging task: ', task); // Log pour le débogage
+    //console.log('Dragging task: ', task); // Log pour le débogage
   }
 
   onDrop(event: DragEvent, status: TaskStatus): void {
     // Gère l'événement de dépôt d'une tâche
     event.preventDefault(); // Empêche le comportement par défaut du navigateur
-
+    
     if (this.currentTask) {
-      this.currentTask.status = status; // Met à jour le statut de la tâche
 
+      this.currentTask.status = status; // Met à jour le statut de la tâche
       this.taskService.editTask(this.currentTask).subscribe({
         next: () => {
           this.loadTasks(); // Recharge les tâches pour refléter les changements

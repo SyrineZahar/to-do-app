@@ -114,7 +114,7 @@ public class Task implements Serializable { // La classe implémente Serializabl
 	}
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
+		this.updatedAt = updatedAt;	
 	}
 
 	public boolean isDestactive() {
@@ -145,5 +145,12 @@ public class Task implements Serializable { // La classe implémente Serializabl
 		return serialVersionUID;
 	}
 
+	@Override
+	public String toString() {
+		return "Task [user=" + user + ", group=" + group + "]";
+	}
+
+	
+	
  
 }
