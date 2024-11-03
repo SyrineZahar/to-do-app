@@ -5,6 +5,7 @@ import { Router } from '@angular/router'; // Import du Router
 import { User } from 'src/app/classe/User';
 import { userService } from 'src/app/service/User.service';
 import { FormControl, FormGroup } from '@angular/forms';
+import { taskService } from 'src/app/service/Task.service';
 
 @Component({
   selector: 'app-groups',
@@ -17,9 +18,12 @@ export class GroupsComponent implements OnInit {
   users!: User[];
 
   userForm!: FormGroup;
+  filterForm!: FormGroup;
 
 
-  constructor(private groupService: GroupService, private router: Router, private userService: userService) {
+
+
+  constructor(private groupService: GroupService, private router: Router, private userService: userService, private taskService: taskService) {
 
   }
 
@@ -28,6 +32,11 @@ export class GroupsComponent implements OnInit {
     this.userForm = new FormGroup({
       user_id: new FormControl(null) 
     });
+
+    this.filterForm = new FormGroup({
+      filter_user_id: new FormControl(null)
+    });
+    
 
     this.groupService.getGroups().subscribe((data: GroupEntity[]) => {
       console.log(data);
@@ -75,4 +84,27 @@ export class GroupsComponent implements OnInit {
         });
       }
 }
-  }}
+  }
+
+  filterTasksByUser() {
+    const selectedUserId = this.filterForm.value.filter_user_id; // Ensure you are accessing `filter_user_id`
+    console.log(selectedUserId); // Check the console to ensure it's showing the expected ID
+  
+    if (selectedUserId) {
+      const selectedUser = this.users.find(user => user.id == selectedUserId);
+      console.log(selectedUser);
+  
+      if (selectedUser) {
+        this.taskService.getTasksByUserId(Number(selectedUserId)).subscribe({
+          next: (response) => {
+            console.log(response);
+          },
+          error: (error) => {
+            console.error('Error fetching tasks:', error);
+          }
+        });
+      }
+    }
+  }
+  
+}

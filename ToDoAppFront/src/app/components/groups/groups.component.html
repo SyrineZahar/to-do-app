@@ -18,6 +18,16 @@
     <h2>{{ selectedGroup.nom }} - Détails</h2>
     <img [src]="'assets/image/' + selectedGroup.profilePicture" alt="Profile Picture" class="profile-pic" />
 
+    <div class="form-group" [formGroup]="filterForm">
+      Filtrer les tâches par utilisateur
+      <select id="filter_user_id" class="form-control" formControlName="filter_user_id" (change)="filterTasksByUser()">
+        <option value="" disabled selected>Choisir un utilisateur</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+    
     <div class="task-list">
       <h3>Tâches du groupe:</h3>
       <table>

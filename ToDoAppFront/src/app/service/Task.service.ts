@@ -52,4 +52,10 @@ export class taskService {
         console.log(task)
         return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task); // Met à jour la tâche en fonction de son ID
     }
+
+
+    getTasksByUserId(userId: number) {
+        return this.httpClient.get<Task[]>(`${this.URL}/${userId}`); // Correctly constructs the URL with userId
+    }
+      
 }

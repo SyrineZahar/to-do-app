@@ -89,4 +89,9 @@ public class TaskServiceImpl implements ITaskService {
         }
     }
 
+    @Override
+    public List<Task> findByUserId(int userId) {
+        return taskRepo.findByUserId(userId);
+    }
+
 }
