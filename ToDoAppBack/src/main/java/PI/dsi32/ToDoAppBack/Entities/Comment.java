@@ -3,10 +3,10 @@ package PI.dsi32.ToDoAppBack.Entities;
 import jakarta.persistence.*;
 
 @Entity
-public class Comments {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String description;
 
@@ -18,18 +18,18 @@ public class Comments {
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;
 
-    public Comments() {
+    public Comment() {
         super();
     }
 
-    public Comments(Long id, String description, User user, Task task) {
+    public Comment(int id, String description, User user, Task task) {
         this.id = id;
         this.description = description;
         this.user = user;
         this.task = task;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -45,7 +45,7 @@ public class Comments {
         return task;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
