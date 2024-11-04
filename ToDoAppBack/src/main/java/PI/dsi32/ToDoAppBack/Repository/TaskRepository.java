@@ -33,5 +33,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     );
 
     List<Task> findByUserId(int userId);
+    List<Task> findByDeadline(LocalDateTime deadline);
 
 }

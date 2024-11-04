@@ -107,9 +107,26 @@ public class TaskController {
     }
 
 
-    @GetMapping("/{userId}")
+    @GetMapping("/users/{userId}")
     public List<Task> findByUserId(@PathVariable int userId){
         return taskService.findByUserId(userId);
     }
 
+
+    @GetMapping("/deadlines/{deadline}")
+    public List<Task> findByDeadline(@PathVariable LocalDateTime deadline){
+        return taskService.findByDeadline(deadline);
+    }
+
+    @GetMapping("/stat")
+    public ResponseEntity<Long> getUserStat() {
+        try{
+            Long count = taskService.countTasks();
+
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
 }

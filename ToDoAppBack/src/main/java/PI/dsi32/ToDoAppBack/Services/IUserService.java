@@ -10,4 +10,5 @@ public interface IUserService {
 	Optional<User> getUserById(int userId);
 	List<User> getUsersByGroupId(Integer groupId);
 	User getDataUser(String email);
+	Long countUsers();
 }

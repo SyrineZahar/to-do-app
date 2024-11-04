@@ -44,18 +44,26 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
     }
     
     public Optional<GroupEntity> getGroupById(int groupId) {
+
         return groupRepo.findById(groupId);
     }
 
     @Override
     public List<GroupEntity> getGroupsForUser(Integer userId) {
+
         return groupRepo.findGroupsByUserId(userId);
     }
     
     public Optional<GroupEntity> getGroupById(Integer groupId) {
-	    return groupRepo.findById(groupId);
+
+        return groupRepo.findById(groupId);
 	}
-    
+
+    @Override
+    public Long countGroups() {
+        return groupRepo.count();
+    }
+
     @Override
     @Transactional // Ensure the method is transactional
     public void addUserToGroup(int groupId, User user) {

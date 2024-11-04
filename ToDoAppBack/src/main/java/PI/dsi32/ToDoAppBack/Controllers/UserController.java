@@ -71,4 +71,15 @@ public class UserController {
         }
     }
 
+    @GetMapping("/stat")
+    public ResponseEntity<Long> getUserStat() {
+        try{
+            Long count = userService.countUsers();
+
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
 }

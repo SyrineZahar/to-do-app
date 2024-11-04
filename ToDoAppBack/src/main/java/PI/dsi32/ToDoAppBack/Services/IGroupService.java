@@ -17,4 +17,7 @@ public interface IGroupService { // Interface définissant les opérations de se
 	List<GroupEntity> getGroupsForUser(Integer userId);
     
 	public Optional<GroupEntity> getGroupById(Integer groupId);
+
+    Long countGroups();
+
 }

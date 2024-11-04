@@ -76,4 +76,15 @@ public class GroupController {
         return ResponseEntity.ok(group.get()); // Return a 200 with the group details.
     }
 
+    @GetMapping("/stat")
+    public ResponseEntity<Long> getUserStat() {
+        try{
+            Long count = groupService.countGroups();
+
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
 }

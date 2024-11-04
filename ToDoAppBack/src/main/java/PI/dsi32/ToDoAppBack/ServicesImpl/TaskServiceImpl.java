@@ -94,4 +94,14 @@ public class TaskServiceImpl implements ITaskService {
         return taskRepo.findByUserId(userId);
     }
 
+    @Override
+    public List<Task> findByDeadline(LocalDateTime deadline) {
+        return taskRepo.findByDeadline(deadline);
+    }
+
+    @Override
+    public Long countTasks() {
+        return taskRepo.count();
+    }
+
 }

@@ -20,5 +20,9 @@ public interface ITaskService { // Interface définissant les opérations de ser
 
     List<Task> findByUserId(int userId);
 
+    List<Task> findByDeadline(LocalDateTime deadline);
+
+    Long countTasks();
+
 
 }

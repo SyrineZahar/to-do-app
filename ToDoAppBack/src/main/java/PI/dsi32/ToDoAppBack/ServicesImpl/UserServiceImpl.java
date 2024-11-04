@@ -44,4 +44,9 @@ public class UserServiceImpl implements IUserService{
 	    }
 	    return null; // Retourne null si l'utilisateur n'existe pas ou si le mot de passe est incorrect.
 	}
+
+	@Override
+	public Long countUsers() {
+		return userRepository.count();
+	}
 }
