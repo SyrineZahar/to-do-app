@@ -24,7 +24,8 @@
         <!-- Corps de la colonne "To Do" -->
         
         <div class="kanban-item" *ngFor="let task of todolist" 
-             draggable="true" (dragstart)="onDragStart(task)">
+             draggable="true" (dragstart)="onDragStart(task)"
+             (click)="openTaskDetails(task)">
           {{ task.title }}
           <!-- Éléments Kanban pour chaque tâche, pouvant être déplacés par glisser-déposer -->
         </div>
@@ -41,7 +42,8 @@
         <!-- Corps de la colonne "In Progress" -->
         
         <div class="kanban-item" *ngFor="let task of inProgressList" 
-             draggable="true" (dragstart)="onDragStart(task)">
+             draggable="true" (dragstart)="onDragStart(task)"
+             (click)="openTaskDetails(task)">
           {{ task.title }}
           <!-- Éléments Kanban pour chaque tâche en cours -->
         </div>
@@ -58,7 +60,8 @@
         <!-- Corps de la colonne "Done" -->
         
         <div class="kanban-item" *ngFor="let task of doneList" 
-             draggable="true" (dragstart)="onDragStart(task)">
+             draggable="true" (dragstart)="onDragStart(task)"
+             (click)="openTaskDetails(task)">
           {{ task.title }}
           <!-- Éléments Kanban pour chaque tâche terminée -->
         </div>

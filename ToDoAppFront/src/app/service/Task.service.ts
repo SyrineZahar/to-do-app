@@ -49,6 +49,7 @@ export class taskService {
 
     // Méthode pour éditer une tâche existante
     editTask(task: Task): Observable<Task> {
+        console.log("service task")
         console.log(task)
         return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task); // Met à jour la tâche en fonction de son ID
     }

@@ -3,9 +3,10 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { Task } from 'src/app/classe/Task';
-import { User } from 'src/app/classe/User';
 import { AuthService } from 'src/app/service/Auth.service';
 import { taskService } from 'src/app/service/Task.service';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { MatDialog } from '@angular/material/dialog';
 
 /**
  * Composant pour le tableau de bord Kanban.
@@ -21,7 +22,7 @@ import { taskService } from 'src/app/service/Task.service';
 })
 export class KanbanDashboardComponent implements OnInit {
   userName: String | undefined;
-  constructor(private taskService: taskService, private router: Router,private authService: AuthService) { }
+  constructor(private taskService: taskService, private router: Router,private authService: AuthService, private dialog: MatDialog) { }
 
   TaskStatus = TaskStatus; // Enumération pour les statuts de tâche
 
@@ -91,4 +92,11 @@ export class KanbanDashboardComponent implements OnInit {
     // Navigue vers le formulaire d'ajout de tâche
     this.router.navigate(['/taskForm']);
   }
+
+  openTaskDetails(task: Task) {
+    this.dialog.open(TaskDetailsComponent, {
+      data: { task }
+    });
+  }
+
 }

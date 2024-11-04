@@ -14,6 +14,9 @@ import { SignupComponent } from './components/signup/signup.component';
 import { GroupFormComponent } from './components/group-form/group-form.component';
 import { GroupsComponent } from './components/groups/groups.component';
 import { LoginComponent } from './components/login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogModule } from '@angular/material/dialog';
+
 
 /**
  * Module principal de l'application Angular.
@@ -28,13 +31,18 @@ import { LoginComponent } from './components/login/login.component';
     NavbarComponent,       // Composant pour la barre de navigation
     TaskFormComponent, 
     SignupComponent, 
-    GroupFormComponent, GroupsComponent, LoginComponent      // Composant pour le formulaire de tâche
+    GroupFormComponent, 
+    GroupsComponent, 
+    LoginComponent,  
+    TaskFormComponent    // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular
     AppRoutingModule,      // Module de routage pour gérer la navigation
     HttpClientModule,      // Module pour effectuer des requêtes HTTP
-    ReactiveFormsModule     // Module pour utiliser les formulaires réactifs
+    ReactiveFormsModule, BrowserAnimationsModule,     MatDialogModule,  
+
+    // Module pour utiliser les formulaires réactifs
   ],
   providers: [],           // Services disponibles dans le module (vide pour le moment)
   bootstrap: [AppComponent] // Composant à démarrer lors du lancement de l'application
