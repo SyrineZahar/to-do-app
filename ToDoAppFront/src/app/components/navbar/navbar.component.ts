@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from 'src/app/service/Auth.service';
 
 /**
  * Composant de la barre de navigation.
@@ -12,7 +13,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar.component.css'] // Chemin vers le fichier CSS du composant
 })
 export class NavbarComponent {
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     // Méthode appelée lors de l'initialisation du composant
@@ -37,5 +38,10 @@ export class NavbarComponent {
       }
     `; // Fonction d'initialisation pour le module de traduction
     document.body.appendChild(googleTranslateInit); // Ajoute le script d'initialisation au corps du document
+  }
+
+
+  onLogout() {
+    this.authService.logout();
   }
 }

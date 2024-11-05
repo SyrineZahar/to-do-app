@@ -36,16 +36,24 @@ export class KanbanDashboardComponent implements OnInit {
     const user = this.authService.getUser();
     if (user) {
       this.userName = user.name;
-      this.tasks = user.tasks || [];
-    }
+      this.loadTasks(user.id); // Charge les tâches au démarrage du composant
+
+    } 
     
-    this.loadTasks(); // Charge les tâches au démarrage du composant
-  }
+      }
 
 
-  loadTasks(): void {
+  loadTasks(id : number): void {
     // Charge les tâches à partir du service
-    
+    this.taskService.getTasksByUserId(id).subscribe({
+      next: (tasks: Task[]) => {
+        this.tasks = tasks; // Stocke les tâches récupérées
+        this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
+      },
+      error: (err: HttpErrorResponse) => {
+        console.error('Error fetching tasks:', err); // Gestion des erreurs
+      }
+    });
      // Stocke les tâches récupérées
     this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
     
@@ -61,7 +69,7 @@ export class KanbanDashboardComponent implements OnInit {
   onDragStart(task: Task): void {
     // Gère l'événement de début de glisser d'une tâche
     this.currentTask = task; // Stocke la tâche actuelle
-    //console.log('Dragging task: ', task); // Log pour le débogage
+    console.log('Dragging task: ', task); // Log pour le débogage
   }
 
   onDrop(event: DragEvent, status: TaskStatus): void {
@@ -73,7 +81,7 @@ export class KanbanDashboardComponent implements OnInit {
       this.currentTask.status = status; // Met à jour le statut de la tâche
       this.taskService.editTask(this.currentTask).subscribe({
         next: () => {
-          this.loadTasks(); // Recharge les tâches pour refléter les changements
+          this.loadTasks(this.currentTask.user_id); // Recharge les tâches pour refléter les changements
           console.log('Task dropped and updated'); // Log pour le débogage
         },
         error: (err: HttpErrorResponse) => {
