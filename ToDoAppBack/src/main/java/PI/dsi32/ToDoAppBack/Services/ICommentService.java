@@ -9,4 +9,6 @@ public interface ICommentService {
     Comment addComment(Comment comment);
     Comment updateComment(Comment comment);
     void deleteComment(Comment comment);
+    List<Comment> getCommentByTaskId(int taskId);
+
 }

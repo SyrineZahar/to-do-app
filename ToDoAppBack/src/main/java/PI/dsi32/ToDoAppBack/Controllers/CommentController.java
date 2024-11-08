@@ -27,6 +27,17 @@ public class CommentController {
         }
     }
 
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<List<Comment>> getCommentsByTaskId(@PathVariable("taskId") int taskId) {
+        try {
+            List<Comment> comments = commentService.getCommentByTaskId(taskId);
+            return new ResponseEntity<>(comments, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
         try {
