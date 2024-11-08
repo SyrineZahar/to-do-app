@@ -1,23 +1,28 @@
 package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List; // Importation de la classe List.
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import PI.dsi32.ToDoAppBack.Entities.User;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service; // Importation de l'annotation Service.
 
 import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
 import PI.dsi32.ToDoAppBack.Repository.TaskRepository; // Importation du dépôt TaskRepository.
 import PI.dsi32.ToDoAppBack.Services.ITaskService; // Importation de l'interface ITaskService.
+import org.springframework.web.client.RestTemplate;
 
 @Service // Annotation indiquant que cette classe est un service Spring.
 public class TaskServiceImpl implements ITaskService {
-    private static final Logger log = LoggerFactory.getLogger(TaskServiceImpl.class); // Classe implémentant l'interface ITaskService.
+    private final String url="http://127.0.0.1:5000/summarize";
 
     @Autowired // Injection de dépendance pour le dépôt TaskRepository.
     private TaskRepository taskRepo;
@@ -103,5 +108,22 @@ public class TaskServiceImpl implements ITaskService {
     public Long countTasks() {
         return taskRepo.count();
     }
+
+    @Override
+    public String getDescriptionSummary(String Description) {
+        Map<String, String> requestBody = new HashMap<>();
+
+        requestBody.put("text", Description);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<Map<String, String>> request = new HttpEntity<>(requestBody, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+
+        return response.getBody();
+    }
+
 
 }

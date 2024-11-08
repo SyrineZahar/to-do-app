@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*; // Importation des annotations
 import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
 import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
 import PI.dsi32.ToDoAppBack.Services.IGroupService; // Importation de l'interface de service des groupes.
-import PI.dsi32.ToDoAppBack.ServicesImpl.EmailSender;
 
 @CrossOrigin(origins = "*") // Permet les requêtes cross-origin depuis n'importe quelle origine.
 @RestController // Indique que ce contrôleur gère des requêtes REST.

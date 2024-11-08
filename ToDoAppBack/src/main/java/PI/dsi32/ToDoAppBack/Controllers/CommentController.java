@@ -17,17 +17,6 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
-    @GetMapping
-    public ResponseEntity<List<Comment>> getAllComments() {
-        try {
-            List<Comment> comments = commentService.getAllComments();
-            return new ResponseEntity<>(comments, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-
     @GetMapping("/{taskId}")
     public ResponseEntity<List<Comment>> getCommentsByTaskId(@PathVariable("taskId") int taskId) {
         try {

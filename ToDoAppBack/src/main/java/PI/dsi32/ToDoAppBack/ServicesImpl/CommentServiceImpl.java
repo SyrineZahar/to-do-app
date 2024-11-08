@@ -15,11 +15,6 @@ public class CommentServiceImpl implements ICommentService {
     private CommentRepository commentRepository;
 
     @Override
-    public List<Comment> getAllComments() {
-        return commentRepository.findAll();
-    }
-
-    @Override
     public Comment addComment(Comment comment) {
         return commentRepository.save(comment);
     }

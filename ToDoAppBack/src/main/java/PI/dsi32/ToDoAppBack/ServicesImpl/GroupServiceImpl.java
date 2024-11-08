@@ -3,13 +3,9 @@ package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les i
 import java.util.List; // Importation de la classe List.
 import java.util.Optional;
 
-import PI.dsi32.ToDoAppBack.ServicesImpl.EmailSender;
 
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
-import org.springframework.stereotype.Service; // Importation de l'annotation Service.
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-//import javax.mail.internet.MimeMessage; // Import MimeMessage
+import org.springframework.stereotype.Service; // Importation de l'annotation Service. // Import MimeMessage
 
 import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
 import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.

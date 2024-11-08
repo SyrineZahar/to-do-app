@@ -24,5 +24,7 @@ public interface ITaskService { // Interface définissant les opérations de ser
 
     Long countTasks();
 
+    String getDescriptionSummary(String description);
+
 
 }

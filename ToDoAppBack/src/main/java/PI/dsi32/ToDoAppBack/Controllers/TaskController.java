@@ -4,18 +4,13 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
-import org.hibernate.boot.archive.scan.spi.ScanParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import PI.dsi32.ToDoAppBack.Entities.Task;
-import PI.dsi32.ToDoAppBack.Entities.User;
-import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
-import PI.dsi32.ToDoAppBack.Repository.UserRepository;
 import PI.dsi32.ToDoAppBack.Services.IUserService;
 import PI.dsi32.ToDoAppBack.ServicesImpl.TaskServiceImpl;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
@@ -127,6 +122,17 @@ public class TaskController {
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+
+    @PostMapping("/descriptionSum")
+    public ResponseEntity<String> getCommentsSum(@RequestBody String description){
+        try {
+            String res = taskService.getDescriptionSummary(description);
+            return new ResponseEntity<>(res, HttpStatus.OK);
+        }catch (Exception e) {
+            return new ResponseEntity<>("the error:"+e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
