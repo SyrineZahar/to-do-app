@@ -76,7 +76,7 @@ public class GroupController {
     }
 
     @GetMapping("/stat")
-    public ResponseEntity<Long> getUserStat() {
+    public ResponseEntity<Long> getGroupStat() {
         try{
             Long count = groupService.countGroups();
 

@@ -61,5 +61,10 @@ export class taskService {
     getTasksByGroupId(groupId: number) {
         return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);
     }
+
+
+    getTaskstat(): Observable<number> {
+        return this.httpClient.get<number>(`${this.URL}/stat`);
+    }
       
 }

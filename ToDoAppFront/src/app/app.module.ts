@@ -17,7 +17,8 @@ import { LoginComponent } from './components/login/login.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
-import { MatIconModule } from '@angular/material/icon';  // Import du module MatIconModule
+import { MatIconModule } from '@angular/material/icon';
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';  // Import du module MatIconModule
 
 
 /**
@@ -36,7 +37,7 @@ import { MatIconModule } from '@angular/material/icon';  // Import du module Mat
     GroupFormComponent, 
     GroupsComponent, 
     LoginComponent,  
-    TaskFormComponent, DashboardUserComponent    // Composant pour le formulaire de tâche
+    TaskFormComponent, DashboardUserComponent, DashboardAdminComponent    // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular

@@ -8,6 +8,7 @@ import { GroupsComponent } from './components/groups/groups.component';
 import { LoginComponent } from './components/login/login.component';
 import { adminGuard, authGuardGuard } from './guards/auth-guard.guard';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 
 // Définition des routes de l'application
 const routes: Routes = [
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: "taskForm", component: TaskFormComponent, canActivate: [authGuardGuard] }, // Route pour TaskFormComponent
   { path: "groups", component: GroupsComponent, canActivate: [authGuardGuard] }, // Route pour GroupsComponent
   { path: "groupForm", component: GroupFormComponent, canActivate: [adminGuard] }, // Route pour GroupFormComponent, accessible uniquement par admin
+  { path: "admin-dashboard", component: DashboardAdminComponent, canActivate: [adminGuard] }, 
   { path: "**", redirectTo: "login" } // Redirection pour les routes non trouvées
+  
 ];
 
 @NgModule({

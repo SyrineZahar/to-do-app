@@ -43,6 +43,10 @@ export class GroupService {
   addUserToGroup(groupId: number, user: User) {
     return this.httpClient.post<GroupEntity>(`${this.URL}/${groupId}/users`, user);
   }
+
+  getGroupStat(): Observable<number> {
+    return this.httpClient.get<number>(`${this.URL}/stat`);
+  }
   
   
 }
