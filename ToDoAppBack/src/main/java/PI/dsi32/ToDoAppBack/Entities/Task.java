@@ -8,14 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import PI.dsi32.ToDoAppBack.enums.TaskStatus; // Importation de l'énumération TaskStatus.
-import jakarta.persistence.Entity; // Importation pour la définition de l'entité JPA.
-import jakarta.persistence.EnumType; // Importation pour spécifier le type d'énumération.
-import jakarta.persistence.Enumerated; // Importation pour la gestion des énumérations en JPA.
-import jakarta.persistence.GeneratedValue; // Importation pour la génération automatique des valeurs.
-import jakarta.persistence.GenerationType; // Importation pour définir le type de stratégie de génération.
-import jakarta.persistence.Id; // Importation pour identifier la clé primaire de l'entité.
-import jakarta.persistence.JoinColumn; // Importation pour définir une colonne de jointure.
-import jakarta.persistence.ManyToOne; // Importation pour définir une relation plusieurs-à-un.
+import jakarta.persistence.*;
 
 @Entity // Annotation indiquant que cette classe est une entité JPA.
 public class Task implements Serializable { // La classe implémente Serializable pour la sérialisation.
@@ -26,7 +19,8 @@ public class Task implements Serializable { // La classe implémente Serializabl
     private int id;
 
     private String title;
-    private String description;
+	@Column(length = 2000)
+	private String description;
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;

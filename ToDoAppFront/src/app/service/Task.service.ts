@@ -66,5 +66,10 @@ export class taskService {
     getTaskstat(): Observable<number> {
         return this.httpClient.get<number>(`${this.URL}/stat`);
     }
-      
+
+    getDescriptionSummary(description: string): Observable<{ summarized_text: string }> {
+        return this.httpClient.post<{ summarized_text: string }>(`${this.URL}/descriptionSum`, { description });
+    }   
+
+
 }

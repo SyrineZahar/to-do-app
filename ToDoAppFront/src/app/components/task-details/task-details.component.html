@@ -1,31 +1,37 @@
 <div class="task">
   <h1 class="text-center">Task Details</h1>
   <div class="task-details-dialog">
-    <!-- Left section: Comments -->
     <div class="task-comments">
       <h2>Comments</h2>
       <div class="comment-list">
-        <!-- Loop to display existing comments -->
-        <div *ngFor="let comment of data.task.comments" class="comment-item">
-          <p><strong>{{ comment.user }}</strong> - </p>
-          <p>{{ comment.text }}</p>
+        <div *ngFor="let comment of comments" class="comment-item">
+          <p><strong>{{ comment.user.name }}</strong> - {{ comment.description }}</p>
         </div>
       </div>
-      
-      <!-- Section to add a comment -->
-      <div class="add-comment">
-        <textarea placeholder="Add a comment..."></textarea>
-        <button>Submit</button>
-      </div>
+
+      <form [formGroup]="commentForm" (ngSubmit)="onSubmit()">
+        <div class="add-comment">
+          <textarea formControlName="text" placeholder="Add a comment..."></textarea>
+          <button type="submit" [disabled]="commentForm.invalid">Submit</button>
+        </div>
+      </form>
     </div>
 
-    <!-- Right section: Task details -->
     <div class="task-details">
       <h2>Task Details</h2>
       <p><strong>Title:</strong> {{ data.task.title }}</p>
       <p><strong>Description:</strong> {{ data.task.description }}</p>
       <p><strong>Deadline:</strong> {{ data.task.deadline }}</p>
-      <p><strong>Assigned to:</strong> </p>
+      <p><strong>Assigned to:</strong> </p> <!-- Display assigned user if available -->
+      <button type="button" class="ai" (click)="fetchSummary()">
+        <img src="assets/icons/microchip-solid.svg" alt="Description of the SVG" width="20px" height="20px">
+      </button>
+    </div>
+
+    <!-- Conditionally display the description summary -->
+    <div *ngIf="isSummaryVisible">
+      <h3>Description Summary:</h3>
+      <p>{{ summarizedText }}</p>
     </div>
   </div>
 </div>
