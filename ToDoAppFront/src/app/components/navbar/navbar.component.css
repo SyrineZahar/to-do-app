@@ -1,28 +1,85 @@
 nav {
-    background-color: #333;
-    padding: 10px;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    width: 100%;
+    background-color: #ffffff; 
+    color: #333333; 
+    padding: 0rem 2rem;
     display: flex;
-}
-
-nav li {
-    margin-right: 20px;
-}
-
-nav a {
-    color: white;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    margin-right: 2rem; 
+  }
+  
+  nav ul li a {
     text-decoration: none;
-}
-
-nav a:hover {
-    text-decoration: underline;
-}
-
-#google_translate_element {
-    margin-left: auto;
-}
+    color: #333333; 
+    font-weight: 500;
+    padding: 0.5rem;
+    transition: all 0.3s ease; 
+    border-bottom: 3px solid transparent; 
+  }
+  
+  nav ul li a:hover {
+    color: #1868D8;
+    background-color: #f1f1f1; 
+    border-bottom: 3px solid #1868D8;
+  }
+  
+  nav ul li a.active {
+    border-bottom: 3px solid #1868D8; 
+    background-color: #f1f1f1; 
+  }
+  
+.navbar-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    gap: 1rem; 
+  }
+  
+  #google_translate_element {
+    position: relative;
+    z-index: 1000;
+    background-color: transparent; 
+    border: none;
+    padding: 0.5rem;
+    box-shadow: none; 
+  }
+  
+  nav button {
+    background-color: #1868D8; 
+    color: #ffffff; 
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+  }
+  
+  nav button:hover {
+    background-color: #1868D8; 
+    transform: scale(1.05); 
+  }
+  
+  
+  
+  nav {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  }
+  

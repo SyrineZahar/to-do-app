@@ -1,5 +1,5 @@
 // Importation des modules nécessaires
-import { HttpClient } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
+import { HttpClient, HttpHeaders } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
 import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
 import { catchError, map, Observable, throwError } from 'rxjs'; // Pour gérer les flux de données asynchrones
 import { Task } from '../classe/Task'; // Importation de la classe Task
@@ -50,13 +50,16 @@ export class taskService {
     // Méthode pour éditer une tâche existante
     editTask(task: Task): Observable<Task> {
         console.log("service task")
-        console.log(task)
-        return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task); // Met à jour la tâche en fonction de son ID
+        const headers = new HttpHeaders().set('Content-Type', 'application/json');
+        return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task)// Met à jour la tâche en fonction de son ID
     }
 
 
     getTasksByUserId(userId: number) {
         return this.httpClient.get<Task[]>(`${this.URL}/${userId}`); // Correctly constructs the URL with userId
+    }
+    getTasksByGroupId(groupId: number) {
+        return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);
     }
       
 }

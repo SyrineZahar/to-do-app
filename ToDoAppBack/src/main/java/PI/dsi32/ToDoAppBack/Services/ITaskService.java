@@ -19,6 +19,8 @@ public interface ITaskService { // Interface définissant les opérations de ser
     void notifyUsers(List<Task> tasks);
 
     List<Task> findByUserId(int userId);
+    
+    List<Task> findByGroupId(int groupId);
 
     List<Task> findByDeadline(LocalDateTime deadline);
 

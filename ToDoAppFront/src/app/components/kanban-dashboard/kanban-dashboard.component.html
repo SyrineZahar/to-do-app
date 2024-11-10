@@ -1,8 +1,5 @@
 <div class="container mt-4">
   <!-- Conteneur principal avec une marge supérieure -->
-  <div *ngIf="userName">
-    Hello, {{ userName }}!
-  </div>
   <h1 class="text-center">Your To Do List</h1>
   <!-- Titre principal de la liste de tâches, centré -->
 
@@ -16,7 +13,7 @@
         To Do
         <!-- En-tête de la colonne "To Do" -->
         
-        <button class="btn btn-primary btn-sm ms-2 table-add" (click)="navigateToFormTask()">+</button>
+        <!-- <button class="btn btn-primary btn-sm ms-2 table-add" (click)="navigateToFormTask()">+</button> -->
         <!-- Bouton pour ajouter une nouvelle tâche, déclenche la fonction navigateToFormTask -->
       </div>
 
@@ -29,6 +26,7 @@
           {{ task.title }}
           <!-- Éléments Kanban pour chaque tâche, pouvant être déplacés par glisser-déposer -->
         </div>
+        <div class="add-item" (click)="openAddTask()"><img src="assets/icons/circle-plus-solid.svg" alt="Description of the SVG" width="20px" height="20px">&nbsp;<span>Add Task</span></div>
       </div>
     </div>
     

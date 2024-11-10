@@ -33,7 +33,11 @@ export class GroupService {
   }
 
   getGroupsByUser(userId: Number): Observable<GroupEntity[]>{
-    return this.httpClient.get<GroupEntity[]>(`${this.URL}/${userId}`);
+    return this.httpClient.get<GroupEntity[]>(`${this.URL}/user/${userId}`);
+  }
+
+  getGroupsById(groupId: Number): Observable<GroupEntity>{
+    return this.httpClient.get<GroupEntity>(`${this.URL}/${groupId}`);
   }
 
   addUserToGroup(groupId: number, user: User) {

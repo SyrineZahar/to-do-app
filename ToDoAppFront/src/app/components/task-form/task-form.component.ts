@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { GroupEntity } from 'src/app/classe/GroupEntity';
@@ -9,6 +10,8 @@ import { AuthService } from 'src/app/service/Auth.service';
 import { GroupService } from 'src/app/service/group.service';
 import { taskService } from 'src/app/service/Task.service';
 import { userService } from 'src/app/service/User.service';
+import { futureDateValidator } from './future-date.validator';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-task-form',
@@ -16,6 +19,7 @@ import { userService } from 'src/app/service/User.service';
   styleUrls: ['./task-form.component.css']
 })
 export class TaskFormComponent {
+  groupId: number;
   task!: Task;
   taskForm!: FormGroup;
   taskStatuses = Object.values(TaskStatus);
@@ -23,27 +27,20 @@ export class TaskFormComponent {
   groups!: GroupEntity[] ;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private dialogRef: MatDialogRef<TaskFormComponent>,
     private fb: FormBuilder,
     private taskService: taskService, 
     private userService: userService,
     private router: Router,
     private groupService: GroupService ,
     private authService: AuthService,
-  ) {}
+  ) { this.groupId = data.group_id; }
 
   ngOnInit(): void {
     this.createEmptyForm();
-
-    //fetch groups
-    this.groupService.getGroups().subscribe((data: GroupEntity[]) => {
-      this.groups = data;
-      console.log(this.groups);
-    }, (error: any) => {
-      console.error('Error fetching users:', error);
-    });
-
     //fetch users
-    this.userService.getUsers().subscribe((data: User[]) => {
+    this.userService.getUsersbygroup(this.groupId).subscribe((data: User[]) => {
       this.users = data;
       console.log(this.users);
     }, (error: any) => {
@@ -56,10 +53,10 @@ export class TaskFormComponent {
       title: ['', Validators.required],
       description: ['', Validators.required],
       status: [TaskStatus.todo, Validators.required],
-      deadline: ['', Validators.required],
+      deadline: ['', [Validators.required, futureDateValidator()]],
       isDesactivated: [false],
       user_id: [null, Validators.required],
-      group_id: [null, Validators.required]
+      group_id: []
     });
   }
 
@@ -70,7 +67,7 @@ export class TaskFormComponent {
           this.taskForm.value.description,
           this.taskForm.value.status,
           new Date(this.taskForm.value.deadline),
-          Number(this.taskForm.value.group_id),
+          Number(this.groupId),
           Number(this.taskForm.value.user_id),
           this.taskForm.value.isDesactivated,
         );
@@ -81,7 +78,7 @@ export class TaskFormComponent {
           this.userService.getUserData(user.email).subscribe({
             next: (user: User) => {
               this.authService.setUser(user); // Sauvegarde de l'utilisateur dans le localStorage
-              this.router.navigate(['/kanban']); // Redirection vers la page de tableau de bord
+              this.dialogRef.close();            
             },
             error: (error: any) => {
               console.error('Login failed:', error);
@@ -94,43 +91,9 @@ export class TaskFormComponent {
   }
   }
 
-  onGroupChange() {
-    const groupId = this.taskForm.get('group_id')?.value; 
-    if (groupId) {
-      this.userService.getUsersbygroup(groupId).subscribe(
-        (users) => {
-          this.users = users; // Met à jour la liste des utilisateurs
-          // Ne réinitialisez pas le champ utilisateur pour garder la sélection actuelle
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération des utilisateurs:', error);
-        }
-      );
-    } 
-    // Si aucun groupe n'est sélectionné, vous pouvez garder la liste actuelle des utilisateurs
-  }
-  
-  onUserChange() {
-    const userId = this.taskForm.get('user_id')?.value; // Récupère l'ID de l'utilisateur sélectionné
-    if (userId) {
-      this.groupService.getGroupsByUser(userId).subscribe(
-        (groups) => {
-          this.groups = groups; // Met à jour la liste des groupes
-          // Ne réinitialisez pas le champ groupe pour garder la sélection actuelle
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération des groupes:', error);
-        }
-      );
-    } 
-    // Si aucun utilisateur n'est sélectionné, vous pouvez garder la liste actuelle des groupes
-  }
-  
-  
-
 
   navigateToTasks(): void {
-    this.router.navigate(["kanban"]); // Redirect to task list
+    this.dialogRef.close(); // Redirect to task list
   }
 
   

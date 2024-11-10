@@ -1,0 +1,17 @@
+<div class="background">
+  <div class="container">
+    <div class="welcome-section">
+      <h1 *ngIf="userName">Welcome back, {{ userName }}.</h1>
+      <p>Pick up where you left off in Work Together.</p>
+    </div>
+    <div *ngFor="let group of userGroups" class="group-card">
+      <div class="group-info">
+        <img [src]="'assets/image/' + group.profilePicture" alt="Profile Picture" class="profile-pic" />
+        <div class="group-name">{{ group.nom }}</div>
+      </div>
+      <button id="jira-button" class="group-button" tabindex="0" type="button" (click)="goToKanban(group.id)">
+        <span>Go to Group</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,10 @@ package PI.dsi32.ToDoAppBack.Entities; // Déclaration du package pour les entit
 import java.io.Serializable; // Importation pour permettre la sérialisation.
 import java.time.LocalDateTime; // Importation pour gérer les dates et heures.
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import PI.dsi32.ToDoAppBack.enums.TaskStatus; // Importation de l'énumération TaskStatus.
 import jakarta.persistence.Entity; // Importation pour la définition de l'entité JPA.
 import jakarta.persistence.EnumType; // Importation pour spécifier le type d'énumération.
@@ -26,20 +30,24 @@ public class Task implements Serializable { // La classe implémente Serializabl
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime deadline;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
     private boolean isDestactive;
 
     // Chaque tâche a un seul utilisateur
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     // Chaque tâche appartient à un seul groupe
     @ManyToOne
     @JoinColumn(name = "group_id")
+    @JsonIgnore
     private GroupEntity group;
     
     public Task() {

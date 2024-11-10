@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import PI.dsi32.ToDoAppBack.Entities.Task;
-import PI.dsi32.ToDoAppBack.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -33,6 +32,9 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     );
 
     List<Task> findByUserId(int userId);
+    
+    List<Task> findByGroupId(int groupId);
+    
     List<Task> findByDeadline(LocalDateTime deadline);
 
 }

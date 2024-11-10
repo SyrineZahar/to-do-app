@@ -7,13 +7,15 @@ import { GroupFormComponent } from './components/group-form/group-form.component
 import { GroupsComponent } from './components/groups/groups.component';
 import { LoginComponent } from './components/login/login.component';
 import { adminGuard, authGuardGuard } from './guards/auth-guard.guard';
+import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 
 // Définition des routes de l'application
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" }, // Redirection vers SignupComponent par défaut
+  { path: "userdashboard", component: DashboardUserComponent, canActivate: [authGuardGuard]},
   { path: "signup", component: SignupComponent }, // Route pour le composant d'inscription
   { path: "login", component: LoginComponent }, // Route pour le composant de Login
-  { path: "kanban", component: KanbanDashboardComponent, canActivate: [authGuardGuard] }, // Route vers KanbanDashboardComponent
+  { path: "kanban/:id", component: KanbanDashboardComponent, canActivate: [authGuardGuard] }, // Route vers KanbanDashboardComponent
   { path: "taskForm", component: TaskFormComponent, canActivate: [authGuardGuard] }, // Route pour TaskFormComponent
   { path: "groups", component: GroupsComponent, canActivate: [authGuardGuard] }, // Route pour GroupsComponent
   { path: "groupForm", component: GroupFormComponent, canActivate: [adminGuard] }, // Route pour GroupFormComponent, accessible uniquement par admin

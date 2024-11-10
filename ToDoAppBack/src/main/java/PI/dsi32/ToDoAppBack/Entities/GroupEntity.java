@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
@@ -26,9 +28,11 @@ public class GroupEntity implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "groups")
+    @JsonIgnore 
 	private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Task> tasks;
 
     public GroupEntity() {

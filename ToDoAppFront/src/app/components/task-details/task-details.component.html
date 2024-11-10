@@ -1,12 +1,31 @@
-<div class="task-details-dialog">
-    <h1 class="task-title">{{ data.task.title }}</h1>
-    <div class="task-details">
-      <p><strong>Description:</strong> {{ data.task.description }}</p>
-      <p><strong>Duration:</strong> {{ data.task.deadline }} hours</p>
+<div class="task">
+  <h1 class="text-center">Task Details</h1>
+  <div class="task-details-dialog">
+    <!-- Left section: Comments -->
+    <div class="task-comments">
+      <h2>Comments</h2>
+      <div class="comment-list">
+        <!-- Loop to display existing comments -->
+        <div *ngFor="let comment of data.task.comments" class="comment-item">
+          <p><strong>{{ comment.user }}</strong> - </p>
+          <p>{{ comment.text }}</p>
+        </div>
+      </div>
+      
+      <!-- Section to add a comment -->
+      <div class="add-comment">
+        <textarea placeholder="Add a comment..."></textarea>
+        <button>Submit</button>
+      </div>
     </div>
-    <div class="task-actions">
-      <!-- <button mat-button [mat-dialog-close]="true"  class="btn btn-secondary">Close</button> -->
-      <!-- <button mat-button (click)="onEdit()" [mat-dialog-close]="true" class="btn btn-primary">Edit</button> -->
-      <!-- <button mat-button (click)="onDelete()" [mat-dialog-close]="true" class="btn btn-danger">Delete</button> -->
+
+    <!-- Right section: Task details -->
+    <div class="task-details">
+      <h2>Task Details</h2>
+      <p><strong>Title:</strong> {{ data.task.title }}</p>
+      <p><strong>Description:</strong> {{ data.task.description }}</p>
+      <p><strong>Deadline:</strong> {{ data.task.deadline }}</p>
+      <p><strong>Assigned to:</strong> </p>
     </div>
   </div>
+</div>

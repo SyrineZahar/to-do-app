@@ -77,17 +77,17 @@ public class TaskController {
 
 
 
-    @PutMapping("/{id}")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
         try {
-        	System.out.println(task);
-        	task.setUpdatedAt(LocalDateTime.now()); 
+            task.setUpdatedAt(LocalDateTime.now());
             Task updatedTask = taskService.editTask(task);
             return new ResponseEntity<>(updatedTask, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity("Error updating task: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Erreur lors de la mise à jour de la tâche : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 
     @PostMapping("/notifyUsers")
@@ -105,6 +105,11 @@ public class TaskController {
     @GetMapping("/users/{userId}")
     public List<Task> findByUserId(@PathVariable int userId){
         return taskService.findByUserId(userId);
+    }
+    
+    @GetMapping("/groups/{groupId}")
+    public List<Task> findByGrouprId(@PathVariable int groupId){
+        return taskService.findByGroupId(groupId);
     }
 
 

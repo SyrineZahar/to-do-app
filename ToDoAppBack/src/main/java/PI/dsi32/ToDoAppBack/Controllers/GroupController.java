@@ -51,7 +51,7 @@ public class GroupController {
         }
     }
     
-    @GetMapping("/{userId}") // Mapping pour récupérer les groupes par ID utilisateur.
+    @GetMapping("/user/{userId}") // Mapping pour récupérer les groupes par ID utilisateur.
     public ResponseEntity<List<GroupEntity>> getGroupsByUserId(@PathVariable Integer userId) {
         List<GroupEntity> groups = groupService.getGroupsForUser(userId); // Appel de la méthode dans le repository.
         

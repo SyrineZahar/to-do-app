@@ -5,15 +5,16 @@
     --card-bg-color: rgba(30, 30, 30, 0.85); 
     --text-color-dark: #2d3436;
     --text-color-light: #ffffff;
-    --primary-color: #6c5ce7;
+    --primary-color: #1868D8;
     --secondary-color: #74b9ff;
-    --background-color: #151515;
+    --background-color: #ffffff;
     --input-border-color: #dfe6e9;
     --error-color: #ff7675;
 }
 
 html, body {
     height: 100%;
+    width: 100%;
     margin: 0;
     font-family: 'Roboto', "Helvetica Neue", sans-serif;
     background-color: var(--background-color);
@@ -32,7 +33,6 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow-x: hidden;
-    background: linear-gradient(to bottom right, #0b0b0b, #2d3436);
 }
 
 a {
@@ -42,7 +42,7 @@ a {
 }
 
 a:hover {
-    color: #5e50db;
+    color: #1868D8;
 }
 
 button {
@@ -57,7 +57,7 @@ button {
 }
 
 button:hover {
-    background-color: #5e50db;
+    background-color: #1868D8;
     transform: scale(1.05); 
 }
 
@@ -77,15 +77,13 @@ button:hover {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-    text-shadow: 2px 4px 6px rgba(0, 0, 0, 0.5), 
-                 0px 0px 10px rgba(108, 92, 231, 0.7); 
     color: #fff;
     font-weight: 700;
 }
 
 p {
     line-height: 1.6;
-    color: var(--text-color-light);
+    color: black;
     margin-bottom: 1rem;
 }
 
@@ -102,7 +100,7 @@ input, textarea {
 
 input:focus, textarea:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(108, 92, 231, 0.7); 
+    box-shadow: 0 0 10px #1868D8; 
 }
 
 label {
@@ -154,6 +152,9 @@ html, body {
 
 
 
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

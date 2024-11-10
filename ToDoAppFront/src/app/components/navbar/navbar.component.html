@@ -1,11 +1,13 @@
 <nav>
     <ul>
-        <li><a routerLink="/kanban">Tableau Kanban</a></li>
-        <li><a routerLink="/taskForm">Formulaire de Tâche</a></li>
-        <li><a routerLink="/groups">Groupes</a></li>
-        <li><a routerLink="/groupForm">Formulaire de Groupe</a></li>
+        <li><a routerLink="/kanban" routerLinkActive="active">Tableau Kanban</a></li>
+        <li><a routerLink="/taskForm" routerLinkActive="active">Formulaire de Tâche</a></li>
+        <li><a routerLink="/groups" routerLinkActive="active">Groupes</a></li>
+        <li><a routerLink="/groupForm" routerLinkActive="active">Formulaire de Groupe</a></li>
     </ul>
 
-    <div id="google_translate_element"></div>
-    <button onclick="onLogout()" >Logout</button>
+    <div class="navbar-right">
+        <button (click)="onLogout()">Logout</button>
+        <div id="google_translate_element"></div>
+    </div>
 </nav>

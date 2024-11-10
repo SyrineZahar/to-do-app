@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/service/Auth.service';
 
 /**
@@ -13,7 +14,7 @@ import { AuthService } from 'src/app/service/Auth.service';
   styleUrls: ['./navbar.component.css'] // Chemin vers le fichier CSS du composant
 })
 export class NavbarComponent {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
     // Méthode appelée lors de l'initialisation du composant
@@ -43,5 +44,6 @@ export class NavbarComponent {
 
   onLogout() {
     this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

@@ -54,9 +54,17 @@ public class TaskServiceImpl implements ITaskService {
 
     @Override
     public Task editTask(Task task) {
-        // Met à jour une tâche existante dans le dépôt et retourne la tâche mise à jour.
-        return taskRepo.save(task);
+        // Vérifier si la tâche existe dans la base de données en utilisant son ID.
+        Task existingTask = taskRepo.findById(task.getId())
+            .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + task.getId()));
+
+        // Mettre à jour uniquement le statut de la tâche.
+        existingTask.setStatus(task.getStatus());
+
+        // Enregistrer la tâche mise à jour et retourner la tâche.
+        return taskRepo.save(existingTask);
     }
+
 
 
 
@@ -97,6 +105,11 @@ public class TaskServiceImpl implements ITaskService {
     @Override
     public List<Task> findByUserId(int userId) {
         return taskRepo.findByUserId(userId);
+    }
+    
+    @Override
+    public List<Task> findByGroupId(int groupId) {
+        return taskRepo.findByGroupId(groupId);
     }
 
     @Override

@@ -18,10 +18,5 @@ export class TaskDetailsComponent {
     private router: Router,
     private taskService: taskService
 ) {}
-  onEdit(): void {
-    
-  }
-  onDelete(): void {
   
-  }
 }

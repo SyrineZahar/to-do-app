@@ -33,7 +33,7 @@ h1 {
 
 /* Colonne du Kanban */
 .kanban-column {
-  background: linear-gradient(135deg, #3f3f3f, #1a1a1a); /* Dégradé de couleur pour l'arrière-plan */
+  background: linear-gradient(135deg, #b0b0b0, #ffffff); /* Dégradé de couleur pour l'arrière-plan */
   border-radius: 8px; /* Coins arrondis */
   width: 100%; /* Largeur maximale */
   min-width: 250px; /* Largeur minimale */
@@ -61,18 +61,17 @@ h1 {
 
 /* Élément Kanban */
 .kanban-item {
-  background-color: #2d2d2d; /* Couleur de fond des éléments Kanban */
-  color: var(--text-color-light); /* Couleur du texte */
+  color: black; /* Couleur du texte */
+  background-color: rgba(255, 254, 254, 0.2);
+  box-shadow: #333;
   border-radius: 6px; /* Coins arrondis */
   padding: 0.75rem; /* Espacement interne */
   margin-bottom: 0.5rem; /* Marge inférieure */
   cursor: pointer; /* Change le curseur en pointeur */
   transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur */
 }
-
-/* Effet au survol d'un élément Kanban */
-.kanban-item:hover {
-  background-color: var(--primary-color); /* Change la couleur de fond au survol */
+.kanban-item:hover{
+  background-color: rgba(142, 142, 142, 0.2);
 }
 
 /* Styles responsives */
@@ -148,4 +147,20 @@ h1 {
 .mat-paginator .mat-select-trigger {
   background: #2d2d2d; /* Couleur de fond */
   color: var(--text-color-light); /* Couleur du texte */
+}
+
+.add-item{
+  background-color: transparent;
+  width: 100%;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  padding: 0.75rem;
+  justify-content: flex-start;
+  flex-direction: row;
+}
+.add-item:hover{
+  background-color: rgba(142, 142, 142, 0.2);
+  border-radius: 6px; /* Coins arrondis */
+  padding: 0.75rem;
 }
