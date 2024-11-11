@@ -46,5 +46,15 @@ export class DashboardAdminComponent implements OnInit {
     );
   }
 
+  notifyUsers(){
+    this.taskService.notifyUsers().subscribe(
+      next=>{
+        alert('emails sent')
+      },
+      error=>{
+        alert(error)
+      }
+    )
+  }
 
 }

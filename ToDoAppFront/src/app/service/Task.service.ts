@@ -76,4 +76,7 @@ export class taskService {
     updateTask(taskId:Number, task: Task){
         return this.httpClient.put(`${this.URL}/${taskId}`, task)
     }
+    notifyUsers(){
+        return this.httpClient.post(`${this.URL}/notifyUsers`,'')
+    }
 }
