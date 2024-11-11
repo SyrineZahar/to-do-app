@@ -13,6 +13,9 @@
   }
   
   .sidebarRight {
+    /* backdrop-filter: blur(20px); */
+    background-size: cover;  /* Ensures the image covers the whole background */
+    background-position: center; /* Centers the background image */
     width: 1000px; /* Vous pouvez garder la largeur si nécessaire */
     height:500px;
     background-color: #4e4e4e;
@@ -141,5 +144,18 @@
     align-items: normal;
     height: auto;
     width: auto;
+  }
+  .filter-add-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+    margin-top: 20px;
+  }
+
+  
+  .form-group {
+    flex: 1;
+    padding: 0 10px;
+    text-align: center;
   }
   

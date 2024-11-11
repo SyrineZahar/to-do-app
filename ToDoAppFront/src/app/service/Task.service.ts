@@ -55,8 +55,8 @@ export class taskService {
     }
 
 
-    getTasksByUserId(userId: number) {
-        return this.httpClient.get<Task[]>(`${this.URL}/users/${userId}`); // Correctly constructs the URL with userId
+    getTasksByUserIdAndGroupId(userId: number, groupId:number) {
+        return this.httpClient.get<Task[]>(`${this.URL}/${userId}/${groupId}`); // Correctly constructs the URL with userId
     }
     getTasksByGroupId(groupId: number) {
         return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);
@@ -69,5 +69,11 @@ export class taskService {
     getDescriptionSummary(description: string): Observable<{ summarized_text: string }> {
         return this.httpClient.post<{ summarized_text: string }>(`${this.URL}/descriptionSum`, { description });
     }  
-      
+    deleteTask(taskId:Number){
+        return this.httpClient.delete(`${this.URL}/${taskId}`)
+    }
+
+    updateTask(taskId:Number, task: Task){
+        return this.httpClient.put(`${this.URL}/${taskId}`, task)
+    }
 }

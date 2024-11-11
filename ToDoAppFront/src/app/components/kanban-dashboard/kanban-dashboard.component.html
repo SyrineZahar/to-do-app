@@ -23,10 +23,13 @@
         <div class="kanban-item" *ngFor="let task of todolist" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
-          {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
+          {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>  
+          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
+            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
+          </button> -->
           <!-- Éléments Kanban pour chaque tâche, pouvant être déplacés par glisser-déposer -->
         </div>
-        <div class="add-item" (click)="openAddTask()"><img src="assets/icons/circle-plus-solid.svg" alt="Description of the SVG" width="20px" height="20px">&nbsp;<span>Add Task</span></div>
+        <div class="add-item" (click)="openAddTask($event)"><img src="assets/icons/circle-plus-solid.svg" alt="Description of the SVG" width="20px" height="20px">&nbsp;<span>Add Task</span></div>
       </div>
     </div>
     
@@ -43,6 +46,9 @@
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
           {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
+          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
+            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
+          </button> -->
           <!-- Éléments Kanban pour chaque tâche en cours -->
         </div>
       </div>
@@ -61,6 +67,9 @@
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
           {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
+          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
+            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
+          </button> -->
           <!-- Éléments Kanban pour chaque tâche terminée -->
         </div>
       </div>

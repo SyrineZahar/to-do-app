@@ -103,8 +103,8 @@ public class TaskServiceImpl implements ITaskService {
     }
 
     @Override
-    public List<Task> findByUserId(int userId) {
-        return taskRepo.findByUserId(userId);
+    public List<Task> findByUserIdAndGroupId(int userId, int groupId) {
+        return taskRepo.findByUserIdAndGroupId(userId, groupId);
     }
     
     @Override
@@ -136,6 +136,11 @@ public class TaskServiceImpl implements ITaskService {
         ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
 
         return response.getBody();
+    }
+
+    @Override
+    public void deleteTask(int taskId) {
+        taskRepo.deleteById(taskId);
     }
 
 

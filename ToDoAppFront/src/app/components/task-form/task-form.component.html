@@ -1,65 +1,65 @@
 <div class="add-task">
-    <h1 class="text-center">Add Task</h1>
+    <h1 class="text-center">{{ isUpdate ? 'Update Task' : 'Add Task' }}</h1>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
-        <!-- Champ pour le titre de la tâche -->
-        <div class="form-group">
-            <label for="title">Titre</label>
-            <input
-                id="title"  
-                type="text"  
-                class="form-control"  
-                formControlName="title"  
-                placeholder="Entrer le titre de la tâche"
-            />
-        </div>
-    
-        <!-- Champ pour la description de la tâche -->
-        <div class="form-group">
-            <label for="description">Description</label>
-            <textarea
-                id="description"  
-                class="form-control"  
-                formControlName="description"  
-                placeholder="Entrer la description"
-            ></textarea>
-        </div>
-    
-        <!-- Menu déroulant pour sélectionner le statut de la tâche -->
-        <div class="form-group">
-            <label for="status">Statut</label>
-            <select id="status" class="form-control" formControlName="status">
-                <option *ngFor="let status of taskStatuses" [value]="status">
-                    {{ status }}  <!-- Affichage du statut -->
-                </option>
-            </select>
-        </div>
-    
-        <!-- Champ pour définir la date limite de la tâche -->
-        <div class="form-group">
-            <label for="deadline">Deadline</label>
-            <input
-                id="deadline"  
-                type="date" 
-                class="form-control"  
-                formControlName="deadline"  
-            />
-        </div>
-    
-        <!-- Menu déroulant pour sélectionner l'utilisateur assigné -->
-        <div class="form-group">
-            <label for="user_id">Utilisateur assigné</label>
-            <select id="user_id" class="form-control" formControlName="user_id">
-              <option value="" disabled selected>Choisir un utilisateur</option> <!-- Placeholder option -->
-              <option *ngFor="let user of users" [value]="user.id">
-                {{ user.name }}
-              </option>
-            </select>
-        </div>
-    
-        <!-- Bouton pour soumettre le formulaire -->
-        <button type="submit" class="btn btn-primary">Enregistrer</button>
-        <!-- Bouton pour annuler et retourner à la liste des tâches -->
-        <button type="button" class="btn btn-secondary" (click)="navigateToTasks()">Annuler</button>
+      <!-- Champ pour le titre de la tâche -->
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          id="title"  
+          type="text"  
+          class="form-control"  
+          formControlName="title"  
+          placeholder="Enter a title"
+        />
+      </div>
+  
+      <!-- Champ pour la description de la tâche -->
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"  
+          class="form-control"  
+          formControlName="description"  
+          placeholder="Enter a description"
+        ></textarea>
+      </div>
+  
+      <!-- Menu déroulant pour sélectionner le statut de la tâche -->
+      <div class="form-group">
+        <label for="status">Status</label>
+        <select id="status" class="form-control" formControlName="status">
+          <option *ngFor="let status of taskStatuses" [value]="status">
+            {{ status }}  <!-- Affichage du statut -->
+          </option>
+        </select>
+      </div>
+  
+      <!-- Champ pour définir la date limite de la tâche (hidden for update) -->
+      <div class="form-group" >
+        <label for="deadline">Deadline</label>
+        <input
+          id="deadline"  
+          type="date" 
+          class="form-control"  
+          formControlName="deadline"  
+        />
+      </div>
+  
+      <!-- Menu déroulant pour sélectionner l'utilisateur assigné (hidden for update) -->
+      <div class="form-group" >
+        <label for="user_id">Assigner user</label>
+        <select id="user_id" class="form-control" formControlName="user_id">
+          <option value="" disabled selected>Choisir un utilisateur</option> <!-- Placeholder option -->
+          <option *ngFor="let user of users" [value]="user.id">
+            {{ user.name }}
+          </option>
+        </select>
+      </div>
+  
+      <!-- Bouton pour soumettre le formulaire -->
+      <button type="submit" class="btn btn-primary">save</button>
+      <!-- Bouton pour annuler et retourner à la liste des tâches -->
+      <button type="button" class="btn btn-secondary" (click)="navigateToTasks()">cancel</button>
     </form>
-    
-</div>
+  </div>
+  

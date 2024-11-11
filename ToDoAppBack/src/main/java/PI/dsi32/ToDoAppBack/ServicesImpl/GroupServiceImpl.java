@@ -4,6 +4,7 @@ import java.util.List; // Importation de la classe List.
 import java.util.Optional;
 
 
+import PI.dsi32.ToDoAppBack.Controllers.Exceptions.UserAlreadyInGroupException;
 import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
 import org.springframework.stereotype.Service; // Importation de l'annotation Service. // Import MimeMessage
 
@@ -61,32 +62,48 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
     }
 
     @Override
+    public void deleteGroupById(Integer groupId) {
+        groupRepo.deleteById(groupId);
+    }
+
+    @Override
+    public GroupEntity updateGroup(GroupEntity group) {
+        return groupRepo.save(group);
+    }
+
+    @Override
     @Transactional // Ensure the method is transactional
     public void addUserToGroup(int groupId, User user) {
         // Retrieve the group by ID
         GroupEntity group = groupRepo.findById(groupId)
-            .orElseThrow(() -> new RuntimeException("Group not found"));
+                .orElseThrow(() -> new RuntimeException("Group not found"));
 
         // If user is already in the database, load the managed user
         User managedUser = userRepo.findById(user.getId())
-            .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Add the user to the group's list of users
-        group.getUsers().add(managedUser);
+        // Check if the user is already in the group
+        if (!group.getUsers().contains(managedUser)) {
+            // Add the user to the group's list of users
+            group.getUsers().add(managedUser);
 
-        // Add the group to the user's list of groups
-        managedUser.getGroups().add(group);
+            // Add the group to the user's list of groups
+            managedUser.getGroups().add(group);
 
-        // Save the user or the group
-        userRepo.save(managedUser);  // Saving only the user is fine because it's bidirectional
+            // Save the user (since the relation is bidirectional, saving the user is enough)
+            userRepo.save(managedUser);
 
-        String emailContent = "Dear " + user.getName() + ",\n\n"
-                + "You've been added to a new group in the Work Together application. "
-                + "We hope you enjoy collaborating with your team!\n\n"
-                + "Best regards,\nThe Work Together Team";
-        emailSender.sendSimpleEmail(user,emailContent);
-
+            // Send email to the user
+            String emailContent = "Dear " + user.getName() + ",\n\n"
+                    + "You've been added to a new group in the Work Together application. "
+                    + "We hope you enjoy collaborating with your team!\n\n"
+                    + "Best regards,\nThe Work Together Team";
+            emailSender.sendSimpleEmail(user, emailContent);
+        } else {
+            throw new UserAlreadyInGroupException("User is already in the group");
+        }
     }
+
 
 
 

@@ -3,6 +3,7 @@ package PI.dsi32.ToDoAppBack.Controllers; // Déclaration du package pour le con
 import java.util.List; // Importation de la classe List pour les collections.
 import java.util.Optional;
 
+import PI.dsi32.ToDoAppBack.Controllers.Exceptions.UserAlreadyInGroupException;
 import org.springframework.beans.factory.annotation.Autowired; // Annotation pour l'injection de dépendances.
 import org.springframework.http.HttpStatus; // Importation des statuts HTTP.
 import org.springframework.http.ResponseEntity; // Importation de la classe ResponseEntity pour les réponses HTTP.
@@ -53,17 +54,21 @@ public class GroupController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
         }
     }
-    
-    @PostMapping("/{groupId}/users") // Gère les requêtes POST pour ajouter un utilisateur à un groupe.
-    public String addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
+
+    @PostMapping("/{groupId}/users")
+    public ResponseEntity<String> addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
         try {
             groupService.addUserToGroup(groupId, user);
-
-            return "done";
+            return ResponseEntity.ok().build();
+        } catch (UserAlreadyInGroupException e) {
+            // Return a specific message when the user is already in the group
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST); // 400 Bad Request
         } catch (RuntimeException e) {
-            return e.toString(); // Retourne un statut 500 en cas d'erreur.
+            // Return a generic error message for other exceptions
+            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
         }
     }
+
     
     @GetMapping("/user/{userId}") // Mapping pour récupérer les groupes par ID utilisateur.
     public ResponseEntity<List<GroupEntity>> getGroupsByUserId(@PathVariable Integer userId) {
@@ -98,6 +103,33 @@ public class GroupController {
         }catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
+        }
+    }
+
+    @DeleteMapping("/{groupId}")
+    public ResponseEntity<String> deleteGroup(@PathVariable int groupId) {
+        try{
+            groupService.deleteGroupById(groupId);
+            return ResponseEntity.ok().build();
+
+        }
+        catch (RuntimeException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
+
+    @PutMapping("/{groupId}")
+    public ResponseEntity<GroupEntity> updateGroup(
+            @PathVariable Integer groupId,
+            @RequestBody GroupEntity group) {
+        try {
+            group.setId(groupId);
+            GroupEntity updatedGroup = groupService.updateGroup(group);
+            return ResponseEntity.ok(updatedGroup);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

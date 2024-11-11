@@ -9,6 +9,7 @@ import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFormComponent } from '../task-form/task-form.component';
 import { userService } from 'src/app/service/User.service';
+import { DialogRef } from '@angular/cdk/dialog';
 
 /**
  * Composant pour le tableau de bord Kanban.
@@ -102,17 +103,22 @@ export class KanbanDashboardComponent implements OnInit {
   }
 
   onDragOver(event: DragEvent): void {
-    // Gère l'événement de glisser sur une zone de dépôt
-    event.preventDefault(); // Permet le dépôt
+    event.preventDefault(); 
   }
 
   openTaskDetails(task: Task) {
-    this.dialog.open(TaskDetailsComponent, {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
       data: { task }
     });
+  
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadTasks(); 
+    });
   }
+  
 
-  openAddTask() {
+  openAddTask(event: MouseEvent): void {
+    event.stopPropagation(); // Prevent the click event from reaching other elements
     const dialogRef = this.dialog.open(TaskFormComponent, {
       data: { group_id: this.groupId }
     });
@@ -121,6 +127,24 @@ export class KanbanDashboardComponent implements OnInit {
     });
   }
   
+  
+  navigateToUpdateTask(taskId: number): void {
+    // Find the task by its ID
+    const taskToUpdate = this.tasks.find(task => task.id === taskId);
+  
+    if (taskToUpdate) {
+      // Open the TaskFormComponent dialog and pass the task data
+      console.log(taskToUpdate)
+      const dialogRef = this.dialog.open(TaskFormComponent, {
+        data: { task: taskToUpdate, group_id: this.groupId } // Pass the task to the form component
+      });
+  
+      // After the dialog is closed, reload the tasks to reflect any changes
+      dialogRef.afterClosed().subscribe(() => {
+        this.loadTasks();
+      });
+    }
+  }
   
 
 }

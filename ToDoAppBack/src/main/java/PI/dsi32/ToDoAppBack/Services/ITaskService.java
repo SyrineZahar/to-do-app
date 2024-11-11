@@ -12,13 +12,14 @@ public interface ITaskService { // Interface définissant les opérations de ser
     //Task addTask(Task task); // Méthode pour ajouter une nouvelle tâche.
     
     Task editTask(Task task); // Méthode pour modifier une tâche existante.
-    
+
 
     void addTaskWithSQL(Task task, int userId, int groupId);
+    //void addTaskWithSQL(Task task, int userId, int groupId);
 
     void notifyUsers(List<Task> tasks);
 
-    List<Task> findByUserId(int userId);
+    List<Task> findByUserIdAndGroupId(int userId, int groupId);
     
     List<Task> findByGroupId(int groupId);
 
@@ -28,5 +29,5 @@ public interface ITaskService { // Interface définissant les opérations de ser
 
     String getDescriptionSummary(String description);
 
-
+    void deleteTask(int taskId);
 }

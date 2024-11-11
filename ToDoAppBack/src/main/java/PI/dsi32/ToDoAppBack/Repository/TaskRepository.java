@@ -31,7 +31,7 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             @Param("groupId") int groupId
     );
 
-    List<Task> findByUserId(int userId);
+    List<Task> findByUserIdAndGroupId(int userId, int groupId);
     
     List<Task> findByGroupId(int groupId);
     

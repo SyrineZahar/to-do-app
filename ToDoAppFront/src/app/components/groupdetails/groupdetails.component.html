@@ -1,38 +1,53 @@
-<div class="sidebarRight">
-    <h2>{{ data.group.nom }} - Détails</h2>
-    <img [src]="'assets/image/' + data.group.profilePicture" alt="Profile Picture" class="profile-pic" />
-  
+<div class="sidebarRight" [style.background-image]="'url(assets/image/' + data.group.backgroundImage + ')'" >
+  <h2>{{ data.group.nom }} - Details</h2>
+  <img [src]="'assets/image/' + data.group.profilePicture" alt="Profile Picture" class="profile-pic" />
+
+  <!-- Container for filter and add user sections -->
+  <div class="filter-add-container">
+    <!-- Filter tasks by user -->
     <div class="form-group" [formGroup]="filterForm">
-      Filtrer les tâches par utilisateur
+      Filtrer per user
       <select id="filter_user_id" class="form-control" formControlName="filter_user_id" (change)="filterTasksByUser()">
-        <option value="" disabled selected>Choisir un utilisateur</option>
-        <option *ngFor="let user of users" [value]="user.id">
+        <option value="" disabled selected>Choose user</option>
+        <option *ngFor="let user of groupUser" [value]="user.id">
           {{ user.name }}
         </option>
       </select>
     </div>
-    
-    <!-- Display filtered task details -->
-    <div class="task-list">
-      <h3>Tâches du groupe:</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Titre</th>
-            <th>Created At</th>
-            <th>Deadline</th>
-            <th>Statut</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let task of filteredTasks">
-            <td>{{ task.title }}</td>
-            <td>{{ task.createdAt }}</td>
-            <td>{{ task.deadline }}</td>
-            <td>{{ task.status }}</td>
-          </tr>
-        </tbody>
-      </table>
+
+    <!-- Add user to group section -->
+    <div class="form-group" [formGroup]="userForm">
+      Add user to group
+      <select id="add_user_id" class="form-control" formControlName="user_id">
+        <option value="" disabled selected>Choose user</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+      <button (click)="addUser()" class="btn btn-primary mt-2">Add</button>
     </div>
   </div>
-  
+
+  <!-- Display filtered task details -->
+  <div class="task-list">
+    <h3>Group Tasks:</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Created At</th>
+          <th>Deadline</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of filteredTasks">
+          <td>{{ task.title }}</td>
+          <td>{{ task.createdAt }}</td>
+          <td>{{ task.deadline }}</td>
+          <td>{{ task.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

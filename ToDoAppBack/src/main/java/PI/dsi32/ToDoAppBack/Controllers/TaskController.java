@@ -5,6 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import PI.dsi32.ToDoAppBack.Entities.GroupEntity;
+import PI.dsi32.ToDoAppBack.Entities.User;
+import PI.dsi32.ToDoAppBack.Repository.CommentRepository;
+import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
+import PI.dsi32.ToDoAppBack.Repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +28,12 @@ public class TaskController {
 
     @Autowired
     private TaskServiceImpl taskService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private GroupRepository groupRepository;
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping()
     public ResponseEntity<List<Task>> getAllTasks() {
@@ -36,21 +48,45 @@ public class TaskController {
     @PostMapping()
     public ResponseEntity<Map<String, String>> addTask(@RequestBody Map<String, Object> payload) {
         try {
-            // Extraire les valeurs du payload
+            // Extract values from payload
             String title = (String) payload.get("title");
+            System.out.println(title);
             String description = (String) payload.get("description");
+            System.out.println(description);
+
             String statusStr = (String) payload.get("status");
+            System.out.println(statusStr);
+
             LocalDateTime deadline = LocalDateTime.parse((String) payload.get("deadline"));
+            System.out.println(deadline);
+
             boolean isDestactive = (boolean) payload.get("isDestactive");
-            int userId = (int) payload.get("user_id");
-            int groupId = (int) payload.get("group_id");
+            System.out.println(isDestactive);
 
-            // Convertir le statut de la tâche en énumération
-            TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase()); // Assurez-vous que l'énumération correspond à la chaîne
+            // Check and parse userId and groupId
+            if (!payload.containsKey("user_id") || payload.get("user_id") == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "user_id is missing or null"));
+            }
+            int userId = ((Number) payload.get("user_id")).intValue();
+            System.out.println("userId: " + userId);
 
-            // Créer une nouvelle tâche
+            if (!payload.containsKey("group_id") || payload.get("group_id") == null) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body(Map.of("error", "group_id is missing or null"));
+            }
+            int groupId = ((Number) payload.get("group_id")).intValue();
+            System.out.println("groupId: " + groupId);
 
-            IUserService userService;
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            GroupEntity group = groupRepository.findById(groupId)
+                    .orElseThrow(() -> new RuntimeException("Group not found"));
+
+            // Convert status string to TaskStatus enum
+            TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase());
+
+            // Create new Task
             Task task = new Task();
             task.setTitle(title);
             task.setDescription(description);
@@ -58,31 +94,34 @@ public class TaskController {
             task.setDeadline(deadline);
             task.setDestactive(isDestactive);
 
-            // Appeler le service avec userId et groupId
+            // Call service to add task
             taskService.addTaskWithSQL(task, userId, groupId);
+
             Map<String, String> response = new HashMap<>();
             response.put("message", "Task created successfully");
-            
-            // Retourner une réponse avec le code HTTP 201 (Created)
+
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
-            
+
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body(Map.of("error", "Invalid task status: " + e.getMessage()));
+                    .body(Map.of("error", "Invalid task status: " + e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(Map.of("error", "Error creating task: " + e.getMessage()));
+                    .body(Map.of("error", "Error creating task: " + e.getMessage()));
         }
     }
 
 
 
+
+
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+    public ResponseEntity<Task> updateTask(@RequestBody Task task, @PathVariable int id) {
         try {
             task.setUpdatedAt(LocalDateTime.now());
+            task.setId(id);
             Task updatedTask = taskService.editTask(task);
-            return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return new ResponseEntity("Erreur lors de la mise à jour de la tâche : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -102,9 +141,9 @@ public class TaskController {
     }
 
 
-    @GetMapping("/users/{userId}")
-    public List<Task> findByUserId(@PathVariable int userId){
-        return taskService.findByUserId(userId);
+    @GetMapping("/{userId}/{groupId}")
+    public List<Task> findByUserIdAndGroupId(@PathVariable int userId,@PathVariable int groupId){
+        return taskService.findByUserIdAndGroupId(userId,groupId);
     }
     
     @GetMapping("/groups/{groupId}")
@@ -137,6 +176,18 @@ public class TaskController {
             String res = taskService.getDescriptionSummary(description);
             return new ResponseEntity<>(res, HttpStatus.OK);
         }catch (Exception e) {
+            return new ResponseEntity<>("the error:"+e, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @Transactional
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<String> deleteTask(@PathVariable int taskId){
+        try{
+            commentRepository.deleteByTaskId(taskId);
+            taskService.deleteTask(taskId);
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e) {
             return new ResponseEntity<>("the error:"+e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

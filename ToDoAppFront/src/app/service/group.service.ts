@@ -50,5 +50,9 @@ export class GroupService {
   getGroupStat(): Observable<number> {
     return this.httpClient.get<number>(`${this.URL}/stat`);
   }
+
+  deleteGroup(groupId:Number){
+    return this.httpClient.delete(`${this.URL}/${groupId}`)
+  }
   
 }

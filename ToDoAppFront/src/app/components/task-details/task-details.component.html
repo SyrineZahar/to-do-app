@@ -1,5 +1,9 @@
 <div class="task">
   <h1 class="text-center">Task Details</h1>
+  <button *ngIf="data.task.id" (click)="deleteTask(data.task.id)">
+    <img src="assets/icons/delete-svgrepo-com.svg"  width="20px" height="20px">
+  </button>
+
   <div class="task-details-dialog">
     <div class="task-comments">
       <h2>Comments</h2>
@@ -27,9 +31,9 @@
         <img src="assets/icons/microchip-solid.svg" alt="Description of the SVG" width="20px" height="20px">
       </button>
       <!-- Conditionally display the description summary -->
-      <div *ngIf="isSummaryVisible">
-        <h3>Description Summary:</h3>
-        <p>{{ summarizedText }}</p>
+      <div class="summary" *ngIf="isSummaryVisible">
+        <h2>Description summary: </h2>
+        <p> {{ summarizedText }}</p>
       </div>
     </div>
   </div>

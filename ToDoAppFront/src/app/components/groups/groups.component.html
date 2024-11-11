@@ -1,9 +1,15 @@
 <div class="container">
   <div class="sidebar">
     <div class="group-list">
-      <div class="group-item" (click)="selectGroup(group)" *ngFor="let group of groups">
+      <div class="group-item" (click)="selectGroup($event, group)" *ngFor="let group of groups">
         <img [src]="'assets/image/' + group.profilePicture" class="profile-pic" />
         <p>{{ group.nom }}</p>
+        <button class="deletebutton" *ngIf="group.id" (click)="deleteGroup(group.id, $event)">
+          <img src="assets/icons/delete-svgrepo-com.svg" width="20px" height="20px">
+        </button>
+        <button *ngIf="group.id" (click)="navigateToGroupForm(group, $event)">
+          <img src="assets/icons/edit-svgrepo-com.svg" width="20px" height="20px">
+        </button>
       </div>
     </div>
     <button class="group-form-button" (click)="navigateToGroupForm()">+ New Group</button>
