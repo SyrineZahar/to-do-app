@@ -87,7 +87,6 @@ public class TaskServiceImpl implements ITaskService {
                         ", Title: " + task.getTitle() +
                         ", Deadline: " + task.getDeadline() +
                         ", Group: " + (task.getGroup() != null ? task.getGroup().getNom() : "No group"));
-                System.out.println(task);
             }
         }
 

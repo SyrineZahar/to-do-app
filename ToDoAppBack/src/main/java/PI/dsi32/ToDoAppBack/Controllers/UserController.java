@@ -2,6 +2,7 @@ package PI.dsi32.ToDoAppBack.Controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -36,6 +37,23 @@ public class UserController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
         }
+    }
+    
+    @GetMapping("/name/{userId}")
+    public ResponseEntity<User> getUserNameById(@PathVariable int userId) {
+        Optional<User> user = userService.getUserById(userId);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
+        }
+    }
+    
+    @GetMapping("/taskId/{taskId}")
+    public ResponseEntity<User> getUserByTaskId(@PathVariable("taskId") Integer taskId) {
+        Optional<User> user = userService.getUserByTask(taskId);
+        return user.map(ResponseEntity::ok)
+                   .orElseGet(() -> ResponseEntity.notFound().build());
     }
     
     @GetMapping("/{groupId}") 

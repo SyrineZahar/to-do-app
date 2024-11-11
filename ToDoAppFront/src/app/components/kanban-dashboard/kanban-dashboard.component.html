@@ -23,7 +23,7 @@
         <div class="kanban-item" *ngFor="let task of todolist" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
-          {{ task.title }}
+          {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
           <!-- Éléments Kanban pour chaque tâche, pouvant être déplacés par glisser-déposer -->
         </div>
         <div class="add-item" (click)="openAddTask()"><img src="assets/icons/circle-plus-solid.svg" alt="Description of the SVG" width="20px" height="20px">&nbsp;<span>Add Task</span></div>
@@ -42,7 +42,7 @@
         <div class="kanban-item" *ngFor="let task of inProgressList" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
-          {{ task.title }}
+          {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
           <!-- Éléments Kanban pour chaque tâche en cours -->
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="kanban-item" *ngFor="let task of doneList" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
-          {{ task.title }}
+          {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
           <!-- Éléments Kanban pour chaque tâche terminée -->
         </div>
       </div>

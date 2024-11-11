@@ -62,14 +62,12 @@ export class taskService {
         return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);
     }
 
-
     getTaskstat(): Observable<number> {
         return this.httpClient.get<number>(`${this.URL}/stat`);
     }
 
     getDescriptionSummary(description: string): Observable<{ summarized_text: string }> {
         return this.httpClient.post<{ summarized_text: string }>(`${this.URL}/descriptionSum`, { description });
-    }   
-
-
+    }  
+      
 }

@@ -9,6 +9,7 @@ public interface IUserService {
 	List<User> getAllUsers();
 	Optional<User> getUserById(int userId);
 	List<User> getUsersByGroupId(Integer groupId);
+	Optional<User> getUserByTask(Integer taskId);
 	User getDataUser(String email);
 	Long countUsers();
 }

@@ -18,8 +18,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 import { MatIconModule } from '@angular/material/icon';
-import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';  // Import du module MatIconModule
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 
 
 /**
@@ -39,14 +39,14 @@ import { TaskDetailsComponent } from './components/task-details/task-details.com
     GroupsComponent, 
     LoginComponent,  
     TaskDetailsComponent,
-    TaskFormComponent, DashboardUserComponent, DashboardAdminComponent    // Composant pour le formulaire de tâche
+    TaskFormComponent, DashboardUserComponent , DashboardAdminComponent  // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular
     MatIconModule,
     AppRoutingModule,      // Module de routage pour gérer la navigation
     HttpClientModule,      // Module pour effectuer des requêtes HTTP
-    ReactiveFormsModule, BrowserAnimationsModule,     MatDialogModule,  
+    ReactiveFormsModule, BrowserAnimationsModule, MatDialogModule,  
 
     // Module pour utiliser les formulaires réactifs
   ],

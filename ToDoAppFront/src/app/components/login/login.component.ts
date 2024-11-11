@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserRole } from 'src/app/classe/Enum/UserRole.enum';
 import { User } from 'src/app/classe/User';
 import { AuthService } from 'src/app/service/Auth.service';
 

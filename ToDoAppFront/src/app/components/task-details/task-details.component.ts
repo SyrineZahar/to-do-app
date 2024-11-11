@@ -7,6 +7,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { taskService } from 'src/app/service/Task.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Comment } from 'src/app/classe/Comment';
+import { AuthService } from 'src/app/service/Auth.service';
+import { userService } from 'src/app/service/User.service';
+import { map, Observable, tap } from 'rxjs';
+import { User } from 'src/app/classe/User';
 
 @Component({
   selector: 'app-task-details',
@@ -18,20 +22,23 @@ export class TaskDetailsComponent {
   summarizedText: string = ''; // Store the description summary
   isSummaryVisible: boolean = false;
   commentForm: FormGroup;
+  assignedUser: String = ''; 
 
   ngOnInit(): void {
     this.loadComments();
-    console.log(Number(this.data.task.id))
+    if (this.data.task.id !== undefined) {
+      this.getUserByTaskId(Number(this.data.task.id));
+    }
   }
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { task: Task },
-    private dialogRef: MatDialogRef<TaskDetailsComponent>,
-    private router: Router,
+    private commentService: CommentService,
+    private authService: AuthService,
+    private UserService: userService,
     private taskService: taskService,
-    private commentService: CommentService
   ) {
     this.commentForm = new FormGroup({
-      text: new FormControl('', [Validators.required, Validators.maxLength(500)]),
+      description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
       user: new FormControl('currentUser', Validators.required), // Replace with actual user data if needed
       task: new FormControl(this.data.task.id, Validators.required) // Assuming task has an id
     });
@@ -41,10 +48,10 @@ export class TaskDetailsComponent {
   onSubmit() {
     if (this.commentForm.valid) {
       const commentData = this.commentForm.value;
-      
-      // Call the CommentService to add the comment
+      commentData.task = this.data.task;
+      commentData.user = this.authService.getUser();
       this.commentService.addComment(commentData).subscribe(response => {
-        this.dialogRef.close();
+        this.loadComments();
       }, error => {
         console.error('Error adding comment:', error);
       });
@@ -52,15 +59,21 @@ export class TaskDetailsComponent {
   }
 
   loadComments(): void {
-    // Charge les commentaires à partir du service
     this.commentService.getCommentsByTaskId(Number(this.data.task.id)).subscribe({
-      next: (data) => {
-        this.comments = data; // Stocke les commentaires récupérés
-        console.log(this.comments); // Affiche les commentaires dans la console pour le débogage
-        // Vous pouvez également ajouter des fonctions ici pour manipuler ou afficher les commentaires
+      next: (comments) => {
+        this.comments = comments;
+  
+        // Check and load user details if `user` is an ID
+        this.comments.forEach((comment, index) => {
+          if (typeof comment.user === 'number') {
+            this.UserService.getUserById(comment.user).subscribe(user => {
+              this.comments[index].user = user;
+            });
+          }
+        });
       },
       error: (err: HttpErrorResponse) => {
-        console.error('Failed to load comments:', err); // Gestion des erreurs
+        console.error('Failed to load comments:', err);
       }
     });
   }
@@ -77,5 +90,16 @@ export class TaskDetailsComponent {
       });
     }
   }
-
+  getUserByTaskId(taskId: number): void {
+    this.UserService.getUserByTaskId(taskId).subscribe({
+      next: (data) => {
+        this.assignedUser = data.name; 
+      },
+      error: (err) => {
+        console.error('Error fetching user data:', err);
+      }
+    });
+  }
+  
+  
 }

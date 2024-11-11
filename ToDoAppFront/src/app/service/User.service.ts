@@ -22,6 +22,10 @@ export class userService {
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' }); 
       
       return this.httpClient.post<any>(`${this.URL}/getData`, Data, { headers });
+    }
+
+    getUserById(userId: number): Observable<User> {
+      return this.httpClient.get<User>(`${this.URL}/name/${userId}`);
   }
 
     getUsersbygroup(groupId: number):Observable<User[]>{
@@ -30,5 +34,9 @@ export class userService {
 
     getUserstat(): Observable<number> {
       return this.httpClient.get<number>(`${this.URL}/stat`);
+  }
+
+  getUserByTaskId(taskId: number): Observable<User> {
+    return this.httpClient.get<User>(`${this.URL}/taskId/${taskId}`);
   }
 }

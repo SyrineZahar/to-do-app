@@ -1,11 +1,11 @@
 .login-wrapper {
-    height: 70vh;
-    width: 200vh;
+    height: 100vh;
+    width: 100vw;
     display: flex;
     justify-content: center;
     align-items: center;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
-                url('https://i.pinimg.com/originals/ac/54/a1/ac54a128942c750799c2c1fe144d2467.jpg') no-repeat center center/cover; /* Replace with actual image URL */
+                url('https://img.suedostschweizjobs.ch/e8e62e607c0198456acc_997xbgFFFFFF.jpeg') no-repeat center center/cover; /* Replace with actual image URL */
 }
 
 
@@ -70,7 +70,7 @@
 }
 
 .btn-submit:hover {
-    background: linear-gradient(135deg, #5e50db, #6bb9ff);
+    background: linear-gradient(135deg, var(--primary-color), #6bb9ff);
 }
 
 .error {

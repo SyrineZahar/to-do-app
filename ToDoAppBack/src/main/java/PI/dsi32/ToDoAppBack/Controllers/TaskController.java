@@ -90,7 +90,7 @@ public class TaskController {
 
 
 
-    @GetMapping("/notifyUsers")
+    @PostMapping("/notifyUsers")
     public String notifyUsersBeforeTwoDays() {
         // Retrieve the list of all tasks from the service.
         List<Task> allTasks = taskService.getAllTasks();

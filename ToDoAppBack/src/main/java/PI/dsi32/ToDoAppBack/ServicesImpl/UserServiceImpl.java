@@ -23,9 +23,14 @@ public class UserServiceImpl implements IUserService{
 	}
 	
 	
-	
+	@Override
 	public Optional<User> getUserById(int userId) {
         return userRepository.findById(userId);
+    }
+	
+	@Override
+	public Optional<User> getUserByTask(Integer taskId) {
+        return userRepository.findUserByTaskId(taskId);
     }
 	
 	@Override

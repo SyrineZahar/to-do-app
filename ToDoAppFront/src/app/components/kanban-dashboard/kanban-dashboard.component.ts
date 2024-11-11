@@ -8,6 +8,7 @@ import { taskService } from 'src/app/service/Task.service';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { userService } from 'src/app/service/User.service';
 
 /**
  * Composant pour le tableau de bord Kanban.
@@ -22,12 +23,12 @@ import { TaskFormComponent } from '../task-form/task-form.component';
   styleUrls: ['./kanban-dashboard.component.css'] // Chemin vers le fichier CSS du composant
 })
 export class KanbanDashboardComponent implements OnInit {
-  userName: String | undefined;
-  constructor(private taskService: taskService, private router: Router,private authService: AuthService, private dialog: MatDialog, private route: ActivatedRoute) { }
+  assignedUser!: String;
+  constructor(private taskService: taskService, private dialog: MatDialog, private route: ActivatedRoute, private UserService: userService) { }
 
   groupId!: number;
   TaskStatus = TaskStatus; // Enumération pour les statuts de tâche
-
+  assignedUserName: { [key: number]: string } = {};
   tasks: Task[] = []; // Liste complète des tâches
   todolist: Task[] = []; // Tâches à faire
   inProgressList: Task[] = []; // Tâches en cours
@@ -45,8 +46,21 @@ export class KanbanDashboardComponent implements OnInit {
     this.taskService.getTasksByGroupId(this.groupId).subscribe({
       next: (tasks: Task[]) => {
         this.tasks = tasks; // Stocke les tâches récupérées
-        console.log(this.tasks)
+        console.log(this.tasks);
         this.updateTaskLists(); // Met à jour les listes de tâches selon leur statut
+
+        // Fetch user data for each task and store only the first two characters of the user's name
+        this.tasks.forEach(task => {
+          this.UserService.getUserByTaskId(task.id!).subscribe({
+            next: (user) => {
+              // Store the first 2 characters of user's name for each task
+              this.assignedUserName[task.id!] = user.name.substring(0, 2).toUpperCase(); 
+            },
+            error: (err) => {
+              console.error('Error fetching user data for task:', task.id, err);
+            }
+          });
+        });
       },
       error: (err: HttpErrorResponse) => {
         console.error('Error fetching tasks:', err); // Gestion des erreurs
@@ -107,4 +121,6 @@ export class KanbanDashboardComponent implements OnInit {
     });
   }
   
+  
+
 }

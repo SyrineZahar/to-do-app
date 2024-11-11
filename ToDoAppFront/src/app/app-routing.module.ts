@@ -21,8 +21,8 @@ const routes: Routes = [
   { path: "groups", component: GroupsComponent, canActivate: [authGuardGuard] }, // Route pour GroupsComponent
   { path: "groupForm", component: GroupFormComponent, canActivate: [adminGuard] }, // Route pour GroupFormComponent, accessible uniquement par admin
   { path: "admin-dashboard", component: DashboardAdminComponent, canActivate: [adminGuard] }, 
+
   { path: "**", redirectTo: "login" } // Redirection pour les routes non trouvées
-  
 ];
 
 @NgModule({

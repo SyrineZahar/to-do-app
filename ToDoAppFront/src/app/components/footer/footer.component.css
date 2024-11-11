@@ -5,7 +5,7 @@
 */
 
 .footer {
-    background-color: var(--card-bg-color); /* Couleur de fond du footer, définie par la variable CSS */
+    background-color: white; /* Couleur de fond du footer, définie par la variable CSS */
     backdrop-filter: blur(10px); /* Applique un flou d'arrière-plan */
     color: var(--text-color-light); /* Couleur du texte, définie par la variable CSS */
     padding: 1.5rem; /* Espacement interne du footer */
@@ -14,8 +14,7 @@
     text-align: center; /* Centre le texte à l'intérieur du footer */
     position: relative; /* Positionnement relatif pour un meilleur contrôle des éléments */
     bottom: 0; /* Fixe le footer en bas de son conteneur */
-    width: 100%; /* Le footer prend toute la largeur du conteneur */
-    margin-top: 2rem; /* Marge supérieure pour séparer le footer du contenu précédent */
+    width: 100vw; /* Le footer prend toute la largeur du conteneur */
 }
 
 /* 
@@ -39,7 +38,7 @@
 .footer p {
     margin: 0; /* Supprime la marge par défaut */
     font-size: 0.9rem; /* Taille de la police pour les paragraphes */
-    color: var(--text-color-light); /* Couleur du texte, définie par la variable CSS */
+    color: black; /* Couleur du texte, définie par la variable CSS */
 }
 
 /* 
@@ -49,7 +48,8 @@
 */
 
 .footer-links {
-    margin-top: 0.5rem; /* Marge supérieure pour séparer les liens des paragraphes */
+    margin-top: 0.5rem; 
+    color: black;/* Marge supérieure pour séparer les liens des paragraphes */
 }
 
 /* 
@@ -64,16 +64,6 @@
     font-weight: 500; /* Poids de la police pour les liens */
     margin: 0 0.5rem; /* Marges latérales pour espacer les liens */
     transition: color 0.3s ease; /* Transition douce pour le changement de couleur */
-}
-
-/* 
-  Effet au survol des liens
-  ---------------------------
-  Change la couleur des liens lorsque l'utilisateur les survole.
-*/
-
-.footer-links a:hover {
-    color: #5e50db; /* Couleur du lien au survol */
 }
 
 /* 

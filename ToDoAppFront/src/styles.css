@@ -93,7 +93,7 @@ input, textarea {
     border: 1px solid var(--input-border-color);
     border-radius: 8px;
     background-color: var(--background-color);
-    color: var(--text-color-light);
+    color: black;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }

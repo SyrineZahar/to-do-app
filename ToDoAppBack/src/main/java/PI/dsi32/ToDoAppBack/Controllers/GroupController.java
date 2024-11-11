@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*; // Importation des annotations
 import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
 import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
 import PI.dsi32.ToDoAppBack.Services.IGroupService; // Importation de l'interface de service des groupes.
+import PI.dsi32.ToDoAppBack.Services.IUserService;
 
 @CrossOrigin(origins = "*") // Permet les requêtes cross-origin depuis n'importe quelle origine.
 @RestController // Indique que ce contrôleur gère des requêtes REST.
@@ -19,6 +20,9 @@ public class GroupController {
 	
 	@Autowired // Injection du service des groupes.
     private IGroupService groupService;
+	
+	@Autowired 
+    private IUserService userService;
 
     @GetMapping() // Gère les requêtes GET sur le chemin /groups.
     public ResponseEntity<List<GroupEntity>> getAllGroups() {
@@ -27,6 +31,16 @@ public class GroupController {
             return new ResponseEntity<>(groups, HttpStatus.OK); // Retourne les groupes avec un statut HTTP 200.
         } catch (RuntimeException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); // Retourne un statut 500 en cas d'erreur.
+        }
+    }
+    
+    @GetMapping("/{userId}")
+    public ResponseEntity<User> getUserById(@PathVariable int userId) {
+        Optional<User> user = userService.getUserById(userId);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());  // Return user if found
+        } else {
+            return ResponseEntity.notFound().build();  // Return 404 if not found
         }
     }
 	
@@ -76,7 +90,7 @@ public class GroupController {
     }
 
     @GetMapping("/stat")
-    public ResponseEntity<Long> getGroupStat() {
+    public ResponseEntity<Long> getUserStat() {
         try{
             Long count = groupService.countGroups();
 
