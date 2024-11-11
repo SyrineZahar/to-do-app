@@ -36,12 +36,14 @@ export class GroupdetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.fetchGroupUsers();
+    this.fetchUsers();
     // Load users in the group
     this.users = this.data.group.users ?? [];
+    console.log(this.users)
     // Display all tasks initially
     this.filteredTasks = this.data.group.tasks ?? [];
     // Fetch users in the group
-    this.fetchGroupUsers();
   }
 
   fetchGroupUsers() {
@@ -100,6 +102,16 @@ export class GroupdetailsComponent implements OnInit {
         } else {
           alert('An error occurred while adding the user to the group.');
         }
+      },
+    });
+  }
+  fetchUsers() {
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+      },
+      error: (error) => {
+        console.error('Error fetching users:', error);
       },
     });
   }
