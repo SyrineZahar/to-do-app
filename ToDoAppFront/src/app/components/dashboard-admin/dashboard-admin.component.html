@@ -1,12 +1,4 @@
 <div class="adimncontainer">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <ul>
-      <li><a routerLink="/home" routerLinkActive="active">Home</a></li>
-      <li><a routerLink="/groups" routerLinkActive="active">Group Component</a></li>
-      <li><a routerLink="/dashboard-user" routerLinkActive="active">Dashboard User</a></li>
-    </ul>
-  </div>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -22,10 +14,10 @@
         <p>Number of Users: {{ userCount }}</p>
       </div>
     </div>
-
+    <!-- Empty Div Below Counters -->
+    <div class="empty-div">
+      <app-groups></app-groups>
+    </div>
   </div>
-  <!-- Empty Div Below Counters -->
-  <div class="empty-div">
-    <!-- You can add content here later if needed -->
-  </div>
+  
 </div>

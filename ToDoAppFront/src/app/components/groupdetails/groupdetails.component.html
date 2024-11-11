@@ -1,0 +1,38 @@
+<div class="sidebarRight">
+    <h2>{{ data.group.nom }} - Détails</h2>
+    <img [src]="'assets/image/' + data.group.profilePicture" alt="Profile Picture" class="profile-pic" />
+  
+    <div class="form-group" [formGroup]="filterForm">
+      Filtrer les tâches par utilisateur
+      <select id="filter_user_id" class="form-control" formControlName="filter_user_id" (change)="filterTasksByUser()">
+        <option value="" disabled selected>Choisir un utilisateur</option>
+        <option *ngFor="let user of users" [value]="user.id">
+          {{ user.name }}
+        </option>
+      </select>
+    </div>
+    
+    <!-- Display filtered task details -->
+    <div class="task-list">
+      <h3>Tâches du groupe:</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Titre</th>
+            <th>Created At</th>
+            <th>Deadline</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of filteredTasks">
+            <td>{{ task.title }}</td>
+            <td>{{ task.createdAt }}</td>
+            <td>{{ task.deadline }}</td>
+            <td>{{ task.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

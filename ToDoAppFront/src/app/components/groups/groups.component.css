@@ -1,7 +1,8 @@
 .container {
   display: flex;
   width: 100%;
-  height: 50vh; /* Full height */
+  height: 350px;
+  overflow: auto;
 }
 
 .sidebar {
@@ -36,13 +37,21 @@
 .group-item {
   display: flex;
   cursor: pointer;
-  background-color: #4e4e4e;
+  background-color: #ffffff;
+  padding: 2rem;
   align-items: center;
   margin-bottom: 10px;
+  border-radius: 16px;
 }
 
 .group-item:hover {
-  background-color: #7c7c7c;
+  background-color: rgb(233, 237, 255);
+  box-shadow: 2px 4px 10px 0 rgba(0, 0, 0, 0.2);
+}
+.group-item p{
+  font-size: large;
+  text-align: center;
+  margin: 0;
 }
 
 .profile-pic {

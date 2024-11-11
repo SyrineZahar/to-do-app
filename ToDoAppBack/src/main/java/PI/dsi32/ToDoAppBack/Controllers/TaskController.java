@@ -33,7 +33,7 @@ public class TaskController {
         }
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Map<String, String>> addTask(@RequestBody Map<String, Object> payload) {
         try {
             // Extraire les valeurs du payload

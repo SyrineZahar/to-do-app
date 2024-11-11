@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GroupEntity } from 'src/app/classe/GroupEntity'; // Import de la classe GroupEntity
+import { User } from 'src/app/classe/User';
 import { GroupService } from 'src/app/service/group.service'; // Import de votre service de groupe
 
 /**
@@ -60,6 +61,8 @@ export class GroupFormComponent {
         description: ['', Validators.required], // Champ description obligatoire
         backgroundImage: [null], // Champ d'image de fond (optionnel)
         profilePicture: [null],
+        users: [],
+        tasks: [],
     });
   }
 
@@ -131,7 +134,7 @@ export class GroupFormComponent {
             this.backgroundImageFile.name, // Utiliser le nom du fichier
             this.profilePictureFile.name, // Utiliser le nom du fichier
             this.groupForm.value.nom,
-            this.groupForm.value.description,
+            this.groupForm.value.description
         );
 
         console.log('Données du groupe à envoyer:', groupData);
@@ -139,7 +142,6 @@ export class GroupFormComponent {
         this.groupService.addGroup(groupData).subscribe({
             next: () => {
                 console.log('Groupe ajouté avec succès');
-                this.router.navigate([""]); // Redirection vers la liste des groupes
             },
             error: (err) => {
                 console.error('Erreur lors de l\'ajout du groupe:', err);
@@ -152,13 +154,4 @@ export class GroupFormComponent {
   }
 
 
-  
-
-  /**
-   * Méthode pour naviguer vers la liste des groupes.
-   * Cette méthode est appelée lors de l'annulation.
-   */
-  navigateToGroups(): void {
-    this.router.navigate(['/groups']); // Redirection vers la liste des groupes
-  }
 }

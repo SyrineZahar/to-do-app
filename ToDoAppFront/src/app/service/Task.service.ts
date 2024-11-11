@@ -56,7 +56,7 @@ export class taskService {
 
 
     getTasksByUserId(userId: number) {
-        return this.httpClient.get<Task[]>(`${this.URL}/${userId}`); // Correctly constructs the URL with userId
+        return this.httpClient.get<Task[]>(`${this.URL}/users/${userId}`); // Correctly constructs the URL with userId
     }
     getTasksByGroupId(groupId: number) {
         return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);

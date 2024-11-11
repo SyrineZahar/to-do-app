@@ -28,11 +28,9 @@ public class GroupEntity implements Serializable {
     private String description;
 
     @ManyToMany(mappedBy = "groups")
-    @JsonIgnore 
 	private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
 
     @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Task> tasks;
 
     public GroupEntity() {

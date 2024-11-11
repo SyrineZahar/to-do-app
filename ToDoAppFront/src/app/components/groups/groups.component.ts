@@ -6,6 +6,9 @@ import { User } from 'src/app/classe/User';
 import { userService } from 'src/app/service/User.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { taskService } from 'src/app/service/Task.service';
+import { GroupFormComponent } from '../group-form/group-form.component';
+import { MatDialog } from '@angular/material/dialog';
+import { GroupdetailsComponent } from '../groupdetails/groupdetails.component';
 
 @Component({
   selector: 'app-groups',
@@ -18,12 +21,12 @@ export class GroupsComponent implements OnInit {
   users!: User[];
 
   userForm!: FormGroup;
-  filterForm!: FormGroup;
+  filterForm!: FormGroup
 
 
 
 
-  constructor(private groupService: GroupService, private router: Router, private userService: userService, private taskService: taskService) {
+  constructor(private dialog: MatDialog, private groupService: GroupService, private router: Router, private userService: userService, private taskService: taskService) {
 
   }
 
@@ -53,11 +56,25 @@ export class GroupsComponent implements OnInit {
   
 
   navigateToGroupForm() {
-    this.router.navigate(['/groupForm']);
+    if (this.dialog) {
+      const dialogRef = this.dialog.open(GroupFormComponent, {
+        data: { }
+      });
+      dialogRef.afterClosed().subscribe(() => {
+        this.ngOnInit();
+      });
+    } else {
+      console.error('Dialog instance is undefined');
+    }
   }
+  
 
   selectGroup(group: GroupEntity) {
     this.selectedGroup = group;
+
+    this.dialog.open(GroupdetailsComponent, {
+      data: { group: this.selectedGroup }
+    });
   }
 
   addTask() {
@@ -86,25 +103,11 @@ export class GroupsComponent implements OnInit {
 }
   }
 
-  filterTasksByUser() {
-    const selectedUserId = this.filterForm.value.filter_user_id; // Ensure you are accessing `filter_user_id`
-    console.log(selectedUserId); // Check the console to ensure it's showing the expected ID
   
-    if (selectedUserId) {
-      const selectedUser = this.users.find(user => user.id == selectedUserId);
-      console.log(selectedUser);
+
   
-      if (selectedUser) {
-        this.taskService.getTasksByUserId(Number(selectedUserId)).subscribe({
-          next: (response) => {
-            console.log(response);
-          },
-          error: (error) => {
-            console.error('Error fetching tasks:', error);
-          }
-        });
-      }
-    }
-  }
+
+
+ 
   
 }

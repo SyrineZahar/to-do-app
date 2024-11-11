@@ -20,6 +20,7 @@ import { DashboardUserComponent } from './components/dashboard-user/dashboard-us
 import { MatIconModule } from '@angular/material/icon';
 import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
+import { GroupdetailsComponent } from './components/groupdetails/groupdetails.component';
 
 
 /**
@@ -39,7 +40,7 @@ import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-
     GroupsComponent, 
     LoginComponent,  
     TaskDetailsComponent,
-    TaskFormComponent, DashboardUserComponent , DashboardAdminComponent  // Composant pour le formulaire de tâche
+    TaskFormComponent, DashboardUserComponent , DashboardAdminComponent, GroupdetailsComponent  // Composant pour le formulaire de tâche
   ],
   imports: [
     BrowserModule,         // Module essentiel pour les applications Angular

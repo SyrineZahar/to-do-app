@@ -51,7 +51,6 @@ public class User implements Serializable {
     private List<GroupEntity> groups;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    @JsonManagedReference
     private List<Task> tasks;
 
     public User() {

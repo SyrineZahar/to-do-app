@@ -1,4 +1,6 @@
+
 <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="group-form">
+  <h1 class="text-center">Add Task</h1>
     <!-- Champ pour le nom du groupe -->
     <div class="form-group">
         <label for="nom">Nom</label>
@@ -26,7 +28,7 @@
         <label>Image de fond</label>
         <input type="file" (change)="onBackgroundImageChange($event)" />
         <div *ngIf="backgroundImageUrl">
-          <img [src]="backgroundImageUrl" alt="Aperçu de l'image de fond" style="max-width: 100px; max-height: 100px;" /> <!-- Affiche l'aperçu -->
+          <img [src]="backgroundImageUrl" alt="Aperçu de l'image de fond" style="max-width: 75px; max-height: 75px;" /> <!-- Affiche l'aperçu -->
         </div>
         <div *ngIf="!backgroundImageFile && groupForm.get('backgroundImage')?.touched">
           <small class="text-danger">Veuillez sélectionner une image de fond.</small>
@@ -37,7 +39,7 @@
         <label>Photo de profil</label>
         <input type="file" (change)="onProfilePictureChange($event)" />
         <div *ngIf="profilePictureUrl">
-          <img [src]="profilePictureUrl" alt="Aperçu de la photo de profil" style="max-width: 100px; max-height: 100px;" /> <!-- Affiche l'aperçu -->
+          <img [src]="profilePictureUrl" alt="Aperçu de la photo de profil" style="max-width: 75px; max-height: 75px;" /> <!-- Affiche l'aperçu -->
         </div>
         <div *ngIf="!profilePictureFile && groupForm.get('profilePicture')?.touched">
           <small class="text-danger">Veuillez sélectionner une photo de profil.</small>
@@ -47,5 +49,5 @@
     <!-- Bouton pour soumettre le formulaire -->
     <button type="submit" class="btn btn-primary">Enregistrer</button>
     <!-- Bouton pour annuler et retourner à la liste des groupes -->
-    <button type="button" class="btn btn-secondary" (click)="navigateToGroups()">Annuler</button>
+    <button type="button" class="btn btn-secondary">Annuler</button>
 </form>

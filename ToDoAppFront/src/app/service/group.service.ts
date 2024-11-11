@@ -1,5 +1,5 @@
 // Importation des modules nécessaires
-import { HttpClient } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
+import { HttpClient, HttpHeaders } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
 import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
 import { Observable } from 'rxjs'; // Pour gérer les flux de données asynchrones
 import { GroupEntity } from '../classe/GroupEntity'; // Importation de la classe GroupEntity
@@ -21,10 +21,14 @@ export class GroupService {
     return this.httpClient.get<GroupEntity[]>(this.URL); // Renvoie un Observable d'un tableau de groupes
   }
 
-  // Méthode pour ajouter un nouveau groupe
   addGroup(group: GroupEntity): Observable<GroupEntity> {
     console.log(group); // Log l'objet du groupe pour le débogage
-    return this.httpClient.post<GroupEntity>(this.URL, group); // Envoie le groupe à l'API et renvoie l'Observable
+  
+    // Définition de l'en-tête Content-Type
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    // Envoie le groupe à l'API avec les en-têtes spécifiés et renvoie l'Observable
+    return this.httpClient.post<GroupEntity>(this.URL, group, { headers });
   }
 
   // Méthode pour éditer un groupe existant

@@ -8,7 +8,8 @@
 
 /* Conteneur principal */
 .container {
-  padding: 2rem; /* Espacement interne du conteneur */
+  padding: 5rem; /* Espacement interne du conteneur */
+  height: 80vh;
 }
 
 /* Style du titre principal */
