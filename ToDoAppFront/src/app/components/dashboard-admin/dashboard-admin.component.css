@@ -22,30 +22,7 @@
     padding: 20px;
   }
   
-  /* Sidebar link styles */
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    margin-bottom: 15px;
-  }
-  
-  .sidebar ul li a {
-    color: black;
-    text-decoration: none;
-    font-weight: bold;
-    display: block;
-    padding: 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-  }
-  
-  .sidebar ul li a:hover,
-  .sidebar ul li a.active {
-    background-color: #007bff; /* Highlight color */
-  }
+
   
   /* Main content area */
   .main-content {
@@ -60,13 +37,18 @@
   /* Style for the counters */
   .counter-container {
     background-color: #ffffff; /* Blue background color */
-    color: #1868D8;
+    border-left: #1868D8 solid 5px;
     font-weight: bold;
     padding: 20px;
     border-radius: 6px;
     margin-right: 10px;
-    text-align: center;
+    display: flex;
   }
+  .counter-container p span{
+    font-size: large;  
+    color: #172B4D;
+    }
+  
   
   /* Align counters at the top of main content */
   .counters {
@@ -75,4 +57,8 @@
     margin-bottom: 20px;
     justify-content: space-around;
   }
+  .counters button{
+    width: 88%;
+  }
+  
   

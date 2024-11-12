@@ -5,20 +5,22 @@
     <!-- Counter Section -->
     <div class="counters">
       <div *ngIf="groupCount !== null" class="counter-container">
-        <p>Number of Groups: {{ groupCount }}</p>
+        <p>Number of Groups: <span>{{ groupCount }}</span></p>
       </div>
       <div *ngIf="taskCount !== null" class="counter-container">
-        <p>Number of Tasks: {{ taskCount }}</p>
+        <p>Number of Tasks: <span>{{ taskCount }}</span></p>
       </div>
       <div *ngIf="userCount !== null" class="counter-container">
-        <p>Number of Users: {{ userCount }}</p>
+        <p>Number of Users: <span>{{ userCount }}</span></p>
       </div>
     </div>
-    <!-- your-component.component.html -->
-  <button (click)="notifyUsers()">Notify Users</button>
-
+    <div class="counters">
+       <!-- your-component.component.html -->
+      <button (click)="notifyUsers()">Notify Users</button>
+    </div>
     <!-- Empty Div Below Counters -->
     <div class="empty-div">
+      
       <app-groups></app-groups>
     </div>
   </div>

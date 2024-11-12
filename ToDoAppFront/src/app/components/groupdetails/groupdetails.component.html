@@ -1,6 +1,8 @@
-<div class="sidebarRight" [style.background-image]="'url(assets/image/' + data.group.backgroundImage + ')'" >
-  <h2>{{ data.group.nom }} - Details</h2>
-  <img [src]="'assets/image/' + data.group.profilePicture" alt="Profile Picture" class="profile-pic" />
+<div class="sidebarRight" >
+  <div [style.background-image]="'url(assets/image/' + data.group.backgroundImage + ')'" class="profile">
+    <img [src]="'assets/image/' + data.group.profilePicture" alt="Profile Picture" class="profile-pic" />
+    <h2>{{ data.group.nom }} - Details</h2>
+  </div>
 
   <!-- Container for filter and add user sections -->
   <div class="filter-add-container">

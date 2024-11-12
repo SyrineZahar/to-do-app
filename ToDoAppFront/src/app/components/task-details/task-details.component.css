@@ -4,6 +4,12 @@
     height: 400px;
 
   }
+  .delete{
+    background-color: var(--error-color);
+    width: 100%;
+    margin-bottom: 1rem;
+  }
+
   .ai{
     width: 100%;
   }

@@ -32,7 +32,7 @@
       <img [src]="backgroundImageUrl" alt="Aperçu de l'image de fond" style="max-width: 75px; max-height: 75px;" />
     </div>
     <div *ngIf="!backgroundImageFile && groupForm.get('backgroundImage')?.touched">
-      <small class="text-danger">Veuillez sélectionner une image de fond.</small>
+      <small class="text-danger">Please select a background image.</small>
     </div>
   </div>
 
@@ -44,7 +44,7 @@
       <img [src]="profilePictureUrl" alt="Aperçu de la photo de profil" style="max-width: 75px; max-height: 75px;" />
     </div>
     <div *ngIf="!profilePictureFile && groupForm.get('profilePicture')?.touched">
-      <small class="text-danger">Veuillez sélectionner une photo de profil.</small>
+      <small class="text-danger">Please select a profile picture.</small>
     </div>
   </div>
 
