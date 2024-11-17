@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { GroupEntity } from 'src/app/classe/GroupEntity';
 import { GroupService } from 'src/app/service/group.service';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-group-form',
@@ -21,7 +21,7 @@ export class GroupFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private groupService: GroupService,
-    private router: Router,
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<GroupFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { group: GroupEntity | null }
   ) {}
@@ -101,7 +101,6 @@ export class GroupFormComponent implements OnInit {
         this.groupForm.value.description
       );
   
-      // Include the ID if we are editing an existing group
       if (this.isEditMode && this.data.group?.id) {
         groupData.id = this.data.group.id;
       }
@@ -113,7 +112,7 @@ export class GroupFormComponent implements OnInit {
             this.dialogRef.close();
           },
           error: (err) => {
-            alert('error accured');
+            this.showPopup('error accured');
           }
         });
       } else {
@@ -123,15 +122,21 @@ export class GroupFormComponent implements OnInit {
             this.dialogRef.close();
           },
           error: (err) => {
-            alert('Error accured');
+            this.showPopup('error accured');
           }
         });
       }
     } else {
-      alert('Veuillez remplir tous les champs obligatoires.');
+      this.showPopup('Please fill in all the required fields.');
     }
   }
   
+  showPopup(message: string): void {
+    this.dialog.open(AlertsComponent, {
+      data: { message },
+      width: '500px'
+    });
+  }
 
   onCancel(): void {
     this.dialogRef.close();

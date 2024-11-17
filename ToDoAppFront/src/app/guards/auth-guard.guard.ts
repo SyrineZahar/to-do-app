@@ -9,9 +9,9 @@ export const authGuardGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (authService.isLoggedIn()) {
-    return true; // Autoriser l'accès si l'utilisateur est connecté
+    return true; 
   } else {
-    router.navigate(['/login']); // Rediriger vers la page de connexion si l'utilisateur n'est pas connecté
+    router.navigate(['/login']); 
     return false;
   }
 };
@@ -33,7 +33,6 @@ export const adminGuard: CanActivateFn = (route, state) => {
     console.log('Access denied. No user.');
   }
 
-  //router.navigate(['/login']); 
   return false; 
 };
 

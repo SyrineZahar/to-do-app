@@ -1,76 +1,52 @@
 <div class="container mt-4">
-  <!-- Conteneur principal avec une marge supérieure -->
   <h1 class="text-center">Your To Do List</h1>
-  <!-- Titre principal de la liste de tâches, centré -->
 
   <div class="kanban-board">
-    <!-- Tableau Kanban pour organiser les tâches -->
 
     <div class="kanban-column" (dragover)="onDragOver($event)" (drop)="onDrop($event, TaskStatus.todo)">
-      <!-- Colonne "To Do" pour les tâches à faire -->
       
       <div class="kanban-header">
         To Do
-        <!-- En-tête de la colonne "To Do" -->
-        
-        <!-- <button class="btn btn-primary btn-sm ms-2 table-add" (click)="navigateToFormTask()">+</button> -->
-        <!-- Bouton pour ajouter une nouvelle tâche, déclenche la fonction navigateToFormTask -->
+
       </div>
 
       <div class="kanban-body">
-        <!-- Corps de la colonne "To Do" -->
         
         <div class="kanban-item" *ngFor="let task of todolist" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
           {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>  
-          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
-            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
-          </button> -->
-          <!-- Éléments Kanban pour chaque tâche, pouvant être déplacés par glisser-déposer -->
+
         </div>
         <div class="add-item" (click)="openAddTask($event)"><img src="assets/icons/circle-plus-solid.svg" alt="Description of the SVG" width="20px" height="20px">&nbsp;<span>Add Task</span></div>
       </div>
     </div>
     
     <div class="kanban-column" (dragover)="onDragOver($event)" (drop)="onDrop($event, TaskStatus.inprogress)">
-      <!-- Colonne "In Progress" pour les tâches en cours -->
       
       <div class="kanban-header">In Progress</div>
-      <!-- En-tête de la colonne "In Progress" -->
       
       <div class="kanban-body">
-        <!-- Corps de la colonne "In Progress" -->
         
         <div class="kanban-item" *ngFor="let task of inProgressList" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
           {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
-          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
-            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
-          </button> -->
-          <!-- Éléments Kanban pour chaque tâche en cours -->
+
         </div>
       </div>
     </div>
     
     <div class="kanban-column" (dragover)="onDragOver($event)" (drop)="onDrop($event, TaskStatus.done)">
-      <!-- Colonne "Done" pour les tâches terminées -->
       
       <div class="kanban-header">Done</div>
-      <!-- En-tête de la colonne "Done" -->
       
       <div class="kanban-body">
-        <!-- Corps de la colonne "Done" -->
         
         <div class="kanban-item" *ngFor="let task of doneList" 
              draggable="true" (dragstart)="onDragStart(task)"
              (click)="openTaskDetails(task)">
           {{ task.title }} <span>{{ assignedUserName[task.id!] }}</span>
-          <!-- <button *ngIf="task.id" (click)="navigateToUpdateTask(task.id)">
-            <img src="assets/icons/update-svgrepo-com.svg"  width="20px" height="20px">
-          </button> -->
-          <!-- Éléments Kanban pour chaque tâche terminée -->
         </div>
       </div>
     </div>

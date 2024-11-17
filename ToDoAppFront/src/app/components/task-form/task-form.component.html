@@ -1,7 +1,6 @@
 <div class="add-task">
     <h1 class="text-center">{{ isUpdate ? 'Update Task' : 'Add Task' }}</h1>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
-      <!-- Champ pour le titre de la tâche -->
       <div class="form-group">
         <label for="title">Title</label>
         <input
@@ -13,7 +12,6 @@
         />
       </div>
   
-      <!-- Champ pour la description de la tâche -->
       <div class="form-group">
         <label for="description">Description</label>
         <textarea
@@ -24,17 +22,15 @@
         ></textarea>
       </div>
   
-      <!-- Menu déroulant pour sélectionner le statut de la tâche -->
       <div class="form-group">
         <label for="status">Status</label>
         <select id="status" class="form-control" formControlName="status">
           <option *ngFor="let status of taskStatuses" [value]="status">
-            {{ status }}  <!-- Affichage du statut -->
+            {{ status }}  
           </option>
         </select>
       </div>
   
-      <!-- Champ pour définir la date limite de la tâche (hidden for update) -->
       <div class="form-group" >
         <label for="deadline">Deadline</label>
         <input
@@ -45,20 +41,17 @@
         />
       </div>
   
-      <!-- Menu déroulant pour sélectionner l'utilisateur assigné (hidden for update) -->
       <div class="form-group" >
         <label for="user_id">Assigner user</label>
         <select id="user_id" class="form-control" formControlName="user_id">
-          <option value="" disabled selected>Choisir un utilisateur</option> <!-- Placeholder option -->
+          <option value="" disabled selected>Choisir un utilisateur</option> 
           <option *ngFor="let user of users" [value]="user.id">
             {{ user.name }}
           </option>
         </select>
       </div>
   
-      <!-- Bouton pour soumettre le formulaire -->
       <button type="submit" class="btn btn-primary">save</button>
-      <!-- Bouton pour annuler et retourner à la liste des tâches -->
       <button type="button" class="btn btn-secondary" (click)="navigateToTasks()">cancel</button>
     </form>
   </div>

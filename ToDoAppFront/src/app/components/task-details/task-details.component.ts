@@ -1,5 +1,4 @@
 import { Component, Inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { Task } from 'src/app/classe/Task';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { CommentService } from 'src/app/service/Comment.service';
@@ -9,9 +8,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Comment } from 'src/app/classe/Comment';
 import { AuthService } from 'src/app/service/Auth.service';
 import { userService } from 'src/app/service/User.service';
-import { map, Observable, tap } from 'rxjs';
-import { User } from 'src/app/classe/User';
 import { TaskFormComponent } from '../task-form/task-form.component';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-task-details',
@@ -20,7 +18,7 @@ import { TaskFormComponent } from '../task-form/task-form.component';
 })
 export class TaskDetailsComponent {
   comments: Comment[] = [];
-  summarizedText: string = ''; // Store the description summary
+  summarizedText: string = '';
   isSummaryVisible: boolean = false;
   commentForm: FormGroup;
   assignedUser: String = ''; 
@@ -38,19 +36,17 @@ export class TaskDetailsComponent {
     private authService: AuthService,
     private UserService: userService,
     private taskService: taskService,
-    private dialog: MatDialog, // Inject MatDialog service
-    private router: Router, // Inject Router service here
+    private dialog: MatDialog, 
     private dialogRef: MatDialogRef<TaskDetailsComponent>
 
   ) {
     this.commentForm = new FormGroup({
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
-      user: new FormControl('currentUser', Validators.required), // Replace with actual user data if needed
-      task: new FormControl(this.data.task.id, Validators.required) // Assuming task has an id
+      user: new FormControl('currentUser', Validators.required), 
+      task: new FormControl(this.data.task.id, Validators.required) 
     });
   }
 
-  // Handle form submission
   onSubmit() {
     if (this.commentForm.valid) {
       const commentData = this.commentForm.value;
@@ -59,10 +55,10 @@ export class TaskDetailsComponent {
   
       this.commentService.addComment(commentData).subscribe({
         next: (response) => {
-          this.loadComments();  // Reload comments immediately
-          this.commentForm.reset({ // Reset form with default values
+          this.loadComments();  
+          this.commentForm.reset({ 
             description: '',
-            user: this.authService.getUser(), // Set the current user if needed
+            user: this.authService.getUser(), 
             task: this.data.task.id,
           });
         },
@@ -78,7 +74,6 @@ export class TaskDetailsComponent {
       next: (comments) => {
         this.comments = comments;
     
-        // Check and load user details if `user` is an ID
         this.comments.forEach((comment, index) => {
           if (typeof comment.user === 'number') {
             this.UserService.getUserById(comment.user).subscribe(user => {
@@ -94,14 +89,14 @@ export class TaskDetailsComponent {
   }
   
   fetchSummary(): void {
-    if (this.data.task.description) {  // Make sure there is a description
+    if (this.data.task.description) {  
       this.taskService.getDescriptionSummary(this.data.task.description).subscribe({
         next: (response) => {
-          this.summarizedText = response.summarized_text;  // Store the summarized text
-          this.isSummaryVisible = true;  // Show the summary
+          this.summarizedText = response.summarized_text;  
+          this.isSummaryVisible = true;  
         },
         error: (error) => {
-          console.error('Error fetching summary:', error);  // Error handling
+          console.error('Error fetching summary:', error);  
         }
       });
     }
@@ -122,28 +117,35 @@ export class TaskDetailsComponent {
     console.log('groupId'+taskId)
     this.taskService.deleteTask(taskId).subscribe({
       next: () => {
-        this.dialogRef.close(); // Close the popup after adding the group
+        this.dialogRef.close(); 
 
       },
       error: (error) => {
-        alert('Error while deleting');
+        this.showPopup('Error while deleting');
       }
     });
-}
-navigateToUpdateTask(taskId: number){
-  const dialogRef = this.dialog.open(TaskFormComponent, {
-    width: '600px',
-    
-    data: {
-      task: this.data.task, 
-    },
+  }
+  navigateToUpdateTask(taskId: number){
+    const dialogRef = this.dialog.open(TaskFormComponent, {
+      width: '600px',
+      
+      data: {
+        task: this.data.task, 
+      },
 
-  });
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      this.loadComments(); // Reload comments or other data as needed
-    }
-  });
-}
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadComments(); 
+      }
+    });
+  }
+
+  showPopup(message: string): void {
+    this.dialog.open(AlertsComponent, {
+      data: { message },
+      width: '500px'
+    });
+  }
 }

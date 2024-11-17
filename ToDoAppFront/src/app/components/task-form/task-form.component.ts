@@ -22,9 +22,9 @@ export class TaskFormComponent implements OnInit {
   task!: Task;
   taskForm!: FormGroup;
   taskStatuses = Object.values(TaskStatus);
-  users: User[] = []; // Initialize users as an empty array
-  groups!: GroupEntity[]; // Initialize groups
-  isUpdate: boolean = false; // Flag to check if it's an update
+  users: User[] = []; 
+  groups!: GroupEntity[]; 
+  isUpdate: boolean = false; 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -36,17 +36,16 @@ export class TaskFormComponent implements OnInit {
     private groupService: GroupService,
     private authService: AuthService,
   ) {
-    this.groupId = data.group_id; // Extract group_id from dialog data
-    this.task = data.task || null; // Initialize task for update or new task
-    this.isUpdate = !!this.task; // Check if it's an update
+    this.groupId = data.group_id; 
+    this.task = data.task || null; 
+    this.isUpdate = !!this.task;
   }
 
   ngOnInit(): void {
-    this.createForm(); // Initialize the form
-    this.fetchUsers(); // Fetch users based on groupId
+    this.createForm(); 
+    this.fetchUsers(); 
   }
 
-  // Method to create the task form with appropriate validators
   private createForm(): void {
     this.taskForm = this.fb.group({
       title: [this.task?.title || '', Validators.required],
@@ -62,84 +61,74 @@ export class TaskFormComponent implements OnInit {
     });
   }
 
-  // Method to format the deadline into the desired format "yyyy-MM-ddTHH:mm:ss"
   private formatDate(date: string | Date): string {
     const d = new Date(date);
     if (isNaN(d.getTime())) {
       console.error("Invalid date:", date);
-      return ''; // Return an empty string if date is invalid
+      return ''; 
     }
-    d.setHours(23, 59, 59, 999); // Set time to 23:59:59
+    d.setHours(23, 59, 59, 999); 
 
-    // Manually format the date to "yyyy-MM-ddTHH:mm:ss"
     const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // Ensure two digits
-    const day = String(d.getDate()).padStart(2, '0'); // Ensure two digits
+    const month = String(d.getMonth() + 1).padStart(2, '0'); 
+    const day = String(d.getDate()).padStart(2, '0'); 
     const hours = String(d.getHours()).padStart(2, '0');
     const minutes = String(d.getMinutes()).padStart(2, '0');
     const seconds = String(d.getSeconds()).padStart(2, '0');
 
-    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`; // Return formatted string
+    return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`; 
   }
 
-  // Method to fetch users for the given groupId
   private fetchUsers(): void {
     this.userService.getUsersbygroup(this.groupId).subscribe(
       (data: User[]) => {
-        this.users = data; // Store users fetched for the group
+        this.users = data; 
       },
       (error: any) => {
         console.error('Error fetching users:', error);
-        // You can show a message to the user or handle error in UI
       }
     );
   }
 
-  // Submit form data to create or update a task
   onSubmit(): void {
     if (this.taskForm.valid) {
-      // Log form value to check the data before submission
       console.log('Form Data:', this.taskForm.value);
 
       let taskDeadline = this.taskForm.value.deadline;
       
-      // Check if deadline is a valid Date and convert to custom formatted string
       if (!(taskDeadline instanceof Date)) {
         taskDeadline = new Date(taskDeadline);
       }
 
       if (isNaN(taskDeadline.getTime())) {
         console.error("Invalid deadline:", taskDeadline);
-        return; // Exit if the deadline is invalid
+        return; 
       }
 
-      taskDeadline.setHours(23, 59, 59, 999); // Set the time to 23:59:59
+      taskDeadline.setHours(23, 59, 59, 999); 
 
-      // Format the deadline manually as "yyyy-MM-ddTHH:mm:ss"
       const formattedDeadline = this.formatDate(taskDeadline);
 
       const taskData = new Task(
         this.taskForm.value.title,
         this.taskForm.value.description,
         this.taskForm.value.status,
-        new Date(formattedDeadline), // Submit the manually formatted deadline
+        new Date(formattedDeadline), 
         Number(this.taskForm.value.group_id),
         Number(this.taskForm.value.user_id),
         this.taskForm.value.isDesactivated
       );
 
       if (this.isUpdate && this.task) {
-        // If it's an update, call updateTask
         this.taskService.updateTask(Number(this.task.id), taskData).subscribe(() => {
-          this.dialogRef.close(); // Close dialog after updating
+          this.dialogRef.close(); 
         }, (error) => {
           console.error('Error updating task:', error);
         });
       } else {
-        // If it's a new task, call addTask
         this.taskService.addTask(taskData).subscribe(() => {
           console.log(taskData)
-          this.dialogRef.close(); // Close dialog after adding
+          this.dialogRef.close(); 
         }, (error) => {
           console.error('Error adding task:', error);
         });
@@ -149,8 +138,7 @@ export class TaskFormComponent implements OnInit {
     }
   }
 
-  // Method to navigate back to the task list view
   navigateToTasks(): void {
-    this.dialogRef.close(); // Close the dialog to return to task list
+    this.dialogRef.close(); 
   }
 }

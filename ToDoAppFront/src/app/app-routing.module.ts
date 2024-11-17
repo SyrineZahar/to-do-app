@@ -10,19 +10,18 @@ import { adminGuard, authGuardGuard } from './guards/auth-guard.guard';
 import { DashboardUserComponent } from './components/dashboard-user/dashboard-user.component';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin.component';
 
-// Définition des routes de l'application
 const routes: Routes = [
-  { path: "", redirectTo: "login", pathMatch: "full" }, // Redirection vers SignupComponent par défaut
+  { path: "", redirectTo: "login", pathMatch: "full" }, 
   { path: "userdashboard", component: DashboardUserComponent, canActivate: [authGuardGuard]},
-  { path: "signup", component: SignupComponent }, // Route pour le composant d'inscription
-  { path: "login", component: LoginComponent }, // Route pour le composant de Login
-  { path: "kanban/:id", component: KanbanDashboardComponent, canActivate: [authGuardGuard] }, // Route vers KanbanDashboardComponent
-  { path: "taskForm", component: TaskFormComponent, canActivate: [authGuardGuard] }, // Route pour TaskFormComponent
-  { path: "groups", component: GroupsComponent, canActivate: [authGuardGuard] }, // Route pour GroupsComponent
-  { path: "groupForm", component: GroupFormComponent, canActivate: [adminGuard] }, // Route pour GroupFormComponent, accessible uniquement par admin
+  { path: "signup", component: SignupComponent }, 
+  { path: "login", component: LoginComponent }, 
+  { path: "kanban/:id", component: KanbanDashboardComponent, canActivate: [authGuardGuard] }, 
+  { path: "taskForm", component: TaskFormComponent, canActivate: [authGuardGuard] }, 
+  { path: "groups", component: GroupsComponent, canActivate: [authGuardGuard] },
+  { path: "groupForm", component: GroupFormComponent, canActivate: [adminGuard] }, 
   { path: "admin-dashboard", component: DashboardAdminComponent, canActivate: [adminGuard] }, 
 
-  { path: "**", redirectTo: "login" } // Redirection pour les routes non trouvées
+  { path: "**", redirectTo: "login" } 
 ];
 
 @NgModule({

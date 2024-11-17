@@ -1,30 +1,26 @@
-/* Style général pour enlever les marges et remplir toute la page */
 html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
-  }
-  
-  
-  /* Barre de navigation fixe */
-  app-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%; /* Occupe toute la largeur */
-    height: 60px; /* Hauteur fixe pour la navbar */
-    z-index: 1000;
-  }
-  
-   /* Barre de navigation fixe */
-   router-outlet {
-    top: 0;
-    left: 0;
-    width: 100%; /* Occupe toute la largeur */
-  }
-  
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+
+app-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; 
+  height: 60px; 
+  z-index: 1000;
+}
+
+ router-outlet {
+  top: 0;
+  left: 0;
+  width: 100%; 
+}

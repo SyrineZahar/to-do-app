@@ -1,83 +1,48 @@
-/* 
-  Style du pied de page (footer)
-  ------------------------------
-  Cette section définit le style général du pied de page de l'application.
-*/
-
 .footer {
-    background-color: white; /* Couleur de fond du footer, définie par la variable CSS */
-    backdrop-filter: blur(10px); /* Applique un flou d'arrière-plan */
-    color: var(--text-color-light); /* Couleur du texte, définie par la variable CSS */
-    padding: 1.5rem; /* Espacement interne du footer */
-    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Bordure supérieure semi-transparente */
-    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); /* Ombre portée au-dessus du footer */
-    text-align: center; /* Centre le texte à l'intérieur du footer */
-    position: relative; /* Positionnement relatif pour un meilleur contrôle des éléments */
-    bottom: 0; /* Fixe le footer en bas de son conteneur */
-    width: 100vw; /* Le footer prend toute la largeur du conteneur */
+    background-color: white; 
+    backdrop-filter: blur(10px); 
+    color: var(--text-color-light); 
+    padding: 1.5rem; 
+    border-top: 1px solid rgba(255, 255, 255, 0.2); 
+    box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2); 
+    text-align: center; 
+    position: relative; 
+    bottom: 0;
+    width: 100vw;
 }
-
-/* 
-  Contenu du footer
-  -----------------
-  Cette classe gère l'alignement et la disposition des éléments à l'intérieur du footer.
-*/
 
 .footer-content {
-    display: flex; /* Utilise un modèle flex pour la disposition */
-    flex-direction: column; /* Dispose les éléments en colonne */
-    align-items: center; /* Centre les éléments horizontalement */
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
 }
-
-/* 
-  Paragraphes dans le footer
-  ---------------------------
-  Cette section définit le style des paragraphes dans le footer.
-*/
 
 .footer p {
-    margin: 0; /* Supprime la marge par défaut */
-    font-size: 0.9rem; /* Taille de la police pour les paragraphes */
-    color: black; /* Couleur du texte, définie par la variable CSS */
+    margin: 0; 
+    font-size: 0.9rem; 
+    color: black; 
 }
-
-/* 
-  Liens dans le footer
-  ---------------------
-  Cette classe gère le style des liens à l'intérieur du footer.
-*/
 
 .footer-links {
     margin-top: 0.5rem; 
-    color: black;/* Marge supérieure pour séparer les liens des paragraphes */
+    color: black;
 }
-
-/* 
-  Style des liens dans le footer
-  -------------------------------
-  Définit le style des éléments de lien dans le footer.
-*/
 
 .footer-links a {
-    color: var(--primary-color); /* Couleur du texte des liens, définie par la variable CSS */
-    text-decoration: none; /* Supprime le soulignement des liens */
-    font-weight: 500; /* Poids de la police pour les liens */
-    margin: 0 0.5rem; /* Marges latérales pour espacer les liens */
-    transition: color 0.3s ease; /* Transition douce pour le changement de couleur */
+    color: var(--primary-color);
+    text-decoration: none; 
+    font-weight: 500; 
+    margin: 0 0.5rem; 
+    transition: color 0.3s ease; 
 }
 
-/* 
-  Styles responsives
-  --------------------
-  Modifications des styles pour les écrans plus petits (max-width: 768px).
-*/
 
 @media (max-width: 768px) {
     .footer {
-        padding: 1rem; /* Réduit le padding du footer sur les petits écrans */
+        padding: 1rem; 
     }
 
     .footer-links a {
-        margin: 0 0.25rem; /* Réduit la marge des liens sur les petits écrans */
+        margin: 0 0.25rem;
     }
 }

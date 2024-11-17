@@ -1,6 +1,5 @@
 <div class="task">
   <h1 class="text-center">Task Details</h1>
-  
 
   <div class="task-details-dialog">
     <div class="task-comments">
@@ -24,14 +23,13 @@
       <p><strong>Title:</strong> {{ data.task.title }}</p>
       <p><strong>Description:</strong> {{ data.task.description }}</p>
       <p><strong>Deadline:</strong> {{ data.task.deadline }}</p>
-      <p><strong>Assigned to:</strong> {{  assignedUser}} </p> <!-- Display assigned user if available -->
+      <p><strong>Assigned to:</strong> {{  assignedUser}} </p> 
       <button *ngIf="data.task.id" (click)="deleteTask(data.task.id)" class="delete">
         <img src="assets/icons/delete-svgrepo-com.svg"  width="20px" height="20px">
       </button>
       <button type="button" class="ai" (click)="fetchSummary()">
         <img src="assets/icons/microchip-solid.svg" alt="Description of the SVG" width="20px" height="20px">
       </button>
-      <!-- Conditionally display the description summary -->
       <div class="summary" *ngIf="isSummaryVisible">
         <h2>Description summary: </h2>
         <p> {{ summarizedText }}</p>

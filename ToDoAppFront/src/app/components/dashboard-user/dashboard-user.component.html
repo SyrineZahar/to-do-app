@@ -9,7 +9,7 @@
         <img [src]="'assets/image/' + group.profilePicture" alt="Profile Picture" class="profile-pic" />
         <div class="group-name">{{ group.nom }}</div>
       </div>
-      <button id="jira-button" class="group-button" tabindex="0" type="button" (click)="goToKanban(group.id)">
+      <button id="group-button" class="group-button" tabindex="0" type="button" (click)="goToKanban(group.id)">
         <span>Go to Group</span>
       </button>
     </div>

@@ -9,8 +9,8 @@ export function futureDateValidator(): ValidatorFn {
     const enteredDate = new Date(control.value);
     const currentDate = new Date();
     
-    console.log('Entered Date:', enteredDate);  // Debugging output
-    console.log('Current Date:', currentDate);  // Debugging output
+    console.log('Entered Date:', enteredDate);
+    console.log('Current Date:', currentDate);
 
     if (enteredDate <= currentDate) {
       return { futureDate: true };

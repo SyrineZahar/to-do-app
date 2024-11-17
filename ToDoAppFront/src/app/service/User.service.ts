@@ -7,9 +7,6 @@ import { User } from '../classe/User';
   providedIn: 'root'
 })
 export class userService {
-    getUser(userId: any) {
-      throw new Error('Method not implemented.');
-    }
     URL='http://localhost:8088/users'
 
     constructor(private httpClient:HttpClient) { }

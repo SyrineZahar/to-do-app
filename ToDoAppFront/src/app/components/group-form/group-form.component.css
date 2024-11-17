@@ -1,83 +1,85 @@
 .group-form {
-    background-color: white; /* Couleur de fond du formulaire */
-    border-radius: 16px; /* Arrondi des coins */
-    padding: 2rem; /* Espacement intérieur */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Ombre portée pour donner un effet de profondeur */
-    margin: auto; /* Centre le formulaire horizontalement */
-    max-width: 600px; /* Largeur maximale du formulaire */
-    margin-top: 25px; /* Marge supérieure spécifique */
-    width: 100%; /* Prend toute la largeur disponible */
+    background-color: white; 
+    border-radius: 16px; 
+    padding: 2rem; 
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    margin: auto; 
+    max-width: 600px; 
+    margin-top: 25px; 
+    width: 100%; 
 }
 
 button {
-    margin: 5px; /* Marge autour des boutons */
+    margin: 5px; 
 }
 
 .form-group {
-    margin-bottom: 1.5rem; /* Marge inférieure entre les groupes de formulaires */
+    margin-bottom: 1.5rem; 
 }
 
 .form-group label {
-    display: block; /* Affiche le label comme un bloc pour une meilleure structure */
-    margin-bottom: 0.5rem; /* Marge inférieure pour espacer le label du champ */
-    font-weight: 500; /* Épaisseur de la police pour le label */
-    color: black; /* Couleur du texte pour le label */
+    display: block; 
+    margin-bottom: 0.5rem;
+    font-weight: 500; 
+    color: black; 
 }
 h1 {
-    color: var(--primary-color); /* Couleur définie par la variable CSS */
-    font-size: 2.5rem; /* Taille de la police */
-    font-weight: 700; /* Poids de la police */
-    margin-bottom: 2rem; /* Marge inférieure pour espacer des éléments suivants */
-  }
+    color: var(--primary-color); 
+    font-size: 2.5rem; 
+    font-weight: 700; 
+    margin-bottom: 2rem;
+}
+
 label{
     color: black;
 }
+
 .form-control {
-    width: 100%; /* Prend toute la largeur disponible */
-    max-width: 100%; /* Largeur maximale du champ */
-    padding: 0.75rem; /* Espacement intérieur du champ */
-    border: 1px solid var(--input-border-color); /* Bordure du champ */
-    border-radius: 8px; /* Arrondi des coins du champ */
-    background-color: var(--background-color); /* Couleur de fond du champ */
-    color: black; /* Couleur du texte dans le champ */
-    transition: border-color 0.3s ease; /* Transition douce pour le changement de couleur de bordure */
+    width: 100%; 
+    max-width: 100%; 
+    padding: 0.75rem; 
+    border: 1px solid var(--input-border-color); 
+    border-radius: 8px; 
+    background-color: var(--background-color); 
+    color: black; 
+    transition: border-color 0.3s ease; 
 }
 
 .form-control:focus {
-    border-color: var(--primary-color); /* Couleur de la bordure au focus */
-    outline: none; /* Supprime l'outline par défaut du champ */
+    border-color: var(--primary-color); 
+    outline: none; 
 }
 
 textarea.form-control {
-    resize: vertical; /* Permet de redimensionner le textarea uniquement verticalement */
+    resize: vertical;
 }
 
 .form-check-input {
-    margin-right: 0.5rem; /* Marge à droite de la case à cocher */
+    margin-right: 0.5rem; 
 }
 
 .form-check-label {
-    color: var(--text-color-light); /* Couleur du texte pour le label de la case à cocher */
+    color: var(--text-color-light); 
 }
 
 .btn-primary {
-    background-color: var(--primary-color); /* Couleur de fond du bouton */
-    color: var(--text-color-light); /* Couleur du texte du bouton */
-    border: none; /* Pas de bordure */
-    border-radius: 8px; /* Arrondi des coins du bouton */
-    padding: 0.75rem 1.5rem; /* Espacement intérieur du bouton */
-    cursor: pointer; /* Changement du curseur au survol */
-    font-weight: 500; /* Épaisseur de la police pour le bouton */
-    transition: background-color 0.3s ease; /* Transition douce pour le changement de couleur de fond */
+    background-color: var(--primary-color); 
+    color: var(--text-color-light); 
+    border: none; 
+    border-radius: 8px; 
+    padding: 0.75rem 1.5rem; 
+    cursor: pointer; 
+    font-weight: 500; 
+    transition: background-color 0.3s ease; 
 }
 
 .btn-primary:hover {
-    background-color: var(--primary-color); /* Couleur de fond au survol du bouton */
+    background-color: var(--primary-color); 
 }
 
 @media (max-width: 768px) {
     .group-form {
-        padding: 1rem; /* Réduction de l'espacement intérieur sur les écrans plus petits */
-        max-width: 100%; /* Largeur maximale à 100% pour les petits écrans */
+        padding: 1rem; 
+        max-width: 100%; 
     }
 }

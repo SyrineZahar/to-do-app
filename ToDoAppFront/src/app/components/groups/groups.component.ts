@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { GroupEntity } from 'src/app/classe/GroupEntity';
 import { GroupService } from 'src/app/service/group.service';
-import { Router } from '@angular/router';
 import { User } from 'src/app/classe/User';
 import { userService } from 'src/app/service/User.service';
 import { FormControl, FormGroup } from '@angular/forms';
-import { taskService } from 'src/app/service/Task.service';
 import { GroupFormComponent } from '../group-form/group-form.component';
 import { MatDialog } from '@angular/material/dialog';
 import { GroupdetailsComponent } from '../groupdetails/groupdetails.component';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-groups',
@@ -25,9 +24,7 @@ export class GroupsComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private groupService: GroupService,
-    private router: Router,
     private userService: userService,
-    private taskService: taskService
   ) {}
 
   ngOnInit() {
@@ -66,11 +63,11 @@ export class GroupsComponent implements OnInit {
     event?.stopPropagation();
     
     const dialogRef = this.dialog.open(GroupFormComponent, {
-      data: { group: group || null } // Pass the group data if available
+      data: { group: group || null } 
     });
 
     dialogRef.afterClosed().subscribe(() => {
-      this.ngOnInit(); // Refresh data after closing form
+      this.ngOnInit(); 
     });
   }
 
@@ -112,8 +109,15 @@ export class GroupsComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error deleting group:', error);
-        alert("Vous ne pouvez pas supprimer le groupe car il contient des utilisateurs.");
+        this.showPopup('You cannot delete the group because it contains users.');
       }
+    });
+  }
+
+  showPopup(message: string): void {
+    this.dialog.open(AlertsComponent, {
+      data: { message },
+      width: '500px'
     });
   }
 }

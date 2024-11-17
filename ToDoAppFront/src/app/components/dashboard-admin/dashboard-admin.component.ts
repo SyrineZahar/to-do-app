@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { GroupService } from 'src/app/service/group.service';
 import { taskService } from 'src/app/service/Task.service';
 import { userService } from 'src/app/service/User.service';
+import { AlertsComponent } from '../alerts/alerts.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -14,7 +16,7 @@ export class DashboardAdminComponent implements OnInit {
   userCount!: number;
   
 
-  constructor(private groupService: GroupService, private taskService: taskService, private userService: userService ) {}
+  constructor(private groupService: GroupService, private taskService: taskService, private userService: userService, private dialog: MatDialog ) {}
 
   ngOnInit(): void {
     this.getGroupStat()
@@ -49,12 +51,19 @@ export class DashboardAdminComponent implements OnInit {
   notifyUsers(){
     this.taskService.notifyUsers().subscribe(
       next=>{
-        alert('emails sent')
+        this.showPopup('Emails sent successfully.');
       },
       error=>{
-        alert(error)
+        this.showPopup('An error occurred');
       }
     )
+  }
+
+  showPopup(message: string): void {
+    this.dialog.open(AlertsComponent, {
+      data: { message },
+      width: '500px'
+    });
   }
 
 }

@@ -1,8 +1,6 @@
 <div class="adimncontainer">
 
-  <!-- Main Content -->
   <div class="main-content">
-    <!-- Counter Section -->
     <div class="counters">
       <div *ngIf="groupCount !== null" class="counter-container">
         <p>Number of Groups: <span>{{ groupCount }}</span></p>
@@ -15,10 +13,8 @@
       </div>
     </div>
     <div class="counters">
-       <!-- your-component.component.html -->
       <button (click)="notifyUsers()">Notify Users</button>
     </div>
-    <!-- Empty Div Below Counters -->
     <div class="empty-div">
       
       <app-groups></app-groups>

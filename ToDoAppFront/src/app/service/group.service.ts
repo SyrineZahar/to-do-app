@@ -1,39 +1,31 @@
-// Importation des modules nécessaires
-import { HttpClient, HttpHeaders } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
-import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
-import { Observable } from 'rxjs'; // Pour gérer les flux de données asynchrones
-import { GroupEntity } from '../classe/GroupEntity'; // Importation de la classe GroupEntity
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { Injectable } from '@angular/core'; 
+import { Observable } from 'rxjs'; 
+import { GroupEntity } from '../classe/GroupEntity';
 import { User } from '../classe/User';
 
-// Déclaration du service avec l'injection dans le root module
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
-  // URL de l'API pour accéder aux groupes
-  URL = 'http://localhost:8088/groups'; // Adaptez cette URL à votre API
+  URL = 'http://localhost:8088/groups'; 
 
-  // Injection du HttpClient dans le constructeur
   constructor(private httpClient: HttpClient) { }
 
-  // Méthode pour récupérer tous les groupes
   getGroups(): Observable<GroupEntity[]> {
-    return this.httpClient.get<GroupEntity[]>(this.URL); // Renvoie un Observable d'un tableau de groupes
+    return this.httpClient.get<GroupEntity[]>(this.URL); 
   }
 
   addGroup(group: GroupEntity): Observable<GroupEntity> {
-    console.log(group); // Log l'objet du groupe pour le débogage
+    console.log(group); 
   
-    // Définition de l'en-tête Content-Type
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   
-    // Envoie le groupe à l'API avec les en-têtes spécifiés et renvoie l'Observable
     return this.httpClient.post<GroupEntity>(this.URL, group, { headers });
   }
 
-  // Méthode pour éditer un groupe existant
   editGroup(group: GroupEntity): Observable<GroupEntity> {
-    return this.httpClient.put<GroupEntity>(`${this.URL}/${group.id}`, group); // Met à jour le groupe en fonction de son ID
+    return this.httpClient.put<GroupEntity>(`${this.URL}/${group.id}`, group); 
   }
 
   getGroupsByUser(userId: Number): Observable<GroupEntity[]>{
