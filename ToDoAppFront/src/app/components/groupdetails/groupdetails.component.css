@@ -175,7 +175,8 @@
     flex-direction: column;
     width: 100%;
     padding: 30px;
-    background-size: 100% 50%;
+    padding-bottom: 0;
+    background-size: 100% 60%;
     background-repeat: no-repeat;
     background-position: center top;  
   }

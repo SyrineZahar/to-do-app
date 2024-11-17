@@ -109,7 +109,7 @@ export class GroupFormComponent implements OnInit {
       if (this.isEditMode) {
         this.groupService.editGroup(groupData).subscribe({
           next: () => {
-            alert('Group updated successfully');
+            console.log('Group updated successfully');
             this.dialogRef.close();
           },
           error: (err) => {
@@ -119,7 +119,7 @@ export class GroupFormComponent implements OnInit {
       } else {
         this.groupService.addGroup(groupData).subscribe({
           next: () => {
-            alert('Group added successfully');
+            console.log('Group added successfully');
             this.dialogRef.close();
           },
           error: (err) => {
