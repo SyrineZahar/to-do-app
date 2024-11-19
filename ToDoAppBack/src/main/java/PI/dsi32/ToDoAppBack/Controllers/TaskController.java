@@ -5,11 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import PI.dsi32.ToDoAppBack.Entities.GroupEntity;
-import PI.dsi32.ToDoAppBack.Entities.User;
-import PI.dsi32.ToDoAppBack.Repository.CommentRepository;
-import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
-import PI.dsi32.ToDoAppBack.Repository.UserRepository;
+
+import PI.dsi32.ToDoAppBack.ServicesImpl.CommentServiceImpl;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import PI.dsi32.ToDoAppBack.Entities.Task;
-import PI.dsi32.ToDoAppBack.Services.IUserService;
 import PI.dsi32.ToDoAppBack.ServicesImpl.TaskServiceImpl;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
 
@@ -28,12 +24,9 @@ public class TaskController {
 
     @Autowired
     private TaskServiceImpl taskService;
+
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private GroupRepository groupRepository;
-    @Autowired
-    private CommentRepository commentRepository;
+    private CommentServiceImpl commentService;
 
     @GetMapping()
     public ResponseEntity<List<Task>> getAllTasks() {
@@ -48,7 +41,6 @@ public class TaskController {
     @PostMapping()
     public ResponseEntity<Map<String, String>> addTask(@RequestBody Map<String, Object> payload) {
         try {
-            // Extract values from payload
             String title = (String) payload.get("title");
             System.out.println(title);
             String description = (String) payload.get("description");
@@ -63,7 +55,6 @@ public class TaskController {
             boolean isDestactive = (boolean) payload.get("isDestactive");
             System.out.println(isDestactive);
 
-            // Check and parse userId and groupId
             if (!payload.containsKey("user_id") || payload.get("user_id") == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body(Map.of("error", "user_id is missing or null"));
@@ -78,23 +69,16 @@ public class TaskController {
             int groupId = ((Number) payload.get("group_id")).intValue();
             System.out.println("groupId: " + groupId);
 
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            GroupEntity group = groupRepository.findById(groupId)
-                    .orElseThrow(() -> new RuntimeException("Group not found"));
 
-            // Convert status string to TaskStatus enum
-            TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase());
+            //TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase());
 
-            // Create new Task
             Task task = new Task();
             task.setTitle(title);
             task.setDescription(description);
-            task.setStatus(status);
+            task.setStatus(TaskStatus.valueOf(statusStr));
             task.setDeadline(deadline);
             task.setDestactive(isDestactive);
 
-            // Call service to add task
             taskService.addTaskWithSQL(task, userId, groupId);
 
             Map<String, String> response = new HashMap<>();
@@ -130,14 +114,16 @@ public class TaskController {
 
 
     @PostMapping("/notifyUsers")
-    public String notifyUsersBeforeTwoDays() {
-        // Retrieve the list of all tasks from the service.
-        List<Task> allTasks = taskService.getAllTasks();
+    public ResponseEntity<String> notifyUsersBeforeTwoDays() {
+        try {
+            List<Task> allTasks = taskService.getAllTasks();
+            taskService.notifyUsers(allTasks);
 
-        // Call the method to notify user groups for tasks that have a deadline in two days.
-        taskService.notifyUsers(allTasks);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
-        return "Notification process completed. Users notified for tasks due in 2 days.";
+        }
     }
 
 
@@ -158,7 +144,7 @@ public class TaskController {
     }
 
     @GetMapping("/stat")
-    public ResponseEntity<Long> getUserStat() {
+    public ResponseEntity<Long> getTaskStat() {
         try{
             Long count = taskService.countTasks();
 
@@ -183,7 +169,7 @@ public class TaskController {
     @DeleteMapping("/{taskId}")
     public ResponseEntity<String> deleteTask(@PathVariable int taskId){
         try{
-            commentRepository.deleteByTaskId(taskId);
+            commentService.deleteCommentByTaskId(taskId);
             taskService.deleteTask(taskId);
             return ResponseEntity.ok().build();
         }

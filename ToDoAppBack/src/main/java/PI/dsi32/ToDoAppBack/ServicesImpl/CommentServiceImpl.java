@@ -33,4 +33,9 @@ public class CommentServiceImpl implements ICommentService {
     public List<Comment> getCommentByTaskId(int taskId) {
         return commentRepository.getCommentByTaskId(taskId);
     }
+
+    @Override
+    public void deleteCommentByTaskId(int taskId) {
+        commentRepository.deleteByTaskId(taskId);
+    }
 }

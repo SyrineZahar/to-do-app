@@ -9,5 +9,5 @@ public interface ICommentService {
     Comment updateComment(Comment comment);
     void deleteComment(Comment comment);
     List<Comment> getCommentByTaskId(int taskId);
-
+    void deleteCommentByTaskId(int taskId);
 }

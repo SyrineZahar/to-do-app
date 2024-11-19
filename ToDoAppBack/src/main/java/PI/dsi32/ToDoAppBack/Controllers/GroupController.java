@@ -61,10 +61,8 @@ public class GroupController {
             groupService.addUserToGroup(groupId, user);
             return ResponseEntity.ok().build();
         } catch (UserAlreadyInGroupException e) {
-            // Return a specific message when the user is already in the group
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST); // 400 Bad Request
         } catch (RuntimeException e) {
-            // Return a generic error message for other exceptions
             return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); // 500 Internal Server Error
         }
     }
