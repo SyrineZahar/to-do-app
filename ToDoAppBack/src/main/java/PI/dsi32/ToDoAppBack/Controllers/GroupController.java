@@ -4,7 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import PI.dsi32.ToDoAppBack.Controllers.Exceptions.UserAlreadyInGroupException;
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.eclipse.angus.mail.iap.Response;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus; 
 import org.springframework.http.ResponseEntity; 
 import org.springframework.web.bind.annotation.*; 
@@ -25,26 +26,18 @@ public class GroupController {
 	@Autowired 
     private IUserService userService;
 
-    @GetMapping() 
+    // recuperation des groupes
+    @GetMapping()
     public ResponseEntity<List<GroupEntity>> getAllGroups() {
         try {
-            List<GroupEntity> groups = groupService.getAllGroups(); 
+            List<GroupEntity> groups = groupService.getAllGroups();
             return new ResponseEntity<>(groups, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    
-    @GetMapping("/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable int userId) {
-        Optional<User> user = userService.getUserById(userId);
-        if (user.isPresent()) {
-            return ResponseEntity.ok(user.get());  
-        } else {
-            return ResponseEntity.notFound().build();  
-        }
-    }
-	
+
+    //ajout d'un groupe
     @PostMapping() 
     public ResponseEntity<GroupEntity> addGroup(@RequestBody GroupEntity group) {
         try {
@@ -55,19 +48,20 @@ public class GroupController {
         }
     }
 
+    //ajout utilisateur a group
     @PostMapping("/{groupId}/users")
-    public ResponseEntity<String> addUserToGroup(@PathVariable int groupId, @RequestBody User user) {
+    public ResponseEntity<String> addUserGroup(@PathVariable int groupId, @RequestBody User user) {
         try {
             groupService.addUserToGroup(groupId, user);
             return ResponseEntity.ok().build();
         } catch (UserAlreadyInGroupException e) {
-            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.BAD_REQUEST); 
+            return new ResponseEntity<>("Erreur: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (RuntimeException e) {
-            return new ResponseEntity<>("Error: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR); 
+            return new ResponseEntity<>("Erreur: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    
+    //recuperation des groupes par utilisateur
     @GetMapping("/user/{userId}") 
     public ResponseEntity<List<GroupEntity>> getGroupsByUserId(@PathVariable Integer userId) {
         List<GroupEntity> groups = groupService.getGroupsForUser(userId);
@@ -78,7 +72,8 @@ public class GroupController {
         
         return ResponseEntity.ok(groups); 
     }
-    
+
+    // recuperation group par id
     @GetMapping("/{groupId}") 
     public ResponseEntity<GroupEntity> getGroupById(@PathVariable Integer groupId) {
         Optional<GroupEntity> group = groupService.getGroupById(4); 
@@ -90,8 +85,9 @@ public class GroupController {
         return ResponseEntity.ok(group.get());
     }
 
+    //recuperation de nbr de groupe
     @GetMapping("/stat")
-    public ResponseEntity<Long> getUserStat() {
+    public ResponseEntity<Long> getGroupStat() {
         try{
             Long count = groupService.countGroups();
 
@@ -102,6 +98,7 @@ public class GroupController {
         }
     }
 
+    //suppression du group
     @DeleteMapping("/{groupId}")
     public ResponseEntity<String> deleteGroup(@PathVariable int groupId) {
         try{
@@ -115,7 +112,7 @@ public class GroupController {
         }
     }
 
-
+    // màj d'un groupe
     @PutMapping("/{groupId}")
     public ResponseEntity<GroupEntity> updateGroup(
             @PathVariable Integer groupId,

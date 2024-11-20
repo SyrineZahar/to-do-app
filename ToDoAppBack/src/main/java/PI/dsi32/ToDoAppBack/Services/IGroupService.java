@@ -1,18 +1,18 @@
-package PI.dsi32.ToDoAppBack.Services; // Déclaration du package pour les services.
+package PI.dsi32.ToDoAppBack.Services;
 
-import java.util.List; // Importation de la classe List.
+import java.util.List;
 import java.util.Optional;
 
-import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
-import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
+import PI.dsi32.ToDoAppBack.Entities.GroupEntity;
+import PI.dsi32.ToDoAppBack.Entities.User;
 
-public interface IGroupService { // Interface définissant les opérations de service pour les groupes.
+public interface IGroupService {
     
-    List<GroupEntity> getAllGroups(); // Méthode pour récupérer tous les groupes.
+    List<GroupEntity> getAllGroups();
     
-    GroupEntity addGroup(GroupEntity group); // Méthode pour ajouter un nouveau groupe.
+    GroupEntity addGroup(GroupEntity group);
     
-    void addUserToGroup(int groupId, User user); // Méthode pour ajouter un utilisateur à un groupe donné.
+    void addUserToGroup(int groupId, User user);
 
 	List<GroupEntity> getGroupsForUser(Integer userId);
     

@@ -8,13 +8,10 @@ import { Task } from '../classe/Task'; // Importation de la classe Task
 })
 export class taskService {
     URL = 'http://localhost:8088/tasks';
-  tasks$: any;
+    //tasks$: any;
 
     constructor(private httpClient: HttpClient) { }
 
-    getTasks(): Observable<Task[]> {
-        return this.httpClient.get<Task[]>(this.URL); 
-    }
 
     addTask(task: Task): Observable<string> {
 
@@ -23,7 +20,6 @@ export class taskService {
             description: task.description,
             status: task.status, 
             deadline: task.deadline.toISOString().slice(0, 19), 
-            isDestactive: task.isDestactive,
             user_id: Number(task.user_id), 
             group_id: Number(task.group_id)  
         };

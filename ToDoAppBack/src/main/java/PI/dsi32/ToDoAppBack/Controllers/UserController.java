@@ -24,7 +24,8 @@ import PI.dsi32.ToDoAppBack.ServicesImpl.UserServiceImpl;
 public class UserController {
     @Autowired
     private UserServiceImpl userService;
-    
+
+    // recuperation des utilisateurs
     @GetMapping()
     public ResponseEntity<List<User>> getAll() {
         try {
@@ -38,7 +39,8 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
-    
+
+    // recuperation de nom de l'utilisateur par identifiant
     @GetMapping("/name/{userId}")
     public ResponseEntity<User> getUserNameById(@PathVariable int userId) {
         Optional<User> user = userService.getUserById(userId);
@@ -48,33 +50,32 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR); 
         }
     }
-    
+
+    // recuperation des utilisateurs par l'identificant du tâche
     @GetMapping("/taskId/{taskId}")
     public ResponseEntity<User> getUserByTaskId(@PathVariable("taskId") Integer taskId) {
         Optional<User> user = userService.getUserByTask(taskId);
         return user.map(ResponseEntity::ok)
                    .orElseGet(() -> ResponseEntity.notFound().build());
     }
-    
+
+    //recuperation des utilisateurs par l'identifiant du group
     @GetMapping("/{groupId}") 
     public ResponseEntity<List<User>> getUsersByGroupId(@PathVariable Integer groupId) {
-        List<User> users = userService.getUsersByGroupId(groupId); // Appel de la méthode dans le UserService.
+        List<User> users = userService.getUsersByGroupId(groupId);
         
-        // Vérification si des utilisateurs ont été trouvés.
         if (users.isEmpty()) {
-            return ResponseEntity.notFound().build(); // Retourne un 404 si aucun utilisateur n'est trouvé.
+            return ResponseEntity.notFound().build();
         }
         
-        return ResponseEntity.ok(users); // Retourne un 200 avec la liste des utilisateurs.
+        return ResponseEntity.ok(users);
     }
     
-    
-    
+    //recuperation du mot de passe et email de l'utilisateur
     @PostMapping("/getData")
     public ResponseEntity<User> getDataUser(@RequestBody Map<String, String> loginData) {
 
     	String email = loginData.get("email");
-        String password = loginData.get("password");
 
         try {
             User user = userService.getDataUser(email);
@@ -89,6 +90,7 @@ public class UserController {
         }
     }
 
+    // envoi le nbr des utilisateurs
     @GetMapping("/stat")
     public ResponseEntity<Long> getUserStat() {
         try{

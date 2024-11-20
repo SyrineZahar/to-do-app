@@ -22,6 +22,7 @@ public class AuthServiceImpl implements IAuthService {
 
     private final String NODE_API_URL = "http://localhost:3001"; // URL de l'API Node.js
 
+    // enregistrement de l'utilisateur avec hashage du mot de passe à l'aide d'un module externe node
     @Override
     public User registerUser(User user) {
         User existingUser = userRepository.findByEmail(user.getEmail());
@@ -40,6 +41,7 @@ public class AuthServiceImpl implements IAuthService {
         return userRepository.save(user);
     }
 
+    // login d'un utilisateur avec un module externe node pour la partie hashage
     @Override
     public User loginUser(String email, String password) {
         User user = userRepository.findByEmail(email);

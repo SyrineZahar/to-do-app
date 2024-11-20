@@ -1,99 +1,85 @@
-package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
-
-import java.util.List; // Importation de la classe List.
+package PI.dsi32.ToDoAppBack.ServicesImpl;
+import java.util.List;
 import java.util.Optional;
-
-
 import PI.dsi32.ToDoAppBack.Controllers.Exceptions.UserAlreadyInGroupException;
-import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
-import org.springframework.stereotype.Service; // Importation de l'annotation Service. // Import MimeMessage
-
-import PI.dsi32.ToDoAppBack.Entities.GroupEntity; // Importation de l'entité Group.
-import PI.dsi32.ToDoAppBack.Entities.User; // Importation de l'entité User.
-import PI.dsi32.ToDoAppBack.Repository.GroupRepository; // Importation du dépôt GroupRepository.
-import PI.dsi32.ToDoAppBack.Repository.UserRepository; // Importation du dépôt UserRepository.
-import PI.dsi32.ToDoAppBack.Services.IGroupService; // Importation de l'interface IGroupService.
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import PI.dsi32.ToDoAppBack.Entities.GroupEntity;
+import PI.dsi32.ToDoAppBack.Entities.User;
+import PI.dsi32.ToDoAppBack.Repository.GroupRepository;
+import PI.dsi32.ToDoAppBack.Repository.UserRepository;
+import PI.dsi32.ToDoAppBack.Services.IGroupService;
 import jakarta.transaction.Transactional;
 
-@Service // Annotation indiquant que cette classe est un service Spring.
-public class GroupServiceImpl implements IGroupService { // Classe implémentant l'interface IGroupService.
+@Service
+public class GroupServiceImpl implements IGroupService {
 
-    @Autowired // Injection de dépendance pour le dépôt GroupRepository.
+    @Autowired
     private GroupRepository groupRepo;
 
-    @Autowired // Injection de dépendance pour le dépôt UserRepository.
+    @Autowired
     private UserRepository userRepo;
 
     @Autowired
     private EmailSender emailSender;
 
-
+    // Récupère tous les groupes
     @Override
     public List<GroupEntity> getAllGroups() {
-        // Récupère tous les groupes à partir du dépôt.
         return groupRepo.findAll();
     }
 
+    // Ajoute un nouveau groupe et retourne le groupe ajouté.
     @Override
     public GroupEntity addGroup(GroupEntity group) {
-        // Ajoute un nouveau groupe au dépôt et retourne le groupe ajouté.
         return groupRepo.save(group);
     }
-    
-    public Optional<GroupEntity> getGroupById(int groupId) {
 
-        return groupRepo.findById(groupId);
-    }
-
+    // recuperation et retourne des groupes pour un utilisateur spécifique
     @Override
     public List<GroupEntity> getGroupsForUser(Integer userId) {
-
         return groupRepo.findGroupsByUserId(userId);
     }
-    
-    public Optional<GroupEntity> getGroupById(Integer groupId) {
 
+    //recuperation et retourne d'un groupe spécifique
+    @Override
+    public Optional<GroupEntity> getGroupById(Integer groupId) {
         return groupRepo.findById(groupId);
 	}
 
+    //recuperation et retourne des nbr des groupes
     @Override
     public Long countGroups() {
         return groupRepo.count();
     }
-
+    //suppression d'un groupe spécifique
     @Override
     public void deleteGroupById(Integer groupId) {
         groupRepo.deleteById(groupId);
     }
-
+    //mise à jour et retourne d'un groupe
     @Override
     public GroupEntity updateGroup(GroupEntity group) {
         return groupRepo.save(group);
     }
 
+    //ajout d'un utilisateur a un groupe avec l'envoi du mail comme notif
     @Override
-    @Transactional // Ensure the method is transactional
+    @Transactional
     public void addUserToGroup(int groupId, User user) {
-        // Retrieve the group by ID
         GroupEntity group = groupRepo.findById(groupId)
                 .orElseThrow(() -> new RuntimeException("Group not found"));
 
-        // If user is already in the database, load the managed user
         User managedUser = userRepo.findById(user.getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // Check if the user is already in the group
         if (!group.getUsers().contains(managedUser)) {
-            // Add the user to the group's list of users
             group.getUsers().add(managedUser);
 
-            // Add the group to the user's list of groups
             managedUser.getGroups().add(group);
 
-            // Save the user (since the relation is bidirectional, saving the user is enough)
             userRepo.save(managedUser);
 
-            // Send email to the user
             String emailContent = "Dear " + user.getName() + ",\n\n"
                     + "You've been added to a new group in the Work Together application. "
                     + "We hope you enjoy collaborating with your team!\n\n"
@@ -103,10 +89,5 @@ public class GroupServiceImpl implements IGroupService { // Classe implémentant
             throw new UserAlreadyInGroupException("User is already in the group");
         }
     }
-
-
-
-
-
 
 }

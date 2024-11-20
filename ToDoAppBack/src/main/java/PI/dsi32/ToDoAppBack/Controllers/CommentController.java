@@ -17,6 +17,7 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
+    // recuperation des commentaires d'une tâche spécifique
     @GetMapping("/{taskId}")
     public ResponseEntity<List<Comment>> getCommentsByTaskId(@PathVariable("taskId") int taskId) {
         try {
@@ -27,6 +28,7 @@ public class CommentController {
         }
     }
 
+    //ajout d'un commentaire
     @PostMapping
     public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
         try {
@@ -34,29 +36,6 @@ public class CommentController {
             return new ResponseEntity<>(newComment, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Comment> updateComment(@PathVariable int id, @RequestBody Comment comment) {
-        try {
-            comment.setId(id); // Ensure the correct ID is set for updating
-            Comment updatedComment = commentService.updateComment(comment);
-            return new ResponseEntity<>(updatedComment, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteComment(@PathVariable int id) {
-        try {
-            Comment comment = new Comment();
-            comment.setId(id);
-            commentService.deleteComment(comment);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

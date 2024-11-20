@@ -24,21 +24,24 @@ public class Task implements Serializable { // La classe implémente Serializabl
 
     @Enumerated(EnumType.STRING)
     private TaskStatus status;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy'T'HH:mm:ss")
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime deadline;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime createdAt;
+
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime updatedAt;
-    private boolean isDestactive;
 
-    // Chaque tâche a un seul utilisateur
+
+    // Plusieurs tâches a un seul utilisateur
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
 
-    // Chaque tâche appartient à un seul groupe
+    // Plusieurs tâches appartient à un seul groupe
     @ManyToOne
     @JoinColumn(name = "group_id")
     @JsonIgnore
@@ -49,7 +52,7 @@ public class Task implements Serializable { // La classe implémente Serializabl
     }
     
 	public Task(int id, String title, String description, TaskStatus status, LocalDateTime deadline,
-			LocalDateTime createdAt, LocalDateTime updatedAt, boolean isDestactive, User user, GroupEntity group) {
+			LocalDateTime createdAt, LocalDateTime updatedAt, User user, GroupEntity group) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -58,7 +61,6 @@ public class Task implements Serializable { // La classe implémente Serializabl
 		this.deadline = deadline;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.isDestactive = isDestactive;
 		this.user = user;
 		this.group = group;
 	}
@@ -116,15 +118,7 @@ public class Task implements Serializable { // La classe implémente Serializabl
 	}
 
 	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;	
-	}
-
-	public boolean isDestactive() {
-		return isDestactive;
-	}
-
-	public void setDestactive(boolean isDestactive) {
-		this.isDestactive = isDestactive;
+		this.updatedAt = updatedAt;
 	}
 
 	public User getUser() {

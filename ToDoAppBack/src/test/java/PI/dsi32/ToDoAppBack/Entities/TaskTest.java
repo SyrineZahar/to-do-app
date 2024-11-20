@@ -26,7 +26,7 @@ public class TaskTest {
     @BeforeEach
     public void setUp() {
         now = LocalDateTime.now();
-        task = new Task(1, "Test Title", "Test Description", TaskStatus.INPROGRESS, now, now, now, false, null, null);
+        task = new Task(1, "Test Title", "Test Description", TaskStatus.INPROGRESS, now, now, now, null, null);
     }
 
     /**
@@ -169,18 +169,11 @@ public class TaskTest {
      * Teste la méthode isDestactive de la classe Task.
      * Vérifie que la tâche n'est pas marquée comme désactivée par défaut.
      */
-    @Test
-    public void testIsDestactive() {
-        assertFalse(task.isDestactive());
-    }
+
 
     /**
      * Teste la méthode setDestactive de la classe Task.
      * Vérifie que la tâche peut être marquée comme désactivée.
      */
-    @Test
-    public void testSetDestactive() {
-        task.setDestactive(true);
-        assertTrue(task.isDestactive());
-    }
+
 }

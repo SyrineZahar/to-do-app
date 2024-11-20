@@ -1,38 +1,39 @@
-package PI.dsi32.ToDoAppBack.ServicesImpl; // Déclaration du package pour les implémentations de services.
+package PI.dsi32.ToDoAppBack.ServicesImpl;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
-import java.util.List; // Importation de la classe List.
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import PI.dsi32.ToDoAppBack.Entities.User;
 import PI.dsi32.ToDoAppBack.enums.TaskStatus;
-import org.springframework.beans.factory.annotation.Autowired; // Importation de l'annotation Autowired.
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service; // Importation de l'annotation Service.
+import org.springframework.stereotype.Service;
 
-import PI.dsi32.ToDoAppBack.Entities.Task; // Importation de l'entité Task.
-import PI.dsi32.ToDoAppBack.Repository.TaskRepository; // Importation du dépôt TaskRepository.
-import PI.dsi32.ToDoAppBack.Services.ITaskService; // Importation de l'interface ITaskService.
+import PI.dsi32.ToDoAppBack.Entities.Task;
+import PI.dsi32.ToDoAppBack.Repository.TaskRepository;
+import PI.dsi32.ToDoAppBack.Services.ITaskService;
 import org.springframework.web.client.RestTemplate;
 
-@Service // Annotation indiquant que cette classe est un service Spring.
+@Service
 public class TaskServiceImpl implements ITaskService {
+    //URL d'un module Flask pour le résume d'une description
     private final String url="http://127.0.0.1:5000/summarize";
 
-    @Autowired // Injection de dépendance pour le dépôt TaskRepository.
+    @Autowired
     private TaskRepository taskRepo;
 
     @Autowired
     private EmailSender emailSender;
 
+    // Récupère toutes les tâches à partir du dépôt.
     @Override
     public List<Task> getAllTasks() {
-        // Récupère toutes les tâches à partir du dépôt.
         return taskRepo.findAll();
     }
 
@@ -43,31 +44,23 @@ public class TaskServiceImpl implements ITaskService {
             task.getDescription(),
             task.getStatus().name(),
             task.getDeadline(),
-            LocalDateTime.now(),  // createdAt
-            LocalDateTime.now(),  // updatedAt
-            task.isDestactive(),
-            userId,  // user_id passé directement
-            groupId  // group_id passé directement
+            LocalDateTime.now(),
+            LocalDateTime.now(),
+            userId,
+            groupId
         );
     }
 
-
+    //mise à jour et retourne d'une tache
     @Override
     public Task editTask(Task task) {
-        // Vérifier si la tâche existe dans la base de données en utilisant son ID.
         Task existingTask = taskRepo.findById(task.getId())
             .orElseThrow(() -> new IllegalArgumentException("Task not found with id: " + task.getId()));
-
-        // Mettre à jour uniquement le statut de la tâche.
         existingTask.setStatus(task.getStatus());
-
-        // Enregistrer la tâche mise à jour et retourner la tâche.
         return taskRepo.save(existingTask);
     }
 
-
-
-
+    //l'envoi des notification (email) au utilisateur pour les tâches non faites et son dll apres 2j
     @Override
     public void notifyUsers(List<Task> tasks) {
         LocalDateTime now = LocalDateTime.now();
@@ -76,7 +69,7 @@ public class TaskServiceImpl implements ITaskService {
         List<Task> tasksDueInTwoDays = tasks.stream()
                 .filter(task -> task.getDeadline().toLocalDate().equals(twoDaysBeforeDeadline.toLocalDate())
                         && task.getStatus() != TaskStatus.DONE)
-                .collect(Collectors.toList());
+                .toList();
 
         if (tasksDueInTwoDays.isEmpty()) {
             System.out.println("No tasks due in 2 days.");
@@ -91,37 +84,32 @@ public class TaskServiceImpl implements ITaskService {
         }
 
         for (Task task : tasksDueInTwoDays) {
-            System.out.println("before1 "+task.getGroup().getUsers()); // Print user's email
-
             for (User user : task.getGroup().getUsers()) {
-                System.out.println("before2 "); // Print user's email
-
-                System.out.println("Notifying user: " + user.getName()); // Print user's email
+                System.out.println("Notifying user: " + user.getName());
                 emailSender.sendSimpleEmail(user, "Reminder: Task \"" + task.getTitle() + "\" is due in 2 days.");
             }
         }
     }
 
+    //recupere les tâches associées à un utilisateur et à un groupe spécifiques
     @Override
     public List<Task> findByUserIdAndGroupId(int userId, int groupId) {
         return taskRepo.findByUserIdAndGroupId(userId, groupId);
     }
-    
+
+    //recupere les taches associées à un groupe spécifique
     @Override
     public List<Task> findByGroupId(int groupId) {
         return taskRepo.findByGroupId(groupId);
     }
 
-    @Override
-    public List<Task> findByDeadline(LocalDateTime deadline) {
-        return taskRepo.findByDeadline(deadline);
-    }
-
+    // recupere le nbr des taches
     @Override
     public Long countTasks() {
         return taskRepo.count();
     }
 
+    // consomme l'api flask pour l'utilisateur d'un ai pour le résumé la description d'une tache
     @Override
     public String getDescriptionSummary(String Description) {
         Map<String, String> requestBody = new HashMap<>();
@@ -138,6 +126,7 @@ public class TaskServiceImpl implements ITaskService {
         return response.getBody();
     }
 
+    //suppression d'une tache
     @Override
     public void deleteTask(int taskId) {
         taskRepo.deleteById(taskId);

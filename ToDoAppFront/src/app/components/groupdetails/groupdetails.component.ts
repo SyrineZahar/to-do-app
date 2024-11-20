@@ -91,7 +91,7 @@ export class GroupdetailsComponent implements OnInit {
     }
     this.groupService.addUserToGroup(Number(this.data.group.id), selectedUser).subscribe({
       next: (updatedGroup) => {
-        //this.showPopup('User added successfully');
+        this.showPopup('User added successfully');
         this.data.group = updatedGroup;
       },
       error: (error) => {

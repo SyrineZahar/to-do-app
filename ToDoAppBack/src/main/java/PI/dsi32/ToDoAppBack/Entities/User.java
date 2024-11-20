@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
@@ -42,6 +41,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    // plusieurs utilisateurs font partie du plusieurs groupes
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "user_groups",
@@ -50,6 +50,7 @@ public class User implements Serializable {
     )
     private List<GroupEntity> groups;
 
+    //un utilisateur a plusieurs tâche
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Task> tasks;
 

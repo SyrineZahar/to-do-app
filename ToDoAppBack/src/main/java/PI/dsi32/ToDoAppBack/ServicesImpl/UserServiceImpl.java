@@ -32,23 +32,25 @@ public class UserServiceImpl implements IUserService{
 	public Optional<User> getUserByTask(Integer taskId) {
         return userRepository.findUserByTaskId(taskId);
     }
-	
+
+	// récupération les utilisateurs du groupe.
 	@Override
 	public List<User> getUsersByGroupId(Integer groupId) {
-        return userRepository.findUsersByGroupId(groupId); // Appelle le repository pour récupérer les utilisateurs du groupe.
+        return userRepository.findUsersByGroupId(groupId);
     }
 
-	
+	//recuperation d'un utilisateur par son email sinon retourne null
 	@Override
 	public User getDataUser(String email) {
-	    User user = userRepository.findByEmail(email); // Assurez-vous que cette méthode renvoie un seul utilisateur.
+	    User user = userRepository.findByEmail(email);
 
 	    if (user != null) {
 	        return user;
 	    }
-	    return null; // Retourne null si l'utilisateur n'existe pas ou si le mot de passe est incorrect.
+	    return null;
 	}
 
+	//recupere le nbr des utilisateurs enregistré
 	@Override
 	public Long countUsers() {
 		return userRepository.count();

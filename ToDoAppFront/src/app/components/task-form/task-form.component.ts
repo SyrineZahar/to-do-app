@@ -55,7 +55,6 @@ export class TaskFormComponent implements OnInit {
         this.task?.deadline ? this.formatDate(this.task.deadline) : '', 
         [Validators.required, futureDateValidator()]
       ],
-      isDesactivated: [this.task?.isDestactive || false],
       user_id: [this.task?.user_id || null, Validators.required],
       group_id: [this.groupId]
     });

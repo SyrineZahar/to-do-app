@@ -17,8 +17,8 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO task (title, description, status, deadline, created_at, updated_at, is_destactive, user_id, group_id) " +
-                   "VALUES (:title, :description, :status, :deadline, :createdAt, :updatedAt, :isDestactive, :userId, :groupId)", nativeQuery = true)
+    @Query(value = "INSERT INTO task (title, description, status, deadline, created_at, updated_at, user_id, group_id) " +
+                   "VALUES (:title, :description, :status, :deadline, :createdAt, :updatedAt, :userId, :groupId)", nativeQuery = true)
     void addTaskWithSQL(
             @Param("title") String title,
             @Param("description") String description,
@@ -26,7 +26,6 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
             @Param("deadline") LocalDateTime deadline,
             @Param("createdAt") LocalDateTime createdAt,
             @Param("updatedAt") LocalDateTime updatedAt,
-            @Param("isDestactive") boolean isDestactive,
             @Param("userId") int userId,
             @Param("groupId") int groupId
     );
@@ -35,6 +34,5 @@ public interface TaskRepository extends JpaRepository<Task, Integer> {
     
     List<Task> findByGroupId(int groupId);
     
-    List<Task> findByDeadline(LocalDateTime deadline);
 
 }

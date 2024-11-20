@@ -28,16 +28,8 @@ public class TaskController {
     @Autowired
     private CommentServiceImpl commentService;
 
-    @GetMapping()
-    public ResponseEntity<List<Task>> getAllTasks() {
-        try {
-            List<Task> tasks = taskService.getAllTasks();
-            return new ResponseEntity<>(tasks, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
+    //ajout task avec recuperation des données + jpa
     @PostMapping()
     public ResponseEntity<Map<String, String>> addTask(@RequestBody Map<String, Object> payload) {
         try {
@@ -51,9 +43,6 @@ public class TaskController {
 
             LocalDateTime deadline = LocalDateTime.parse((String) payload.get("deadline"));
             System.out.println(deadline);
-
-            boolean isDestactive = (boolean) payload.get("isDestactive");
-            System.out.println(isDestactive);
 
             if (!payload.containsKey("user_id") || payload.get("user_id") == null) {
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -70,14 +59,13 @@ public class TaskController {
             System.out.println("groupId: " + groupId);
 
 
-            //TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase());
+            TaskStatus status = TaskStatus.valueOf(statusStr.toUpperCase());
 
             Task task = new Task();
             task.setTitle(title);
             task.setDescription(description);
-            task.setStatus(TaskStatus.valueOf(statusStr));
+            task.setStatus(status);
             task.setDeadline(deadline);
-            task.setDestactive(isDestactive);
 
             taskService.addTaskWithSQL(task, userId, groupId);
 
@@ -95,10 +83,7 @@ public class TaskController {
         }
     }
 
-
-
-
-
+    // maj task
     @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Task> updateTask(@RequestBody Task task, @PathVariable int id) {
         try {
@@ -111,8 +96,7 @@ public class TaskController {
         }
     }
 
-
-
+    // notif utilisateur des taches avant 2j du deadline
     @PostMapping("/notifyUsers")
     public ResponseEntity<String> notifyUsersBeforeTwoDays() {
         try {
@@ -126,23 +110,19 @@ public class TaskController {
         }
     }
 
-
+    //filtrage par user et group
     @GetMapping("/{userId}/{groupId}")
     public List<Task> findByUserIdAndGroupId(@PathVariable int userId,@PathVariable int groupId){
         return taskService.findByUserIdAndGroupId(userId,groupId);
     }
-    
+
+    //filtrage par l'identifiant du groupe
     @GetMapping("/groups/{groupId}")
-    public List<Task> findByGrouprId(@PathVariable int groupId){
+    public List<Task> findByGroupeId(@PathVariable int groupId){
         return taskService.findByGroupId(groupId);
     }
 
-
-    @GetMapping("/deadlines/{deadline}")
-    public List<Task> findByDeadline(@PathVariable LocalDateTime deadline){
-        return taskService.findByDeadline(deadline);
-    }
-
+    //recupere le nbr des tâches
     @GetMapping("/stat")
     public ResponseEntity<Long> getTaskStat() {
         try{
@@ -155,7 +135,7 @@ public class TaskController {
         }
     }
 
-
+    // envoie le résume de la description
     @PostMapping("/descriptionSum")
     public ResponseEntity<String> getCommentsSum(@RequestBody String description){
         try {
@@ -165,6 +145,8 @@ public class TaskController {
             return new ResponseEntity<>("the error:"+e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //suppression du taches et ses commentaires
     @Transactional
     @DeleteMapping("/{taskId}")
     public ResponseEntity<String> deleteTask(@PathVariable int taskId){

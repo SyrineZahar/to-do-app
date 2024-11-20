@@ -1,6 +1,4 @@
 package PI.dsi32.ToDoAppBack.Entities;
-
-
 import jakarta.persistence.*;
 
 @Entity
@@ -11,11 +9,12 @@ public class Comment {
 
     private String description;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //plusieurs commentaires appartient à un seul utilisateur
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    //plusieurs commentaires appartient à une seule tâche
     @ManyToOne
     @JoinColumn(name = "task_id", nullable = false)
     private Task task;

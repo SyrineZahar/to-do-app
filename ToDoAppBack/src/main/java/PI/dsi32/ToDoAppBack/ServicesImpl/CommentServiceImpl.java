@@ -13,27 +13,19 @@ public class CommentServiceImpl implements ICommentService {
 
     @Autowired
     private CommentRepository commentRepository;
-
+    //ajout et retourne d'un commentaires
     @Override
     public Comment addComment(Comment comment) {
         return commentRepository.save(comment);
     }
 
-    @Override
-    public Comment updateComment(Comment comment) {
-        return commentRepository.save(comment);
-    }
-
-    @Override
-    public void deleteComment(Comment comment) {
-        commentRepository.delete(comment);
-    }
-
+    //recuperation et retourne d'un commentaire specifique à une tâche
     @Override
     public List<Comment> getCommentByTaskId(int taskId) {
         return commentRepository.getCommentByTaskId(taskId);
     }
 
+    //suppression des commentaires spécifique à d'un tâche
     @Override
     public void deleteCommentByTaskId(int taskId) {
         commentRepository.deleteByTaskId(taskId);

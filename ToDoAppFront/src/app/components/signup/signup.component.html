@@ -27,7 +27,7 @@
             Password is required.
           </div>
           <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.errors?.['pattern']" class="error">
-            Password must contain at least one uppercase letter and one digit.
+            Password must contain at least one uppercase letter, one digit and 5 characters.
           </div>
         </div>
   

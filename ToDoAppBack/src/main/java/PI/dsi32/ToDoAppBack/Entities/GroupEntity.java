@@ -1,11 +1,7 @@
 package PI.dsi32.ToDoAppBack.Entities;
-
 import java.io.Serializable;
 import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.*;
@@ -27,10 +23,12 @@ public class GroupEntity implements Serializable {
     private String nom;
     private String description;
 
-    @ManyToMany(mappedBy = "groups")
-	private List<User> users; // Un groupe peut avoir plusieurs utilisateurs
+	//plusieurs groupe contient plusieurs utilisateurs
+	@ManyToMany(mappedBy = "groups")
+	private List<User> users;
 
-    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+	//une groupe contient plusieurs tâches
+	@OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
     private List<Task> tasks;
 
     public GroupEntity() {

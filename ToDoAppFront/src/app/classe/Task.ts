@@ -8,7 +8,6 @@ export class Task {
         public deadline: Date, 
         public group_id: number,
         public user_id: number,
-        public isDestactive?: boolean, 
         public id?: number, 
         public createdAt?: Date, 
         public updatedAt?: Date 

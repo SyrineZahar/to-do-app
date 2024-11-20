@@ -21,6 +21,7 @@ public class AuthController {
     @Autowired
     private AuthServiceImpl authService;
 
+    //enregistrement d'utilisateur avec body "user"
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
         try {
@@ -30,7 +31,8 @@ public class AuthController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-    
+
+    // login avec email and password
     @PostMapping("/login")
     public ResponseEntity<User> loginUser(@RequestBody Map<String, String> loginData) {
 
