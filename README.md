@@ -1,1 +1,1 @@
-The "Work Together" application is a collaborative platform designed to streamline project management, similar to Jira. It allows teams to efficiently organize and manage tasks within customizable groups. 
+
