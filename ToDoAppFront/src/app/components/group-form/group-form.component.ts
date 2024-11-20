@@ -35,6 +35,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
+  // Crée un formulaire avec les champs nécessaires
   private createForm(): void {
     this.groupForm = this.fb.group({
       nom: ['', Validators.required],
@@ -46,6 +47,7 @@ export class GroupFormComponent implements OnInit {
     });
   }
 
+  // Remplir le formulaire avec les données d'un groupe existant (mode édition)
   private populateForm(group: GroupEntity): void {
     this.groupForm.patchValue({
       nom: group.nom,
@@ -62,6 +64,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
+  // Gère le changement de l'image de fond
   onBackgroundImageChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -77,6 +80,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
+  // Gère le changement de l'image de profil
   onProfilePictureChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -92,6 +96,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
 
+  // Soumet le formulaire
   onSubmit(): void {
     if (this.groupForm.valid) {
       const groupData = new GroupEntity(
@@ -131,6 +136,7 @@ export class GroupFormComponent implements OnInit {
     }
   }
   
+  // Affiche une popup avec un message d'alerte
   showPopup(message: string): void {
     this.dialog.open(AlertsComponent, {
       data: { message },
@@ -138,6 +144,7 @@ export class GroupFormComponent implements OnInit {
     });
   }
 
+  // Ferme le formulaire sans enregistrer
   onCancel(): void {
     this.dialogRef.close();
   }

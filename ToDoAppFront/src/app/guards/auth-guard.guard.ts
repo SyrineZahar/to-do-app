@@ -2,8 +2,8 @@ import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../service/Auth.service';
-import { UserRole } from '../classe/Enum/UserRole.enum';
 
+// Garde de navigation pour vérifier si l'utilisateur est connecté
 export const authGuardGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -16,6 +16,7 @@ export const authGuardGuard: CanActivateFn = (route, state) => {
   }
 };
 
+// Garde de navigation pour vérifier si l'utilisateur a un rôle ADMIN
 export const adminGuard: CanActivateFn = (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router);

@@ -1,7 +1,6 @@
 <form [formGroup]="groupForm" (ngSubmit)="onSubmit()" class="group-form">
   <h1 class="text-center">{{ isEditMode ? 'Edit Group' : 'Add Group' }}</h1>
 
-  <!-- Group Name Field -->
   <div class="form-group">
     <label for="nom">Name</label>
     <input
@@ -13,7 +12,6 @@
     />
   </div>
 
-  <!-- Group Description Field -->
   <div class="form-group">
     <label for="description">Description</label>
     <textarea
@@ -24,7 +22,6 @@
     ></textarea>
   </div>
 
-  <!-- Background Image Field -->
   <div>
     <label>Background Image</label>
     <input type="file" (change)="onBackgroundImageChange($event)" />
@@ -36,7 +33,6 @@
     </div>
   </div>
 
-  <!-- Profile Picture Field -->
   <div>
     <label>Group Image</label>
     <input type="file" (change)="onProfilePictureChange($event)" />
@@ -48,8 +44,6 @@
     </div>
   </div>
 
-  <!-- Submit Button -->
-  <button type="submit" class="btn btn-primary">{{ isEditMode ? 'Update Group' : 'save' }}</button>
-  <!-- Cancel Button -->
+  <button type="submit" class="btn btsave">{{ isEditMode ? 'Update Group' : 'save' }}</button>
   <button type="button" class="btn btn-secondary" (click)="onCancel()">cancel</button>
 </form>

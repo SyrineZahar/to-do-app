@@ -48,6 +48,7 @@ export class GroupsComponent implements OnInit {
     this.fetchUsers();
   }
 
+  // Méthode pour récupérer les utilisateurs
   fetchUsers() {
     this.userService.getUsers().subscribe({
       next: (users) => {
@@ -59,6 +60,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  // Méthode pour naviguer vers le formulaire de groupe (ajout ou modification)
   navigateToGroupForm(group?: GroupEntity, event?: MouseEvent) {
     event?.stopPropagation();
     
@@ -71,6 +73,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  // Méthode pour sélectionner un groupe et afficher ses détails
   selectGroup(event: MouseEvent, group: GroupEntity) {
     event.stopPropagation();
 
@@ -81,6 +84,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  // Méthode pour ajouter un utilisateur au groupe sélectionné
   addUser() {
     const selectedUserId = this.userForm.value.user_id;
 
@@ -100,6 +104,7 @@ export class GroupsComponent implements OnInit {
     }
   }
 
+  // Méthode pour supprimer un groupe
   deleteGroup(groupId: number, event: MouseEvent) {
     event.stopPropagation();
 
@@ -114,6 +119,7 @@ export class GroupsComponent implements OnInit {
     });
   }
 
+  // Méthode pour afficher un pop-up avec un message personnalisé
   showPopup(message: string): void {
     this.dialog.open(AlertsComponent, {
       data: { message },

@@ -15,6 +15,7 @@ export class SignupComponent {
 
   constructor(private fb: FormBuilder,private authService:AuthService,private router: Router) { }
 
+  // Initialisation du formulaire lors de l'initialisation du composant
   ngOnInit(): void {
     this.signupForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -23,6 +24,7 @@ export class SignupComponent {
     });
   }
 
+  // Méthode appelée lors de la soumission du formulaire
   onSubmit(): void {
     if (this.signupForm.valid) {
       let { username, email, password } = this.signupForm.value;

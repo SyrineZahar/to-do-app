@@ -8,7 +8,6 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Comment } from 'src/app/classe/Comment';
 import { AuthService } from 'src/app/service/Auth.service';
 import { userService } from 'src/app/service/User.service';
-import { TaskFormComponent } from '../task-form/task-form.component';
 import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
@@ -40,6 +39,7 @@ export class TaskDetailsComponent {
     private dialogRef: MatDialogRef<TaskDetailsComponent>
 
   ) {
+    // Initialisation du formulaire de commentaire avec des contrôles de validation
     this.commentForm = new FormGroup({
       description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
       user: new FormControl('currentUser', Validators.required), 
@@ -47,6 +47,7 @@ export class TaskDetailsComponent {
     });
   }
 
+  // Méthode pour soumettre un commentaire
   onSubmit() {
     if (this.commentForm.valid) {
       const commentData = this.commentForm.value;
@@ -69,6 +70,7 @@ export class TaskDetailsComponent {
     }
   }
   
+  // Méthode pour charger les commentaires associés à la tâche
   loadComments(): void {
     this.commentService.getCommentsByTaskId(Number(this.data.task.id)).subscribe({
       next: (comments) => {
@@ -88,6 +90,7 @@ export class TaskDetailsComponent {
     });
   }
   
+  // Méthode pour obtenir un résumé de la description de la tâche
   fetchSummary(): void {
     if (this.data.task.description) {  
       this.taskService.getDescriptionSummary(this.data.task.description).subscribe({
@@ -101,6 +104,8 @@ export class TaskDetailsComponent {
       });
     }
   }
+
+  // Méthode pour récupérer l'utilisateur assigné à la tâche
   getUserByTaskId(taskId: number): void {
     this.UserService.getUserByTaskId(taskId).subscribe({
       next: (data) => {
@@ -112,8 +117,8 @@ export class TaskDetailsComponent {
     });
   }
   
+  // Méthode pour supprimer une tâche
   deleteTask(taskId: number) {
-
     console.log('groupId'+taskId)
     this.taskService.deleteTask(taskId).subscribe({
       next: () => {
@@ -125,23 +130,8 @@ export class TaskDetailsComponent {
       }
     });
   }
-  navigateToUpdateTask(taskId: number){
-    const dialogRef = this.dialog.open(TaskFormComponent, {
-      width: '600px',
-      
-      data: {
-        task: this.data.task, 
-      },
 
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadComments(); 
-      }
-    });
-  }
-
+  // Méthode pour afficher une alerte popup
   showPopup(message: string): void {
     this.dialog.open(AlertsComponent, {
       data: { message },

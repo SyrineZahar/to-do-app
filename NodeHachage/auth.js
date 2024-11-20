@@ -5,8 +5,10 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = 3001;
 
+// Middleware pour parser les requêtes JSON
 app.use(bodyParser.json());
 
+// Route pour hacher le mot de passe
 app.post('/hash', async (req, res) => {
     const { password } = req.body;
 
@@ -22,6 +24,7 @@ app.post('/hash', async (req, res) => {
     }
 });
 
+// Route pour vérifier si le mot de passe correspond à un mot de passe haché
 app.post('/verify', async (req, res) => {
     const { password, hashedPassword } = req.body;
 
@@ -37,6 +40,7 @@ app.post('/verify', async (req, res) => {
     }
 });
 
+// Démarrage du serveur 
 app.listen(PORT, () => {
     console.log(`Auth server running on port ${PORT}`);
 });

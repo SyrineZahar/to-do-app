@@ -53,20 +53,27 @@ h2 {
 }
 
 .filter-add-container {
+  align-items: center;
   display: flex;
-  justify-content: space-between;
-  width: 50%;
-  margin-top: 20px;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 }
-
+span {
+  color: black;
+  width: max-content;
+}
+select {
+  width: 200px;
+}
 
 .form-group {
-  flex: 1;
-  padding: 0 10px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 }
 .form-group button{
-  width: 100%;
+  width: auto;
 }
 .form-group button:hover{
   transform: none;

@@ -24,6 +24,7 @@ export class DashboardAdminComponent implements OnInit {
     this.geUserStat()
   }
 
+  // Méthode pour récupérer le nombre total de groupes
   getGroupStat(): void {
     this.groupService.getGroupStat().subscribe(
       (count) => {
@@ -32,6 +33,7 @@ export class DashboardAdminComponent implements OnInit {
     );
   }
 
+  // Méthode pour récupérer le nombre total de tâches
   getTaskStat(): void {
     this.taskService.getTaskstat().subscribe(
       (count) => {
@@ -40,6 +42,7 @@ export class DashboardAdminComponent implements OnInit {
     );
   }
 
+  // Méthode pour récupérer le nombre total d'utilisateurs
   geUserStat(): void {
     this.userService.getUserstat().subscribe(
       (count) => {
@@ -48,6 +51,7 @@ export class DashboardAdminComponent implements OnInit {
     );
   }
 
+  // Méthode pour notifier les utilisateurs en envoyant des emails
   notifyUsers(){
     this.taskService.notifyUsers().subscribe(
       next=>{
@@ -59,6 +63,7 @@ export class DashboardAdminComponent implements OnInit {
     )
   }
 
+  // Méthode pour afficher un message d'alert
   showPopup(message: string): void {
     this.dialog.open(AlertsComponent, {
       data: { message },

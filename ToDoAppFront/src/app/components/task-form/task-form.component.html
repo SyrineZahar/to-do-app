@@ -1,5 +1,5 @@
 <div class="add-task">
-    <h1 class="text-center">{{ isUpdate ? 'Update Task' : 'Add Task' }}</h1>
+    <h1 class="text-center">Add Task</h1>
     <form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
       <div class="form-group">
         <label for="title">Title</label>
@@ -51,8 +51,8 @@
         </select>
       </div>
   
-      <button type="submit" class="btn btn-primary">save</button>
-      <button type="button" class="btn btn-secondary" (click)="navigateToTasks()">cancel</button>
+      <button type="submit" class="btn btsave">Save</button>
+      <button type="button" class="btn btn-secondary" (click)="navigateToTasks()">Cancel</button>
     </form>
   </div>
   

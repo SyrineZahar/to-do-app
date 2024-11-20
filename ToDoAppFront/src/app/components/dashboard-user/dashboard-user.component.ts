@@ -22,6 +22,8 @@ export class DashboardUserComponent implements OnInit{
         this.loadGroups(user.id);
       }  
     }
+
+    // Charge les groupes associés à un utilisateur à partir de son ID
   loadGroups(id: number): void {
     this.groupService.getGroupsByUser(id).subscribe({
       next: (groups: GroupEntity[]) => {
@@ -32,6 +34,8 @@ export class DashboardUserComponent implements OnInit{
       }
     });
   }
+
+  // Navigue vers la page Kanban du groupe
   goToKanban(groupId: number | undefined): void {
     if (groupId !== undefined) {
       this.router.navigate(['/kanban', groupId]);

@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { Task } from 'src/app/classe/Task';
 import { taskService } from 'src/app/service/Task.service';
@@ -34,6 +34,7 @@ export class KanbanDashboardComponent implements OnInit {
     this.loadTasks(); 
   }
 
+  // Méthode pour charger les tâches à partir du service Task
   loadTasks(): void {
     this.taskService.getTasksByGroupId(this.groupId).subscribe({
       next: (tasks: Task[]) => {
@@ -58,17 +59,20 @@ export class KanbanDashboardComponent implements OnInit {
     });
   }
 
+  // Mise à jour des listes de tâches par statut
   updateTaskLists(): void {
     this.todolist = this.tasks.filter(task => task.status === TaskStatus.todo);
     this.inProgressList = this.tasks.filter(task => task.status === TaskStatus.inprogress);
     this.doneList = this.tasks.filter(task => task.status === TaskStatus.done);
   }
 
+  // Méthode pour démarrer le glisser d'une tâche
   onDragStart(task: Task): void {
     this.currentTask = task; 
     console.log('Dragging task: ', task); 
   }
 
+  // Méthode pour gérer le dépôt d'une tâche dans une autre colonne (statut)
   onDrop(event: DragEvent, status: TaskStatus): void {
     event.preventDefault(); 
 
@@ -88,10 +92,12 @@ export class KanbanDashboardComponent implements OnInit {
     }
   }
 
+  // Méthode pour gérer le passage du curseur au-dessus d'un élément de tâche
   onDragOver(event: DragEvent): void {
     event.preventDefault(); 
   }
 
+  // Méthode pour ouvrir les détails d'une tâche dans une boîte de dialogue
   openTaskDetails(task: Task) {
     const dialogRef = this.dialog.open(TaskDetailsComponent, {
       data: { task }
@@ -103,6 +109,7 @@ export class KanbanDashboardComponent implements OnInit {
   }
   
 
+  // Méthode pour ouvrir le formulaire d'ajout d'une nouvelle tâche
   openAddTask(event: MouseEvent): void {
     event.stopPropagation(); 
     const dialogRef = this.dialog.open(TaskFormComponent, {
@@ -113,7 +120,7 @@ export class KanbanDashboardComponent implements OnInit {
     });
   }
   
-  
+  // Méthode pour naviguer vers la mise à jour d'une tâche existante
   navigateToUpdateTask(taskId: number): void {
     const taskToUpdate = this.tasks.find(task => task.id === taskId);
   

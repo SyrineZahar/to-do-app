@@ -15,12 +15,14 @@ export class NavbarComponent {
     this.loadGoogleTranslate(); 
   }
 
+  // Méthode pour charger Google Translate dans la page
   loadGoogleTranslate(): void {
     let script = document.createElement('script'); 
     script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     script.type = 'text/javascript'; 
     document.body.appendChild(script); 
     
+    // Création d'un autre script pour initialiser Google Translate avec les paramètres
     let googleTranslateInit = document.createElement('script'); 
     googleTranslateInit.type = 'text/javascript'; 
     googleTranslateInit.innerHTML = `
@@ -35,6 +37,7 @@ export class NavbarComponent {
   }
 
 
+  // Méthode pour déconnecter l'utilisateur
   onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']);

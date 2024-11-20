@@ -1,18 +1,19 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http'; // Pour effectuer des requêtes HTTP
-import { Injectable } from '@angular/core'; // Pour déclarer le service injectable
-import { catchError, map, Observable, throwError } from 'rxjs'; // Pour gérer les flux de données asynchrones
-import { Task } from '../classe/Task'; // Importation de la classe Task
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { Injectable } from '@angular/core';
+import { catchError, map, Observable, throwError } from 'rxjs'; 
+import { Task } from '../classe/Task'; 
 
 @Injectable({
   providedIn: 'root'
 })
 export class taskService {
+
+    // URL de base pour accéder à l'API des tâches
     URL = 'http://localhost:8088/tasks';
-    //tasks$: any;
 
     constructor(private httpClient: HttpClient) { }
 
-
+    // Fonction pour ajouter une tâche
     addTask(task: Task): Observable<string> {
 
         const payload = {
@@ -34,36 +35,39 @@ export class taskService {
         );
     }
         
-
-
+    // Fonction pour modifier une tâche existante
     editTask(task: Task): Observable<Task> {
         console.log("service task")
         const headers = new HttpHeaders().set('Content-Type', 'application/json');
         return this.httpClient.put<Task>(`${this.URL}/${task.id}`, task)
     }
 
-
+    // Fonction pour récupérer les tâches d'un utilisateur et d'un groupe
     getTasksByUserIdAndGroupId(userId: number, groupId:number) {
         return this.httpClient.get<Task[]>(`${this.URL}/${userId}/${groupId}`);
     }
+    
+    // Fonction pour récupérer les tâches d'un groupe
     getTasksByGroupId(groupId: number) {
         return this.httpClient.get<Task[]>(`${this.URL}/groups/${groupId}`);
     }
 
+    // Fonction pour récupérer des statistiques sur les tâches
     getTaskstat(): Observable<number> {
         return this.httpClient.get<number>(`${this.URL}/stat`);
     }
 
+    // Fonction pour résumer la description d'une tâche
     getDescriptionSummary(description: string): Observable<{ summarized_text: string }> {
         return this.httpClient.post<{ summarized_text: string }>(`${this.URL}/descriptionSum`, { description });
     }  
+
+    // Fonction pour supprimer une tâche
     deleteTask(taskId:Number){
         return this.httpClient.delete(`${this.URL}/${taskId}`)
     }
-
-    updateTask(taskId:Number, task: Task){
-        return this.httpClient.put(`${this.URL}/${taskId}`, task)
-    }
+    
+    // Fonction pour notifier les utilisateurs
     notifyUsers(){
         return this.httpClient.post(`${this.URL}/notifyUsers`,'')
     }

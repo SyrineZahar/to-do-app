@@ -12,6 +12,7 @@ import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-
 
 const routes: Routes = [
   { path: "", redirectTo: "login", pathMatch: "full" }, 
+  
   { path: "userdashboard", component: DashboardUserComponent, canActivate: [authGuardGuard]},
   { path: "signup", component: SignupComponent }, 
   { path: "login", component: LoginComponent }, 

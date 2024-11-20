@@ -45,6 +45,7 @@ export class GroupdetailsComponent implements OnInit {
     this.filteredTasks = this.data.group.tasks ?? [];
   }
 
+  // Récupère les utilisateurs associés à un groupe
   fetchGroupUsers() {
     const groupId = this.data.group.id;  
     this.userService.getUsersbygroup(Number(groupId)).subscribe({
@@ -57,6 +58,7 @@ export class GroupdetailsComponent implements OnInit {
     });
   }
 
+  // Filtre les tâches en fonction de l'utilisateur sélectionné dans le formulaire
   filterTasksByUser() {
     const selectedUserId = this.filterForm.value.filter_user_id;
     const selectedGroupId = this.data.group.id;
@@ -76,6 +78,7 @@ export class GroupdetailsComponent implements OnInit {
     }
   }
 
+  // Ajoute un utilisateur au groupe
   addUser() {
     const selectedUserId = Number(this.userForm.value.user_id);
 
@@ -104,6 +107,8 @@ export class GroupdetailsComponent implements OnInit {
       },
     });
   }
+
+  // Récupère tous les utilisateurs du système
   fetchUsers() {
     this.userService.getUsers().subscribe({
       next: (users) => {
@@ -114,6 +119,8 @@ export class GroupdetailsComponent implements OnInit {
       },
     });
   }
+
+  // Affiche un message d'alerte dans une popup
   showPopup(message: string): void {
     this.dialog.open(AlertsComponent, {
       data: { message },

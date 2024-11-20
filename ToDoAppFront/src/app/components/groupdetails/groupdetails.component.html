@@ -4,33 +4,30 @@
     <h2>{{ data.group.nom }} - Details</h2>
   </div>
 
-  <!-- Container for filter and add user sections -->
   <div class="filter-add-container">
-    <!-- Filter tasks by user -->
     <div class="form-group" [formGroup]="filterForm">
-      Filtrer per user
+      <span>Filtrer per user : &nbsp;&nbsp;&nbsp;</span>
       <select id="filter_user_id" class="form-control" formControlName="filter_user_id" (change)="filterTasksByUser()">
-        <option value="" disabled selected>Choose user</option>
+        <option value="" (click)="fetchGroupUsers()" selected>Choose user</option>
         <option *ngFor="let user of groupUser" [value]="user.id">
           {{ user.name }}
         </option>
       </select>
     </div>
 
-    <!-- Add user to group section -->
-    <div class="form-group" [formGroup]="userForm">
-      Add user to group
+    
+    <div class="form-group" [formGroup]="userForm"> 
+      <span>Add user to group : &nbsp;&nbsp;&nbsp;</span>
       <select id="add_user_id" class="form-control" formControlName="user_id">
         <option value="" disabled selected>Choose user</option>
         <option *ngFor="let user of users" [value]="user.id">
           {{ user.name }}
         </option>
       </select>
-      <button (click)="addUser()" class="btn btn-primary mt-2">Add</button>
+      <button (click)="addUser()" class="btn btn-primary">Add</button>
     </div>
   </div>
 
-  <!-- Display filtered task details -->
   <div class="task-list">
     <table>
       <thead>

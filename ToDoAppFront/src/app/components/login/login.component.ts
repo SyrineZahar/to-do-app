@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { UserRole } from 'src/app/classe/Enum/UserRole.enum';
 import { User } from 'src/app/classe/User';
 import { AuthService } from 'src/app/service/Auth.service';
 
@@ -21,11 +22,17 @@ export class LoginComponent {
     });
   }
 
+  // Fonction de connexion
   login(email: string, password: string) {
     this.authService.login(email, password).subscribe({
       next: (user: User) => {
         this.authService.setUser(user); 
-        this.router.navigate(['/userdashboard']); 
+        if (user.role == UserRole.ADMIN){
+          this.router.navigate(['/admin-dashboard']);       
+        } else {
+          this.router.navigate(['/userdashboard']); 
+        }
+        
       },
       error: (error: any) => {
         console.error('Login failed:', error);
@@ -34,9 +41,7 @@ export class LoginComponent {
     });
   }
 
-  
-  
-
+  // Fonction appelée lors de la soumission du formulaire
   onSubmit() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;

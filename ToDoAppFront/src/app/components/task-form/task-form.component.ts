@@ -1,13 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { TaskStatus } from 'src/app/classe/Enum/TaskStatus.enum';
 import { GroupEntity } from 'src/app/classe/GroupEntity';
 import { Task } from 'src/app/classe/Task';
 import { User } from 'src/app/classe/User';
-import { AuthService } from 'src/app/service/Auth.service';
-import { GroupService } from 'src/app/service/group.service';
 import { taskService } from 'src/app/service/Task.service';
 import { userService } from 'src/app/service/User.service';
 import { futureDateValidator } from './future-date.validator';
@@ -24,7 +21,6 @@ export class TaskFormComponent implements OnInit {
   taskStatuses = Object.values(TaskStatus);
   users: User[] = []; 
   groups!: GroupEntity[]; 
-  isUpdate: boolean = false; 
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -32,13 +28,9 @@ export class TaskFormComponent implements OnInit {
     private fb: FormBuilder,
     private taskService: taskService, 
     private userService: userService,
-    private router: Router,
-    private groupService: GroupService,
-    private authService: AuthService,
   ) {
     this.groupId = data.group_id; 
     this.task = data.task || null; 
-    this.isUpdate = !!this.task;
   }
 
   ngOnInit(): void {
@@ -46,6 +38,7 @@ export class TaskFormComponent implements OnInit {
     this.fetchUsers(); 
   }
 
+  // Méthode pour créer le formulaire avec des validateurs
   private createForm(): void {
     this.taskForm = this.fb.group({
       title: [this.task?.title || '', Validators.required],
@@ -60,6 +53,7 @@ export class TaskFormComponent implements OnInit {
     });
   }
 
+  // Fonction d'aide pour formater la date correctement
   private formatDate(date: string | Date): string {
     const d = new Date(date);
     if (isNaN(d.getTime())) {
@@ -89,6 +83,7 @@ export class TaskFormComponent implements OnInit {
     );
   }
 
+  // Méthode pour soumettre le formulaire et enregistrer la tâche
   onSubmit(): void {
     if (this.taskForm.valid) {
       console.log('Form Data:', this.taskForm.value);
@@ -117,26 +112,18 @@ export class TaskFormComponent implements OnInit {
         Number(this.taskForm.value.user_id),
         this.taskForm.value.isDesactivated
       );
-
-      if (this.isUpdate && this.task) {
-        this.taskService.updateTask(Number(this.task.id), taskData).subscribe(() => {
-          this.dialogRef.close(); 
-        }, (error) => {
-          console.error('Error updating task:', error);
-        });
-      } else {
-        this.taskService.addTask(taskData).subscribe(() => {
-          console.log(taskData)
-          this.dialogRef.close(); 
-        }, (error) => {
-          console.error('Error adding task:', error);
-        });
-      }
+      this.taskService.addTask(taskData).subscribe(() => {
+        console.log(taskData)
+        this.dialogRef.close(); 
+      }, (error) => {
+        console.error('Error adding task:', error);
+      });
     } else {
       console.log('Form is invalid');
     }
   }
 
+  // Ferme la fenêtre modale sans soumettre le formulaire
   navigateToTasks(): void {
     this.dialogRef.close(); 
   }
