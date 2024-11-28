@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { UserRole } from 'src/app/classe/Enum/UserRole.enum';
 import { User } from 'src/app/classe/User';
 import { AuthService } from 'src/app/service/Auth.service';
+import { AlertsComponent } from '../alerts/alerts.component';
 
 @Component({
   selector: 'app-signup',
@@ -13,7 +15,7 @@ import { AuthService } from 'src/app/service/Auth.service';
 export class SignupComponent {
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder,private authService:AuthService,private router: Router) { }
+  constructor(private fb: FormBuilder,private authService:AuthService,private router: Router, private dialog: MatDialog) { }
 
   // Initialisation du formulaire lors de l'initialisation du composant
   ngOnInit(): void {
@@ -37,9 +39,17 @@ export class SignupComponent {
 
         },
         error: (error) => {
-          console.error('Signup failed:', error);
+          this.showPopup('Email is unique');
         }
       });
     }
+  }
+
+   // Affiche une popup avec un message d'alerte
+   showPopup(message: string): void {
+    this.dialog.open(AlertsComponent, {
+      data: { message },
+      width: '500px'
+    });
   }
 }

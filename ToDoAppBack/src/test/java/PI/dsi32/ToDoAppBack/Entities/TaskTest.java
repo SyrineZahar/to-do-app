@@ -32,8 +32,7 @@ public class TaskTest {
     /**
      * Teste la méthode getId de la classe Task.
      * Vérifie que l'ID est correctement défini.
-     */
-    @Test
+     */    @Test
     public void testGetId() {
         assertEquals(1, task.getId());
     }

@@ -45,8 +45,7 @@ export class TaskFormComponent implements OnInit {
       description: [this.task?.description || '', Validators.required],
       status: [this.task?.status || TaskStatus.todo, Validators.required],
       deadline: [
-        this.task?.deadline ? this.formatDate(this.task.deadline) : '', 
-        [Validators.required, futureDateValidator()]
+        this.task?.deadline ? this.formatDate(this.task.deadline) : ''
       ],
       user_id: [this.task?.user_id || null, Validators.required],
       group_id: [this.groupId]
